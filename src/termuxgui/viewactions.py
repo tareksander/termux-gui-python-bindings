@@ -1,4 +1,5 @@
 from json import dumps
+import base64
 
 from termuxgui.__send_read_msg  import __send_read_msg 
 from termuxgui.__send_msg import __send_msg
@@ -8,7 +9,7 @@ def deleteview(mainSocket, aid, id):
     __send_msg(mainSocket, dumps({"method": "deleteView", "params": {"aid": aid, "id": id}}))
 
 def settextsize(mainSocket, aid, id, size):
-    __send_msgg(mainSocket, dumps({"method": "setTextSize", "params": {"aid": aid, "id": id, "size": size}}))
+    __send_msg(mainSocket, dumps({"method": "setTextSize", "params": {"aid": aid, "id": id, "size": size}}))
 
 
 
