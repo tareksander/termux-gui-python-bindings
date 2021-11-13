@@ -1,5 +1,5 @@
 __all__ = ["activity", "bringtasktofront", "connect", "create", "event", "finishactivity", 
-"finishtask", "setinputmode", "setpipparams", "settaskdescription", "settheme", "totermux", "viewactions"]
+"finishtask", "setinputmode", "setpipmode", "setpipparams", "settaskdescription", "settheme", "toast", "totermux", "viewactions"]
 
 for m in __all__:
     exec("from termuxgui."+m+" import *")

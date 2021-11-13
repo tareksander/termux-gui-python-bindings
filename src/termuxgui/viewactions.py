@@ -5,8 +5,16 @@ from termuxgui.__send_read_msg  import __send_read_msg
 from termuxgui.__send_msg import __send_msg
 
 
+
+def showcursor(mainSocket, aid, id, show):
+    __send_msg(mainSocket, dumps({"method": "showCursor", "params": {"aid": aid, "id": id, "show": show}}))
+    
+
 def deleteview(mainSocket, aid, id):
     __send_msg(mainSocket, dumps({"method": "deleteView", "params": {"aid": aid, "id": id}}))
+
+def clearchildren(mainSocket, aid, id):
+    __send_msg(mainSocket, dumps({"method": "deleteChildren", "params": {"aid": aid, "id": id}}))
 
 def settextsize(mainSocket, aid, id, size):
     __send_msg(mainSocket, dumps({"method": "setTextSize", "params": {"aid": aid, "id": id, "size": size}}))
@@ -28,6 +36,11 @@ def setmargin(mainSocket, aid, id, margin, dir=None):
 def setlinearlayoutparams(mainSocket, aid, id, weight):
     __send_msg(mainSocket, dumps({"method": "setLinearLayoutParams", "params": {"aid": aid, "id": id, "weight": weight}}))
 
+def setwidth(mainSocket, aid, id, width):
+    __send_msg(mainSocket, dumps({"method": "setWidth", "params": {"aid": aid, "id": id, "width": width}}))
+
+def setheight(mainSocket, aid, id, height):
+    __send_msg(mainSocket, dumps({"method": "setHeight", "params": {"aid": aid, "id": id, "height": height}}))
 
 def settext(mainSocket, aid, id, text):
     __send_msg(mainSocket, dumps({"method": "setText", "params": {"aid": aid, "id": id, "text": text}}))
