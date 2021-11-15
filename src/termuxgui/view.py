@@ -15,7 +15,7 @@ class View:
         if isinstance(other, View):
             return self.id == other.id
     
-    def deleteview(self):
+    def delete(self):
         self.a.c.send_msg({"method": "deleteView", "params": {"aid": self.a.aid, "id": self.id}})
 
     def setmargin(self, margin, dir=None):

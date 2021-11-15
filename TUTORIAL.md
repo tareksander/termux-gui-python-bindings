@@ -2,7 +2,7 @@
   
 Make sure you installed the library like explained in the README.  
 This tutorial assumes you have the basic understanding of the Android GUI from the [crash course](https://github.com/tareksander/termux-gui).  
-The full source code can be found in the tutorial folder.  
+The full source code can also be found in the tutorial folder.  
   
 ## Basic structure
 
@@ -33,8 +33,19 @@ If you only use one Activity you can use
 if ev.type == "destroy" and ev.value["finishing"]:
     sys.exit()
 ```
-in the event loop to quit you program when the activity exits.
+in the event loop to quit you program when the activity exits.  
+  
+To make these examples shorter it is left out, but you should probably use this  
 
+```python
+try:
+	import termuxgui as tg
+except ModuleNotFoundError:
+	sys.exit("termuxgui module not found. Please install the Termux:GUI python bindings: https://github.com/tareksander/termux-gui-python-bindings")
+```
+
+to import the library so users don't just see a useless ModuleNotFoundError when the library isn't installed.  
+The library already throws a RuntimeError and prints out an informative message when it can't connect to the plugin.
 
 ## Hello world
 
