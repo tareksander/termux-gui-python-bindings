@@ -4,8 +4,10 @@ from secrets import choice
 from string import ascii_letters, digits
 from os import getuid
 from struct import unpack
+from json import dumps
 
-from termuxgui.object.event import Event
+from termuxgui.event import Event
+from termuxgui import msg as tgmsg
 
 def _check_user(s):
     uid = unpack("III",s.getsockopt(SOL_SOCKET, SO_PEERCRED, 12))[1]
@@ -56,10 +58,11 @@ class Connection:
                 raise RuntimeError("Could not connect to Termux:GUI. Is the plugin installed?")
     
     def events(self):
-        yield Event(__read_msg(self._event))
+        while True:
+            yield Event(tgmsg.read_msg(self._event))
     
     def toast(self, text, long=False):
-        __send_msg(self._main, dumps({"method": "toast", "params": {"text": text, "long": long}})) 
+        self.send_msg({"method": "toast", "params": {"text": text, "long": long}}) 
     
     def totermux(self):
         '''Returns to the termux task. This is a shorthand for running am start to start the termux activity.'''
@@ -75,6 +78,19 @@ class Connection:
     def __exit__(self, type, value, traceback):
         self.close()
         return False
+    
+    
+    def send_msg(self, msg):
+        if type(msg) is dict:
+            msg = dumps(msg)
+        tgmsg.send_msg(self._main, msg)
+    
+    def read_msg(self):
+        return tgmsg.read_msg(self._main)
+    
+    def send_read_msg(self, msg):
+        self.send_msg(msg)
+        return self.read_msg()
     
     
     

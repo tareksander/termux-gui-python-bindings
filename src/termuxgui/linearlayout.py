@@ -1,8 +1,7 @@
 from json import dumps
 
-from termuxgui.__send_read_msg  import __send_read_msg
-from termuxgui.__send_msg import __send_msg
-from termuxgui.object.viewgroup import ViewGroup
+
+from termuxgui.viewgroup import ViewGroup
 
 class LinearLayout(ViewGroup):
     
@@ -10,7 +9,7 @@ class LinearLayout(ViewGroup):
         args = {"aid": activity.aid, "vertical": vertical}
         if parent != None:
             args["parent"] = parent.id
-        ViewGroup.__init__(self, activity, __send_read_msg(activity.c._main, dumps({"method": "createLinearLayout", "params": args})))
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({"method": "createLinearLayout", "params": args}))
     
     
     

@@ -7,34 +7,30 @@ The full source code can be found in the tutorial folder.
 ## Basic structure
 
 ```python
-# you can also use from termuxgui import * to leave out the tg. to access methods 
-import termuxgui as tg
-
 import sys
 
+# you can also use from termuxgui import * to leave out the tg. to access methods and classes
+import termuxgui as tg
 
-ret = tg.connect()
-if ret == None: # connection could not be established
-    sys.exit()
-
-# these are the sockets used to communicate with the plugin
-main, event = ret
-
-
-#  set up the gui
-# ...
-
-while True:
-    ev = tg.getevent(event) # waits for events from the gui
+# Create a connection to the plugin.
+# Use with to automatically close the connection afterwards.
+with tg.Connection() as c:
     
-    # react to events
+    
+    #  set up the gui
+    # ...
+    
+    for ev in c.events(): # wait for events from the gui
+        
+        
+        # react to events
 ```
 
 After connecting to the plugin you can set up your gui.  
 Then you have to wait for user input (or sleep for some time) and decide when to quit your program.  
 If you only use one Activity you can use
 ```python
-if ev["type"] == "destroy" and ev["value"]["finishing"]:
+if ev.type == "destroy" and ev.value["finishing"]:
     sys.exit()
 ```
 in the event loop to quit you program when the activity exits.
@@ -50,29 +46,26 @@ import termuxgui as tg
 import sys
 import time
 
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
-
-# create a new Activity.
-# activity returns the Activity id and Task id that is used to refer to the new Activity and Task.
-a, t = tg.activity(main)
-
-# create the TextView.
-# like activity, this returns an id that we can use to manipulate the TextView, but we won't do that in this example.
-tv = tg.createtextview(main, a, "Hello world!")
-
-
-time.sleep(5)
+with tg.Connection() as c:
+    
+    # create a new Activity. By default, a new Task as created.
+    a = tg.Activity(c)
+    # you can find the Task under a.t
+    
+    
+    # create the TextView.
+    tv = tg.TextView(a, "Hello world!")
+    
+    
+    time.sleep(5)
 ```
 
 Now let's modify the example a bit: add 
 ```python
 time.sleep(5)
-tg.settext(main, a, tv, "Goodbye world!")
+tv.settext(main, a, tv, "Goodbye world!")
 ```
-after `tg.createtextview`.
+after `tv = tg.TextView(a, "Hello world!")`.
 Now it displays "Hello World!" for 5 seconds, "Goodbye world!" for 5 seconds and then exits.  
 With that you just created your first dynamic layout.  
 Congratulations!  
@@ -90,41 +83,34 @@ import termuxgui as tg
 import sys
 import time
 
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
-
-a, t = tg.activity(main)
-
-# For each View or Layout you create you can specify the id of the parent Layout to create a hiearachy.
-# If you don't specify a parent, it will replace the current root View.
-# We first create a LinearLayout as our root View.
-root = tg.createlinearlayout(main, a)
-
-# Then we create a TextView that we will use as a title
-title = tg.createtextview(main, a, "Awesome Title", root)
-
-# We set the font size a bit bigger
-tg.settextsize(main, a, title, 30)
-
-
-contenttext = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-# Now we create a TextView for the main content
-content = tg.createtextview(main, a, contenttext, root)
-
-# And we add a Button at the end
-
-button = tg.createbutton(main, a, "Click here!", root)
-
-
-# Now we give the Layout priority to our content Textview so it is bigger than the Button and the title.
-# This priority value is called weight and determines how much of the available space goes to each View.
-tg.setlinearlayoutparams(main, a, content, 10)
-
-
-
-time.sleep(5)
+with tg.Connection() as c:
+    
+    a = tg.Activity(c)
+    
+    # For each View or Layout you create you can specify the parent Layout to create a hiearachy.
+    # If you don't specify a parent, it will replace the current root View.
+    # We first create a LinearLayout as our root View.
+    root = tg.LinearLayout(a)
+    
+    # Then we create a TextView that we will use as a title
+    title = tg.TextView(a, "Awesome Title", root)
+    
+    # We set the font size a bit bigger
+    title.settextsize(30)
+    
+    
+    contenttext = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+    # Now we create a TextView for the main content
+    content = tg.TextView(a, contenttext, root)
+    
+    # And we add a Button at the end
+    button = tg.Button(a, "Click here!", root)
+    
+    # Now we give the Layout priority to our content Textview so it is bigger than the Button and the title.
+    content.setlinearlayoutparams(10)
+    
+    
+    time.sleep(5)
 ```
 
 [hellolayout.py](tutorial/hellolayout.py)<!-- @IGNORE PREVIOUS: link -->
@@ -140,39 +126,45 @@ import sys
 import time
 import threading
 
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
-
-a, t = tg.activity(main)
-
-root = tg.createlinearlayout(main, a)
-
-title = tg.createtextview(main, a, "Awesome Title", root)
-tg.settextsize(main, a, title, 30)
-
-contenttext = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-content = tg.createtextview(main, a, contenttext, root)
-
-button = tg.createbutton(main, a, "Click here!", root)
-
-tg.setlinearlayoutparams(main, a, content, 10)
-
-count = 0
-
-# create a thread to handle the events, so we can still exit the program after 5 seconds no matter what
-def handleEvents():
-    global count
-    while True:
-        ev = tg.getevent(event) # waits for events from the gui
-        if ev["type"] == "click": # checks for click events. We don't need to check the id, as there is only one Button in our example
-            count = count + 1 
-watcher = threading.Thread(target=handleEvents,daemon=True)
-watcher.start()
-
-time.sleep(5)
-print("button pressed", count, "times")
+with tg.Connection() as c:
+    
+    a = tg.Activity(c)
+    
+    # For each View or Layout you create you can specify the parent Layout to create a hiearachy.
+    # If you don't specify a parent, it will replace the current root View.
+    # We first create a LinearLayout as our root View.
+    root = tg.LinearLayout(a)
+    
+    # Then we create a TextView that we will use as a title
+    title = tg.TextView(a, "Awesome Title", root)
+    
+    # We set the font size a bit bigger
+    title.settextsize(30)
+    
+    
+    contenttext = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+    # Now we create a TextView for the main content
+    content = tg.TextView(a, contenttext, root)
+    
+    # And we add a Button at the end
+    button = tg.Button(a, "Click here!", root)
+    
+    # Now we give the Layout priority to our content Textview so it is bigger than the Button and the title.
+    content.setlinearlayoutparams(10)
+    
+    count = 0
+    
+    # create a thread to handle the events, so we can still exit the program after 5 seconds no matter what
+    def handleEvents():
+        global count
+        for ev in c.events(): # waits for events from the gui
+            if ev.type == tg.Event.click: # checks for click events. We don't need to check the id, as there is only one Button in our example
+                count = count + 1 
+    watcher = threading.Thread(target=handleEvents,daemon=True)
+    watcher.start()
+    
+    time.sleep(5)
+    print("button pressed", count, "times")
 ```
 
 [helloevents.py](tutorial/helloevents.py)<!-- @IGNORE PREVIOUS: link -->
@@ -188,25 +180,22 @@ With picture-in-picture mode you can display an Activity in a small window.
 import termuxgui as tg
 import sys
 import time
+import threading
 import io
 
 image = None
 with io.open(sys.argv[1], "rb") as f:
     image = f.read()
-
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
-
-# specify that the Activity should be started in pip mode
-a, t = tg.activity(main,pip=True)
-
-# create an ImageView and set the image
-iv = tg.createimageview(main, a)
-tg.setimage(main, a, iv, image)
-
-time.sleep(5)
+    
+with tg.Connection() as c:
+    a = tg.Activity(c, pip=True) # start the activity in picture-in-picture mode
+    
+    iv = tg.ImageView(a) # create a ImageView to display the image
+    
+    # Set the image
+    iv.setimage(image)
+    
+    time.sleep(5)
 ```
 
 The program will display the image you specified as a command line argument for 5 seconds in a small window.
@@ -224,42 +213,36 @@ It happens often that you want Views to only occupy the space they need in a Lin
 import termuxgui as tg
 import sys
 import time
-
-
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
-
-a, t = tg.activity(main)
-
-
-
-layout = tg.createlinearlayout(main, a)
-
-# Create 3 TextViews
-tv1 = tg.createtextview(main, a, "TextView 1", layout)
-tv2 = tg.createtextview(main, a, "TextView 2", layout)
-tv3 = tg.createtextview(main, a, "TextView 3", layout)
-
-# Now we make them only occupy the space they need.
-# We first have to set the Layout weight to 0 to prevent them from using the free space.
-tg.setlinearlayoutparams(main, a, tv1, 0)
-tg.setlinearlayoutparams(main, a, tv2, 0)
-tg.setlinearlayoutparams(main, a, tv3, 0)
-
-# Then we have to set the height to "WRAP_CONTENT".
-# You can specify width and height in 3 ways: as an integer in dp, "WRAP_CONTENT" and "MATCH_PARENT".
-# "WRAP_CONTENT" makes a View occupy only the space it needs.
-# "MATCH_PARENT" makes a view as large as the parent Layout in that dimension.
-
-# Since the TextViews are displayed in a list, we set the height to "WRAP_CONTENT".
-tg.setheight(main, a, tv1, "WRAP_CONTENT")
-tg.setheight(main, a, tv2, "WRAP_CONTENT")
-tg.setheight(main, a, tv3, "WRAP_CONTENT")
-
-
-time.sleep(5)
+import threading
+    
+with tg.Connection() as c:
+    a = tg.Activity(c)
+    
+    layout = tg.LinearLayout(a)
+    
+    # Create 3 TextViews
+    tv1 = tg.TextView(a, "TextView 1", layout)
+    tv2 = tg.TextView(a, "TextView 2", layout)
+    tv3 = tg.TextView(a, "TextView 3", layout)
+    
+    
+    # Now we make them only occupy the space they need.
+    # We first have to set the Layout weight to 0 to prevent them from using the free space.
+    tv1.setlinearlayoutparams(0)
+    tv2.setlinearlayoutparams(0)
+    tv3.setlinearlayoutparams(0)
+    
+    # Then we have to set the height to "WRAP_CONTENT".
+    # You can specify width and height in 3 ways: as an integer in dp, "WRAP_CONTENT" and "MATCH_PARENT".
+    # "WRAP_CONTENT" makes a View occupy only the space it needs.
+    # "MATCH_PARENT" makes a view as large as the parent Layout in that dimension.
+    
+    # Since the TextViews are displayed in a list, we set the height to "WRAP_CONTENT".
+    tv1.setheight("WRAP_CONTENT")
+    tv2.setheight("WRAP_CONTENT")
+    tv3.setheight("WRAP_CONTENT")
+    
+    time.sleep(5)
 ```
 
 [linearlayout1.py](tutorial/linearlayout1.py)<!-- @IGNORE PREVIOUS: link -->  
@@ -272,49 +255,44 @@ Let's add a row of buttons and also make them as small as they need to be.
 import termuxgui as tg
 import sys
 import time
-
-
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
-
-a, t = tg.activity(main)
-
-
-
-layout = tg.createlinearlayout(main, a)
-
-# Create 3 TextViews
-tv1 = tg.createtextview(main, a, "TextView 1", layout)
-tv2 = tg.createtextview(main, a, "TextView 2", layout)
-buttons = tg.createlinearlayout(main, a, layout, False) # use False to create this as a horizontal Layout
-tv3 = tg.createtextview(main, a, "TextView 3", layout)
-
-# Now we make them only occupy the space they need.
-# We first have to set the Layout weight to 0 to prevent them from using the free space.
-tg.setlinearlayoutparams(main, a, tv1, 0)
-tg.setlinearlayoutparams(main, a, tv2, 0)
-tg.setlinearlayoutparams(main, a, buttons, 0)
-tg.setlinearlayoutparams(main, a, tv3, 0)
-
-# Then we have to set the height to "WRAP_CONTENT".
-# You can specify width and height in 3 ways: as an integer in dp, "WRAP_CONTENT" and "MATCH_PARENT".
-# "WRAP_CONTENT" makes a View occupy only the space it needs.
-# "MATCH_PARENT" makes a view as large as the parent Layout in that dimension.
-
-# Since the TextViews are displayed in a list, we set the height to "WRAP_CONTENT".
-tg.setheight(main, a, tv1, "WRAP_CONTENT")
-tg.setheight(main, a, tv2, "WRAP_CONTENT")
-tg.setheight(main, a, buttons, "WRAP_CONTENT")
-tg.setheight(main, a, tv3, "WRAP_CONTENT")
-
-
-tg.createbutton(main, a, "Button1", buttons)
-tg.createbutton(main, a, "Button2", buttons)
-tg.createbutton(main, a, "Button3", buttons)
-
-time.sleep(5)
+import threading
+    
+with tg.Connection() as c:
+    a = tg.Activity(c)
+    
+    layout = tg.LinearLayout(a)
+    
+    # Create 3 TextViews
+    tv1 = tg.TextView(a, "TextView 1", layout)
+    tv2 = tg.TextView(a, "TextView 2", layout)
+    buttons = tg.LinearLayout(a, layout, False) # use False to create this as a horizontal Layout
+    tv3 = tg.TextView(a, "TextView 3", layout)
+    
+    
+    # Now we make them only occupy the space they need.
+    # We first have to set the Layout weight to 0 to prevent them from using the free space.
+    tv1.setlinearlayoutparams(0)
+    tv2.setlinearlayoutparams(0)
+    buttons.setlinearlayoutparams(0)
+    tv3.setlinearlayoutparams(0)
+    
+    # Then we have to set the height to "WRAP_CONTENT".
+    # You can specify width and height in 3 ways: as an integer in dp, "WRAP_CONTENT" and "MATCH_PARENT".
+    # "WRAP_CONTENT" makes a View occupy only the space it needs.
+    # "MATCH_PARENT" makes a view as large as the parent Layout in that dimension.
+    
+    # Since the TextViews are displayed in a list, we set the height to "WRAP_CONTENT".
+    tv1.setheight("WRAP_CONTENT")
+    tv2.setheight("WRAP_CONTENT")
+    buttons.setheight("WRAP_CONTENT")
+    tv3.setheight("WRAP_CONTENT")
+    
+    
+    bt1 = tg.Button(a, "Button1", buttons)
+    bt2 = tg.Button(a, "Button2", buttons)
+    bt3 = tg.Button(a, "Button3", buttons)
+    
+    time.sleep(5)
 ```
 
 As you can see, for nested LinearLayouts it is enough to set the height and weight of the nested Layout "WRAP_CONTENT" and 0.  
@@ -331,73 +309,70 @@ The make it a practical example, we will make a dialog frontend for the `youtube
 You can install that package if you want to try it out, but the UI works without that.  
 
 ```python
+#!/usr/bin/env python3
+
 import termuxgui as tg
 import sys
 import time
 from subprocess import run
 
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
+with tg.Connection() as c:
 
-a, t = tg.activity(main, dialog=True) # make this activity a dialog
-
-layout = tg.createlinearlayout(main, a)
-
-title = tg.createtextview(main, a, "Download Video", layout)
-tg.settextsize(main, a, title, 30)
-
-# Let's also create a small margin around the title so it looks nicer.
-tg.setmargin(main, a, title, 5)
-
-
-# For dialogs, we don't need to set "WRAP_CONTENT", in dialogs views are automatically packed as close as possible.
-
-tv1 = tg.createtextview(main, a, "Video link:", layout)
-et1 = tg.createedittext(main, a, "", layout)
-
-tv2 = tg.createtextview(main, a, "Filename (empty for automatic filename):", layout)
-et2 = tg.createedittext(main, a, "", layout)
-
-
-# This creates an unchecked Checkbox
-check = tg.createcheckbox(main, a, "high quality", False, layout)
-
-# Create 2 buttons next to each other
-buttons = tg.createlinearlayout(main, a, layout, True)
-
-dl = tg.createbutton(main, a, "download", buttons)
-cancel = tg.createbutton(main, a, "cancel", buttons)
-
-
-hd = False
-
-while True:
-    ev = tg.getevent(event)
-    if ev["type"] == "destroy" and ev["value"]["finishing"]:
-        sys.exit()
-    # Checkboxes also emit a click event when clicked, but they have the extra value "set" indicating whether the box is now checked or unchecked
-    if ev["type"] == "click" and ev["value"]["id"] == check:
-         hd = ev["value"]["set"]
-    if ev["type"] == "click" and ev["value"]["id"] == dl:
-        link = tg.gettext(main, a, et1)
-        name = tg.gettext(main, a, et2)
-        args = ["youtubedr", "download"]
-        if len(name) != 0:
-            args.extend(["-o", name])
-        if hd:
-            args.extend(["-q", "1080p"])
-        args.append(link)
-        if len(link) != 0:
-            try:
-                tg.finishactivity(main, a)
-                run(args)
-            except:
-                pass
-            tg.finishtask(main, t)
-    if ev["type"] == "click" and ev["value"]["id"] == cancel:
-        tg.finishactivity(main, a) # this handily also exits the program, because finishing the activity destroys it, and that event is send to us
+    a = tg.Activity(c, dialog=True) # make this activity a dialog
+    
+    layout = tg.LinearLayout(a)
+    
+    title = tg.TextView(a, "Download Video", layout)
+    title.settextsize(30)
+    
+    # Let's also create a small margin around the title so it looks nicer.
+    title.setmargin(5)
+    
+    
+    # For dialogs, we don't need to set "WRAP_CONTENT", in dialogs views are automatically packed as close as possible.
+    
+    tv1 = tg.TextView( a, "Video link:", layout)
+    et1 = tg.EditText(a, "", layout)
+    
+    tv2 = tg.TextView( a, "Filename (empty for automatic filename):", layout)
+    et2 = tg.EditText( a, "", layout)
+    
+    
+    # This creates an unchecked Checkbox
+    check = tg.Checkbox(a, "high quality", layout, False)
+    
+    # Create 2 buttons next to each other
+    buttons = tg.LinearLayout(a, layout, False)
+    
+    dl = tg.Button(a, "download", buttons)
+    cancel = tg.Button(a, "cancel", buttons)
+    
+    hd = False
+    
+    for ev in c.events():
+        if ev.type == tg.Event.destroy and ev.value["finishing"]:
+            sys.exit()
+        # Checkboxes also emit a click event when clicked, but they have the extra value "set" indicating whether the box is now checked or unchecked.
+        # The id of the event is the View id. Comparing View object with view ids is supported and works as expected.
+        if ev.type == tg.Event.click and ev.value["id"] == check:
+            hd = ev.value["set"]
+        if ev.type == tg.Event.click and ev.value["id"] == dl:
+            link = et1.gettext()
+            name = et2.gettext()
+            args = ["youtubedr", "download"]
+            if len(name) != 0:
+                args.extend(["-o", name])
+            if hd:
+                args.extend(["-q", "1080p"])
+            args.append(link)
+            if len(link) != 0:
+                try:
+                    a.finish()
+                    run(args)
+                except:
+                    pass
+        if ev.type == tg.Event.click and ev.value["id"] == cancel:
+            a.finish() # this handily also exits the program, because finishing the activity destroys it, and that event is send to us
 ```
 
 

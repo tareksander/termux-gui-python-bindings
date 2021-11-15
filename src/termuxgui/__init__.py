@@ -1,7 +1,10 @@
-__all__ = ["activity", "bringtasktofront", "connect", "create", "event", "finishactivity", 
-"finishtask", "setinputmode", "setpipmode", "setpipparams", "settaskdescription", "settheme", "toast", "totermux", "viewactions"]
+__all__ = ["Activity", "Connection", "Event", "Task", "View", "ViewGroup", "LinearLayout",
+           "FrameLayout", "Space", "TextView", "EditText", "ImageView", "Button",
+           "Checkbox", "NestedScrollView", "Buffer"]
+
 
 for m in __all__:
-    exec("from termuxgui."+m+" import *")
+    exec("from termuxgui."+m.lower()+" import "+m)
 del m
+
 

@@ -5,65 +5,61 @@ import sys
 import time
 from subprocess import run
 
-ret = tg.connect()
-if ret == None:
-    sys.exit()
-main, event = ret
+with tg.Connection() as c:
 
-a, t = tg.activity(main, dialog=True) # make this activity a dialog
-
-layout = tg.createlinearlayout(main, a)
-
-title = tg.createtextview(main, a, "Download Video", layout)
-tg.settextsize(main, a, title, 30)
-
-# Let's also create a small margin around the title so it looks nicer.
-tg.setmargin(main, a, title, 5)
-
-
-# For dialogs, we don't need to set "WRAP_CONTENT", in dialogs views are automatically packed as close as possible.
-
-tv1 = tg.createtextview(main, a, "Video link:", layout)
-et1 = tg.createedittext(main, a, "", layout)
-
-tv2 = tg.createtextview(main, a, "Filename (empty for automatic filename):", layout)
-et2 = tg.createedittext(main, a, "", layout)
-
-
-# This creates an unchecked Checkbox
-check = tg.createcheckbox(main, a, "high quality", False, layout)
-
-# Create 2 buttons next to each other
-buttons = tg.createlinearlayout(main, a, layout, True)
-
-dl = tg.createbutton(main, a, "download", buttons)
-cancel = tg.createbutton(main, a, "cancel", buttons)
-
-
-hd = False
-
-while True:
-    ev = tg.getevent(event)
-    if ev["type"] == "destroy" and ev["value"]["finishing"]:
-        sys.exit()
-    # Checkboxes also emit a click event when clicked, but they have the extra value "set" indicating whether the box is now checked or unchecked
-    if ev["type"] == "click" and ev["value"]["id"] == check:
-         hd = ev["value"]["set"]
-    if ev["type"] == "click" and ev["value"]["id"] == dl:
-        link = tg.gettext(main, a, et1)
-        name = tg.gettext(main, a, et2)
-        args = ["youtubedr", "download"]
-        if len(name) != 0:
-            args.extend(["-o", name])
-        if hd:
-            args.extend(["-q", "1080p"])
-        args.append(link)
-        if len(link) != 0:
-            try:
-                tg.finishactivity(main, a)
-                run(args)
-            except:
-                pass
-            tg.finishtask(main, t)
-    if ev["type"] == "click" and ev["value"]["id"] == cancel:
-        tg.finishactivity(main, a) # this handily also exits the program, because finishing the activity destroys it, and that event is send to us
+    a = tg.Activity(c, dialog=True) # make this activity a dialog
+    
+    layout = tg.LinearLayout(a)
+    
+    title = tg.TextView(a, "Download Video", layout)
+    title.settextsize(30)
+    
+    # Let's also create a small margin around the title so it looks nicer.
+    title.setmargin(5)
+    
+    
+    # For dialogs, we don't need to set "WRAP_CONTENT", in dialogs views are automatically packed as close as possible.
+    
+    tv1 = tg.TextView( a, "Video link:", layout)
+    et1 = tg.EditText(a, "", layout)
+    
+    tv2 = tg.TextView( a, "Filename (empty for automatic filename):", layout)
+    et2 = tg.EditText( a, "", layout)
+    
+    
+    # This creates an unchecked Checkbox
+    check = tg.Checkbox(a, "high quality", layout, False)
+    
+    # Create 2 buttons next to each other
+    buttons = tg.LinearLayout(a, layout, False)
+    
+    dl = tg.Button(a, "download", buttons)
+    cancel = tg.Button(a, "cancel", buttons)
+    
+    
+    hd = False
+    
+    for ev in c.events():
+        if ev.type == tg.Event.destroy and ev.value["finishing"]:
+            sys.exit()
+        # Checkboxes also emit a click event when clicked, but they have the extra value "set" indicating whether the box is now checked or unchecked.
+        # The id of the event is the View id. Comparing View object with view ids is supported and works as expected.
+        if ev.type == tg.Event.click and ev.value["id"] == check:
+            hd = ev.value["set"]
+        if ev.type == tg.Event.click and ev.value["id"] == dl:
+            link = et1.gettext()
+            name = et2.gettext()
+            args = ["youtubedr", "download"]
+            if len(name) != 0:
+                args.extend(["-o", name])
+            if hd:
+                args.extend(["-q", "1080p"])
+            args.append(link)
+            if len(link) != 0:
+                try:
+                    a.finish()
+                    run(args)
+                except:
+                    pass
+        if ev.type == tg.Event.click and ev.value["id"] == cancel:
+            a.finish() # this handily also exits the program, because finishing the activity destroys it, and that event is send to us
