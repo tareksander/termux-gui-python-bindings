@@ -49,8 +49,8 @@ def settext(mainSocket, aid, id, text):
 def gettext(mainSocket, aid, id):
     return __send_read_msg(mainSocket, dumps({"method": "getText", "params": {"aid": aid, "id": id}}))
 
-def addbuffer(mainSocket, aid, w, h, format):
-    return __send_read_msg(mainSocket, umps({"method": "addBuffer", "params": {"w": w, "h": h, "format": format}}))
+def addbuffer(mainSocket, w, h, format):
+    return __send_read_msg(mainSocket, dumps({"method": "addBuffer", "params": {"w": w, "h": h, "format": format}}))
 
 def deleteBuffer(mainSocket, bid):
     __send_msg(mainSocket, dumps({"method": "deleteBuffer", "params": {"bid": bid}}))
