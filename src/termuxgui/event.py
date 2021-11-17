@@ -9,6 +9,10 @@ class Event:
     key = "key"
     touch = "touch"
     refresh = "refresh"
+    selected = "selected" # used for RadioGroups
+    itemselected = "itemselected"
+    
+    
     
     # activity events
     create = "create"

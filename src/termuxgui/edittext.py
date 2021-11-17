@@ -5,8 +5,8 @@ from termuxgui.view import View
 
 class EditText(TextView):
     
-    def __init__(self, activity, text, parent=None, singleline=False, line=True):
-        args = {"aid": activity.aid, "text": text, "singleline": singleline, "line": line}
+    def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=None):
+        args = {"aid": activity.aid, "text": text, "singleline": singleline, "line": line, "blockinput": blockinput, "type": inputtype}
         if parent != None:
             args["parent"] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({"method": "createEditText", "params": args}))

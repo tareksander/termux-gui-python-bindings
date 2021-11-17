@@ -1,0 +1,1666 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>termuxgui API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Package <code>termuxgui</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">__all__ = [&#34;Activity&#34;, &#34;Connection&#34;, &#34;Event&#34;, &#34;Task&#34;, &#34;View&#34;, &#34;ViewGroup&#34;, &#34;LinearLayout&#34;,
+           &#34;FrameLayout&#34;, &#34;Space&#34;, &#34;TextView&#34;, &#34;EditText&#34;, &#34;ImageView&#34;, &#34;Button&#34;,
+           &#34;Checkbox&#34;, &#34;NestedScrollView&#34;, &#34;Buffer&#34;, &#34;RadioGroup&#34;, &#34;RadioButton&#34;, &#34;Spinner&#34;]
+
+
+for m in __all__:
+    exec(&#34;from termuxgui.&#34;+m.lower()+&#34; import &#34;+m)
+del m</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="termuxgui.activity" href="activity.html">termuxgui.activity</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.buffer" href="buffer.html">termuxgui.buffer</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.button" href="button.html">termuxgui.button</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.checkbox" href="checkbox.html">termuxgui.checkbox</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.connection" href="connection.html">termuxgui.connection</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.edittext" href="edittext.html">termuxgui.edittext</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.event" href="event.html">termuxgui.event</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.framelayout" href="framelayout.html">termuxgui.framelayout</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.imageview" href="imageview.html">termuxgui.imageview</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.linearlayout" href="linearlayout.html">termuxgui.linearlayout</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.msg" href="msg.html">termuxgui.msg</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.nestedscrollview" href="nestedscrollview.html">termuxgui.nestedscrollview</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.radiobutton" href="radiobutton.html">termuxgui.radiobutton</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.radiogroup" href="radiogroup.html">termuxgui.radiogroup</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.space" href="space.html">termuxgui.space</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.spinner" href="spinner.html">termuxgui.spinner</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.task" href="task.html">termuxgui.task</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.textview" href="textview.html">termuxgui.textview</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.view" href="view.html">termuxgui.view</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.viewgroup" href="viewgroup.html">termuxgui.viewgroup</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="termuxgui.Activity"><code class="flex name class">
+<span>class <span class="ident">Activity</span></span>
+<span>(</span><span>connection, tid=None, dialog=None, pip=False, overlay=None, lockscreen=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Activity:
+    def __init__(self, connection, tid=None,dialog=None,pip=False,overlay=None,lockscreen=None):
+        self.c = connection
+        params = {}
+        if dialog != None:
+            params[&#34;dialog&#34;] = dialog
+        if tid != None:
+            params[&#34;tid&#34;] = tid
+        if pip != None:
+            params[&#34;pip&#34;] = pip
+        if overlay != None:
+            params[&#34;overlay&#34;] = overlay
+        if lockscreen != None:
+            params[&#34;lockscreen&#34;] = lockscreen
+        if tid == None:
+            self.aid, tid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
+        else:
+            self.aid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
+        self.t = Task(connection, tid)
+        if self.aid == -1:
+            raise RuntimeError(&#34;Could not create Activity&#34;)
+    
+    
+    def finish(self):
+        &#39;&#39;&#39;Finishes an Activity.&#39;&#39;&#39;
+        self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    
+    def setinputmode(mode):
+        &#39;&#39;&#39;Sets the input mode for an Activity.&#39;&#39;&#39;
+        self.c.send_msg({&#34;method&#34;: &#34;setInputMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;mode&#34;: mode}})
+    
+    def keepscreenon(on):
+        self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})
+    
+    def setpipmode(self, pip):
+        self.c.send_msg({&#34;method&#34;: &#34;setPiPMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
+    
+    def setpipmodeauto(self, pip):
+        self.c.send_msg({&#34;method&#34;: &#34;setPiPModeAuto&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
+    
+    def setpipparams(self, num, den):
+        &#39;&#39;&#39;Sets the PiP parameters for the Activity, the aspect ration.&#39;&#39;&#39;
+        self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})
+    
+    def settaskdescription(self, text, img):
+        &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
+        self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: text}})
+    
+    def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
+        &#39;&#39;&#39;Sets the Theme fro an Activity.&#39;&#39;&#39;
+        self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary, &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor, &#34;colorAccent&#34;: coloraccent}})
+    
+    def setorientation(orientation):
+        self.c.send_msg({&#34;method&#34;: &#34;setOrientation&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;orientation&#34;: orientation}})
+    
+    
+    
+
+    def setposition(x, y):
+        self.c.send_msg({&#34;method&#34;: &#34;setPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;x&#34;: x, &#34;y&#34;: y}})
+
+
+
+    def sendoverlayevents(send):
+        self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.Activity.finish"><code class="name flex">
+<span>def <span class="ident">finish</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Finishes an Activity.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def finish(self):
+    &#39;&#39;&#39;Finishes an Activity.&#39;&#39;&#39;
+    self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.keepscreenon"><code class="name flex">
+<span>def <span class="ident">keepscreenon</span></span>(<span>on)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def keepscreenon(on):
+    self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.sendoverlayevents"><code class="name flex">
+<span>def <span class="ident">sendoverlayevents</span></span>(<span>send)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sendoverlayevents(send):
+    self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.setinputmode"><code class="name flex">
+<span>def <span class="ident">setinputmode</span></span>(<span>mode)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the input mode for an Activity.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setinputmode(mode):
+    &#39;&#39;&#39;Sets the input mode for an Activity.&#39;&#39;&#39;
+    self.c.send_msg({&#34;method&#34;: &#34;setInputMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;mode&#34;: mode}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.setorientation"><code class="name flex">
+<span>def <span class="ident">setorientation</span></span>(<span>orientation)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setorientation(orientation):
+    self.c.send_msg({&#34;method&#34;: &#34;setOrientation&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;orientation&#34;: orientation}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.setpipmode"><code class="name flex">
+<span>def <span class="ident">setpipmode</span></span>(<span>self, pip)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setpipmode(self, pip):
+    self.c.send_msg({&#34;method&#34;: &#34;setPiPMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.setpipmodeauto"><code class="name flex">
+<span>def <span class="ident">setpipmodeauto</span></span>(<span>self, pip)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setpipmodeauto(self, pip):
+    self.c.send_msg({&#34;method&#34;: &#34;setPiPModeAuto&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.setpipparams"><code class="name flex">
+<span>def <span class="ident">setpipparams</span></span>(<span>self, num, den)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the PiP parameters for the Activity, the aspect ration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setpipparams(self, num, den):
+    &#39;&#39;&#39;Sets the PiP parameters for the Activity, the aspect ration.&#39;&#39;&#39;
+    self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.setposition"><code class="name flex">
+<span>def <span class="ident">setposition</span></span>(<span>x, y)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setposition(x, y):
+    self.c.send_msg({&#34;method&#34;: &#34;setPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;x&#34;: x, &#34;y&#34;: y}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.settaskdescription"><code class="name flex">
+<span>def <span class="ident">settaskdescription</span></span>(<span>self, text, img)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def settaskdescription(self, text, img):
+    &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
+    self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: text}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.settheme"><code class="name flex">
+<span>def <span class="ident">settheme</span></span>(<span>self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the Theme fro an Activity.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
+    &#39;&#39;&#39;Sets the Theme fro an Activity.&#39;&#39;&#39;
+    self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary, &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor, &#34;colorAccent&#34;: coloraccent}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.Buffer"><code class="flex name class">
+<span>class <span class="ident">Buffer</span></span>
+<span>(</span><span>connection, w, h, format='ARGB888')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Buffer:
+    
+    def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
+        self.c = connection
+        c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
+        ret = msg.read_msg_fd(self.c._main,)
+        if len(ret) == 1:
+            raise RuntimeError(&#34;Could not create Buffer&#34;)
+        self.bid, self.fd = ret
+        self.mem = mmap(self.fd, w*h*4)
+    
+    def __enter__(self):
+        return self.mem
+    
+    def __exit__(self, type, value, traceback):
+        self.remove()
+        return False
+    
+    
+    def remove(self):
+        self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
+        self.mem.close()
+        os.close(self.fd)
+    
+    def blit(self):
+        self.mem.flush()
+        self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.Buffer.blit"><code class="name flex">
+<span>def <span class="ident">blit</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def blit(self):
+    self.mem.flush()
+    self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Buffer.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self):
+    self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
+    self.mem.close()
+    os.close(self.fd)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.Button"><code class="flex name class">
+<span>class <span class="ident">Button</span></span>
+<span>(</span><span>activity, text, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Button(TextView):
+    
+    def __init__(self, activity, text, parent=None):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createButton&#34;, &#34;params&#34;: args}))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.radiobutton.RadioButton" href="radiobutton.html#termuxgui.radiobutton.RadioButton">RadioButton</a></li>
+</ul>
+</dd>
+<dt id="termuxgui.Checkbox"><code class="flex name class">
+<span>class <span class="ident">Checkbox</span></span>
+<span>(</span><span>activity, text, parent=None, checked=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Checkbox(TextView):
+    
+    def __init__(self, activity, text, parent=None, checked=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        self.checked = checked
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createCheckbox&#34;, &#34;params&#34;: args}))
+     
+    
+    
+    
+    def handleevent(self, e):
+        &#34;&#34;&#34;Use this to let the CheckBox track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
+        if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
+            self.checked = e.value[&#34;set&#34;]</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.Checkbox.handleevent"><code class="name flex">
+<span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Use this to let the CheckBox track whether it is checked or not. Just pass every Event here.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def handleevent(self, e):
+    &#34;&#34;&#34;Use this to let the CheckBox track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
+    if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
+        self.checked = e.value[&#34;set&#34;]</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.Connection"><code class="flex name class">
+<span>class <span class="ident">Connection</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Connection:
+    def __init__(self):
+        adrMain = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
+        adrEvent = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
+        mainss = socket(AF_UNIX, SOCK_STREAM)
+        eventss = socket(AF_UNIX, SOCK_STREAM)
+        with mainss, eventss:
+            mainss.bind(&#39;\0&#39;+adrMain)
+            eventss.bind(&#39;\0&#39;+adrEvent)
+            mainss.listen(1)
+            eventss.listen(1)
+            mainss.settimeout(5)
+            eventss.settimeout(5)
+            run([&#34;am&#34;,&#34;broadcast&#34;,&#34;-n&#34;,&#34;com.termux.gui/.GUIReceiver&#34;,&#34;--es&#34;, &#34;mainSocket&#34;,adrMain,&#34;--es&#34;, &#34;eventSocket&#34;,adrEvent],stdout=DEVNULL,stderr=DEVNULL)
+            try:
+                main = mainss.accept()[0]
+                try:
+                    event = eventss.accept()[0]
+                    try:
+                        # check for the termux uid to see if it is really the plugin that has connected
+                        if not _check_user(main) or not _check_user(event):
+                            main.close()
+                            event.close()
+                            raise RuntimeError(&#34;Plugin doesn&#39;t have the same UID&#34;)
+                        main.sendall(b&#39;\x01&#39;)
+                        ret = b&#39;&#39;
+                        while len(ret) == 0:
+                            ret = ret + main.recv(1)
+                        if ret[0] != 0:
+                            main.close()
+                            event.close()
+                            raise RuntimeError(&#34;Invalid Protocol version response&#34;)
+                        self._main = main
+                        self._event = event
+                    except Exception as e:
+                        event.close()
+                        raise e
+                except Exception as e:
+                    main.close()
+                    raise e
+            except timeout:
+                raise RuntimeError(&#34;Could not connect to Termux:GUI. Is the plugin installed?&#34;)
+    
+    def events(self):
+        while True:
+            yield Event(tgmsg.read_msg(self._event))
+    
+    def toast(self, text, long=False):
+        self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) 
+    
+    def totermux(self):
+        &#39;&#39;&#39;Returns to the termux task. This is a shorthand for running am start to start the termux activity.&#39;&#39;&#39;
+        run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)
+    
+    def close(self):
+        self._main.close()
+        self._event.close()
+    
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, type, value, traceback):
+        self.close()
+        return False
+    
+    
+    def send_msg(self, msg):
+        if type(msg) is dict:
+            msg = dumps(msg)
+        tgmsg.send_msg(self._main, msg)
+    
+    def read_msg(self):
+        return tgmsg.read_msg(self._main)
+    
+    def send_read_msg(self, msg):
+        self.send_msg(msg)
+        return self.read_msg()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.Connection.close"><code class="name flex">
+<span>def <span class="ident">close</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close(self):
+    self._main.close()
+    self._event.close()</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Connection.events"><code class="name flex">
+<span>def <span class="ident">events</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def events(self):
+    while True:
+        yield Event(tgmsg.read_msg(self._event))</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Connection.read_msg"><code class="name flex">
+<span>def <span class="ident">read_msg</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def read_msg(self):
+    return tgmsg.read_msg(self._main)</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Connection.send_msg"><code class="name flex">
+<span>def <span class="ident">send_msg</span></span>(<span>self, msg)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_msg(self, msg):
+    if type(msg) is dict:
+        msg = dumps(msg)
+    tgmsg.send_msg(self._main, msg)</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Connection.send_read_msg"><code class="name flex">
+<span>def <span class="ident">send_read_msg</span></span>(<span>self, msg)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def send_read_msg(self, msg):
+    self.send_msg(msg)
+    return self.read_msg()</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Connection.toast"><code class="name flex">
+<span>def <span class="ident">toast</span></span>(<span>self, text, long=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def toast(self, text, long=False):
+    self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) </code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Connection.totermux"><code class="name flex">
+<span>def <span class="ident">totermux</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns to the termux task. This is a shorthand for running am start to start the termux activity.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def totermux(self):
+    &#39;&#39;&#39;Returns to the termux task. This is a shorthand for running am start to start the termux activity.&#39;&#39;&#39;
+    run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.EditText"><code class="flex name class">
+<span>class <span class="ident">EditText</span></span>
+<span>(</span><span>activity, text, parent=None, singleline=False, line=True, blockinput=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EditText(TextView):
+    
+    def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
+    
+    
+    
+    def showcursor(self, show):
+        self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.EditText.showcursor"><code class="name flex">
+<span>def <span class="ident">showcursor</span></span>(<span>self, show)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def showcursor(self, show):
+    self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.Event"><code class="flex name class">
+<span>class <span class="ident">Event</span></span>
+<span>(</span><span>ev)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Event:
+    
+    # Event types
+    # View events
+    click = &#34;click&#34;
+    longClick = &#34;longClick&#34;
+    focusChange = &#34;focusChange&#34;
+    key = &#34;key&#34;
+    touch = &#34;touch&#34;
+    refresh = &#34;refresh&#34;
+    selected = &#34;selected&#34; # used for RadioGroups
+    
+    # activity events
+    create = &#34;create&#34;
+    start = &#34;start&#34;
+    resume = &#34;resume&#34;
+    pause = &#34;pause&#34;
+    stop = &#34;stop&#34;
+    destroy = &#34;destroy&#34;
+    userleavehint = &#34;UserLeaveHint&#34;
+    pipchanged = &#34;pipchanged&#34;
+    
+    # special overlay events
+    overlaytouch = &#34;overlayTouch&#34;
+    overlayScale = &#34;overlayScale&#34;
+    
+    
+    def __init__(self, ev):
+        self.type = ev[&#34;type&#34;]
+        try:
+            self.value = ev[&#34;value&#34;]
+            if type(self.value) is dict:
+                self.aid = self.value[&#34;aid&#34;]
+                self.id = self.value[&#34;id&#34;]
+        except KeyError:
+            pass</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.Event.click"><code class="name">var <span class="ident">click</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.create"><code class="name">var <span class="ident">create</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.destroy"><code class="name">var <span class="ident">destroy</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.focusChange"><code class="name">var <span class="ident">focusChange</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.key"><code class="name">var <span class="ident">key</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.longClick"><code class="name">var <span class="ident">longClick</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.overlayScale"><code class="name">var <span class="ident">overlayScale</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.overlaytouch"><code class="name">var <span class="ident">overlaytouch</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.pause"><code class="name">var <span class="ident">pause</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.pipchanged"><code class="name">var <span class="ident">pipchanged</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.refresh"><code class="name">var <span class="ident">refresh</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.resume"><code class="name">var <span class="ident">resume</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.selected"><code class="name">var <span class="ident">selected</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.start"><code class="name">var <span class="ident">start</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.stop"><code class="name">var <span class="ident">stop</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.touch"><code class="name">var <span class="ident">touch</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.userleavehint"><code class="name">var <span class="ident">userleavehint</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.FrameLayout"><code class="flex name class">
+<span>class <span class="ident">FrameLayout</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FrameLayout(ViewGroup):
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createFrameLayout&#34;, &#34;params&#34;: args}))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.nestedscrollview.NestedScrollView" href="nestedscrollview.html#termuxgui.nestedscrollview.NestedScrollView">NestedScrollView</a></li>
+</ul>
+</dd>
+<dt id="termuxgui.ImageView"><code class="flex name class">
+<span>class <span class="ident">ImageView</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImageView(View):
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createImageView&#34;, &#34;params&#34;: args}))
+    
+    
+    
+    def setimage(self, img):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})
+    
+    def setbuffer(self, b):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;bid&#34;: b.bid}})
+    
+    def refresh(self):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.ImageView.refresh"><code class="name flex">
+<span>def <span class="ident">refresh</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def refresh(self):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.ImageView.setbuffer"><code class="name flex">
+<span>def <span class="ident">setbuffer</span></span>(<span>self, b)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setbuffer(self, b):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;bid&#34;: b.bid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.ImageView.setimage"><code class="name flex">
+<span>def <span class="ident">setimage</span></span>(<span>self, img)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setimage(self, img):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.LinearLayout"><code class="flex name class">
+<span>class <span class="ident">LinearLayout</span></span>
+<span>(</span><span>activity, parent=None, vertical=True)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class LinearLayout(ViewGroup):
+    
+    def __init__(self, activity, parent=None, vertical=True):
+        args = {&#34;aid&#34;: activity.aid, &#34;vertical&#34;: vertical}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createLinearLayout&#34;, &#34;params&#34;: args}))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.radiogroup.RadioGroup" href="radiogroup.html#termuxgui.radiogroup.RadioGroup">RadioGroup</a></li>
+</ul>
+</dd>
+<dt id="termuxgui.NestedScrollView"><code class="flex name class">
+<span>class <span class="ident">NestedScrollView</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NestedScrollView(FrameLayout):
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createNestedScrollView&#34;, &#34;params&#34;: args}))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></li>
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+</dd>
+<dt id="termuxgui.RadioButton"><code class="flex name class">
+<span>class <span class="ident">RadioButton</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RadioButton(Button):
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioButton&#34;, &#34;params&#34;: args}))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
+<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+</dd>
+<dt id="termuxgui.RadioGroup"><code class="flex name class">
+<span>class <span class="ident">RadioGroup</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RadioGroup(LinearLayout):
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioGroup&#34;, &#34;params&#34;: args}))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.linearlayout.LinearLayout" href="linearlayout.html#termuxgui.linearlayout.LinearLayout">LinearLayout</a></li>
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+</dd>
+<dt id="termuxgui.Space"><code class="flex name class">
+<span>class <span class="ident">Space</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Space(View):
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpace&#34;, &#34;params&#34;: args}))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+</dd>
+<dt id="termuxgui.Spinner"><code class="flex name class">
+<span>class <span class="ident">Spinner</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Spinner(View):
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpinner&#34;, &#34;params&#34;: args}))
+    
+    
+    def setlist(self, list):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.Spinner.setlist"><code class="name flex">
+<span>def <span class="ident">setlist</span></span>(<span>self, list)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setlist(self, list):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.Task"><code class="flex name class">
+<span>class <span class="ident">Task</span></span>
+<span>(</span><span>connection, tid)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Task:
+    def __init__(self, connection, tid):
+        self.c = connection
+        self.tid = tid
+    
+    def finish(self):
+        self.c.send_msg({&#34;method&#34;: &#34;finishTask&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
+    
+    def bringtofront(self):
+        self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
+    
+    def movetoback(self):
+        self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.Task.bringtofront"><code class="name flex">
+<span>def <span class="ident">bringtofront</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def bringtofront(self):
+    self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Task.finish"><code class="name flex">
+<span>def <span class="ident">finish</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def finish(self):
+    self.c.send_msg({&#34;method&#34;: &#34;finishTask&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Task.movetoback"><code class="name flex">
+<span>def <span class="ident">movetoback</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def movetoback(self):
+    self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.TextView"><code class="flex name class">
+<span>class <span class="ident">TextView</span></span>
+<span>(</span><span>activity, text, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TextView(View):
+    
+    def __init__(self, activity, text, parent=None):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
+    
+    def settextsize(self, size):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})
+    
+    
+    def gettext(self):
+        return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
+    
+    def settext(self, text):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
+<li><a title="termuxgui.checkbox.Checkbox" href="checkbox.html#termuxgui.checkbox.Checkbox">Checkbox</a></li>
+<li><a title="termuxgui.edittext.EditText" href="edittext.html#termuxgui.edittext.EditText">EditText</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.TextView.gettext"><code class="name flex">
+<span>def <span class="ident">gettext</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def gettext(self):
+    return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.TextView.settext"><code class="name flex">
+<span>def <span class="ident">settext</span></span>(<span>self, text)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def settext(self, text):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.TextView.settextsize"><code class="name flex">
+<span>def <span class="ident">settextsize</span></span>(<span>self, size)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def settextsize(self, size):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.View"><code class="flex name class">
+<span>class <span class="ident">View</span></span>
+<span>(</span><span>activity, id)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class View:
+
+    def __init__(self, activity, id):
+        self.a = activity
+        self.id = id
+        if self.id == -1:
+            raise RuntimeError(&#34;Could not create View&#34;)
+    
+    def __eq__(self, other):
+        if type(other) is int:
+            return self.id == other
+        if isinstance(other, View):
+            return self.id == other.id
+    
+    def delete(self):
+        self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
+
+    def setmargin(self, margin, dir=None):
+        args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
+        if dir != None:
+            args[&#34;dir&#34;] = dir
+        self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})
+
+    def setwidth(self, width):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width}})
+
+    def setheight(self, height):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height}})
+
+    def setdimensions(self, width, height):
+        self.a.setwidth(width)
+        self.a.setheight(height)
+
+    def setlinearlayoutparams(self, weight):
+        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})
+
+
+
+    def handleevent(self, e):
+        pass</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.imageview.ImageView" href="imageview.html#termuxgui.imageview.ImageView">ImageView</a></li>
+<li><a title="termuxgui.space.Space" href="space.html#termuxgui.space.Space">Space</a></li>
+<li><a title="termuxgui.spinner.Spinner" href="spinner.html#termuxgui.spinner.Spinner">Spinner</a></li>
+<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.View.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete(self):
+    self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.View.handleevent"><code class="name flex">
+<span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def handleevent(self, e):
+    pass</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.View.setdimensions"><code class="name flex">
+<span>def <span class="ident">setdimensions</span></span>(<span>self, width, height)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setdimensions(self, width, height):
+    self.a.setwidth(width)
+    self.a.setheight(height)</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.View.setheight"><code class="name flex">
+<span>def <span class="ident">setheight</span></span>(<span>self, height)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setheight(self, height):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.View.setlinearlayoutparams"><code class="name flex">
+<span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setlinearlayoutparams(self, weight):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.View.setmargin"><code class="name flex">
+<span>def <span class="ident">setmargin</span></span>(<span>self, margin, dir=None)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setmargin(self, margin, dir=None):
+    args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
+    if dir != None:
+        args[&#34;dir&#34;] = dir
+    self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.View.setwidth"><code class="name flex">
+<span>def <span class="ident">setwidth</span></span>(<span>self, width)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setwidth(self, width):
+    self.a.c.send_msg({&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.ViewGroup"><code class="flex name class">
+<span>class <span class="ident">ViewGroup</span></span>
+<span>(</span><span>activity, id)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ViewGroup(View):
+    
+    def __init__(self, activity, id):
+        View.__init__(self, activity, id)
+    
+    
+    def clearchildren(self):
+        self.a.c.send_msg({&#34;method&#34;: &#34;deleteChildren&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></li>
+<li><a title="termuxgui.linearlayout.LinearLayout" href="linearlayout.html#termuxgui.linearlayout.LinearLayout">LinearLayout</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.ViewGroup.clearchildren"><code class="name flex">
+<span>def <span class="ident">clearchildren</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clearchildren(self):
+    self.a.c.send_msg({&#34;method&#34;: &#34;deleteChildren&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="termuxgui.activity" href="activity.html">termuxgui.activity</a></code></li>
+<li><code><a title="termuxgui.buffer" href="buffer.html">termuxgui.buffer</a></code></li>
+<li><code><a title="termuxgui.button" href="button.html">termuxgui.button</a></code></li>
+<li><code><a title="termuxgui.checkbox" href="checkbox.html">termuxgui.checkbox</a></code></li>
+<li><code><a title="termuxgui.connection" href="connection.html">termuxgui.connection</a></code></li>
+<li><code><a title="termuxgui.edittext" href="edittext.html">termuxgui.edittext</a></code></li>
+<li><code><a title="termuxgui.event" href="event.html">termuxgui.event</a></code></li>
+<li><code><a title="termuxgui.framelayout" href="framelayout.html">termuxgui.framelayout</a></code></li>
+<li><code><a title="termuxgui.imageview" href="imageview.html">termuxgui.imageview</a></code></li>
+<li><code><a title="termuxgui.linearlayout" href="linearlayout.html">termuxgui.linearlayout</a></code></li>
+<li><code><a title="termuxgui.msg" href="msg.html">termuxgui.msg</a></code></li>
+<li><code><a title="termuxgui.nestedscrollview" href="nestedscrollview.html">termuxgui.nestedscrollview</a></code></li>
+<li><code><a title="termuxgui.radiobutton" href="radiobutton.html">termuxgui.radiobutton</a></code></li>
+<li><code><a title="termuxgui.radiogroup" href="radiogroup.html">termuxgui.radiogroup</a></code></li>
+<li><code><a title="termuxgui.space" href="space.html">termuxgui.space</a></code></li>
+<li><code><a title="termuxgui.spinner" href="spinner.html">termuxgui.spinner</a></code></li>
+<li><code><a title="termuxgui.task" href="task.html">termuxgui.task</a></code></li>
+<li><code><a title="termuxgui.textview" href="textview.html">termuxgui.textview</a></code></li>
+<li><code><a title="termuxgui.view" href="view.html">termuxgui.view</a></code></li>
+<li><code><a title="termuxgui.viewgroup" href="viewgroup.html">termuxgui.viewgroup</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="termuxgui.Activity" href="#termuxgui.Activity">Activity</a></code></h4>
+<ul class="two-column">
+<li><code><a title="termuxgui.Activity.finish" href="#termuxgui.Activity.finish">finish</a></code></li>
+<li><code><a title="termuxgui.Activity.keepscreenon" href="#termuxgui.Activity.keepscreenon">keepscreenon</a></code></li>
+<li><code><a title="termuxgui.Activity.sendoverlayevents" href="#termuxgui.Activity.sendoverlayevents">sendoverlayevents</a></code></li>
+<li><code><a title="termuxgui.Activity.setinputmode" href="#termuxgui.Activity.setinputmode">setinputmode</a></code></li>
+<li><code><a title="termuxgui.Activity.setorientation" href="#termuxgui.Activity.setorientation">setorientation</a></code></li>
+<li><code><a title="termuxgui.Activity.setpipmode" href="#termuxgui.Activity.setpipmode">setpipmode</a></code></li>
+<li><code><a title="termuxgui.Activity.setpipmodeauto" href="#termuxgui.Activity.setpipmodeauto">setpipmodeauto</a></code></li>
+<li><code><a title="termuxgui.Activity.setpipparams" href="#termuxgui.Activity.setpipparams">setpipparams</a></code></li>
+<li><code><a title="termuxgui.Activity.setposition" href="#termuxgui.Activity.setposition">setposition</a></code></li>
+<li><code><a title="termuxgui.Activity.settaskdescription" href="#termuxgui.Activity.settaskdescription">settaskdescription</a></code></li>
+<li><code><a title="termuxgui.Activity.settheme" href="#termuxgui.Activity.settheme">settheme</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.Buffer" href="#termuxgui.Buffer">Buffer</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.Buffer.blit" href="#termuxgui.Buffer.blit">blit</a></code></li>
+<li><code><a title="termuxgui.Buffer.remove" href="#termuxgui.Buffer.remove">remove</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.Button" href="#termuxgui.Button">Button</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.Checkbox" href="#termuxgui.Checkbox">Checkbox</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.Checkbox.handleevent" href="#termuxgui.Checkbox.handleevent">handleevent</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.Connection" href="#termuxgui.Connection">Connection</a></code></h4>
+<ul class="two-column">
+<li><code><a title="termuxgui.Connection.close" href="#termuxgui.Connection.close">close</a></code></li>
+<li><code><a title="termuxgui.Connection.events" href="#termuxgui.Connection.events">events</a></code></li>
+<li><code><a title="termuxgui.Connection.read_msg" href="#termuxgui.Connection.read_msg">read_msg</a></code></li>
+<li><code><a title="termuxgui.Connection.send_msg" href="#termuxgui.Connection.send_msg">send_msg</a></code></li>
+<li><code><a title="termuxgui.Connection.send_read_msg" href="#termuxgui.Connection.send_read_msg">send_read_msg</a></code></li>
+<li><code><a title="termuxgui.Connection.toast" href="#termuxgui.Connection.toast">toast</a></code></li>
+<li><code><a title="termuxgui.Connection.totermux" href="#termuxgui.Connection.totermux">totermux</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.EditText" href="#termuxgui.EditText">EditText</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.EditText.showcursor" href="#termuxgui.EditText.showcursor">showcursor</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.Event" href="#termuxgui.Event">Event</a></code></h4>
+<ul class="two-column">
+<li><code><a title="termuxgui.Event.click" href="#termuxgui.Event.click">click</a></code></li>
+<li><code><a title="termuxgui.Event.create" href="#termuxgui.Event.create">create</a></code></li>
+<li><code><a title="termuxgui.Event.destroy" href="#termuxgui.Event.destroy">destroy</a></code></li>
+<li><code><a title="termuxgui.Event.focusChange" href="#termuxgui.Event.focusChange">focusChange</a></code></li>
+<li><code><a title="termuxgui.Event.key" href="#termuxgui.Event.key">key</a></code></li>
+<li><code><a title="termuxgui.Event.longClick" href="#termuxgui.Event.longClick">longClick</a></code></li>
+<li><code><a title="termuxgui.Event.overlayScale" href="#termuxgui.Event.overlayScale">overlayScale</a></code></li>
+<li><code><a title="termuxgui.Event.overlaytouch" href="#termuxgui.Event.overlaytouch">overlaytouch</a></code></li>
+<li><code><a title="termuxgui.Event.pause" href="#termuxgui.Event.pause">pause</a></code></li>
+<li><code><a title="termuxgui.Event.pipchanged" href="#termuxgui.Event.pipchanged">pipchanged</a></code></li>
+<li><code><a title="termuxgui.Event.refresh" href="#termuxgui.Event.refresh">refresh</a></code></li>
+<li><code><a title="termuxgui.Event.resume" href="#termuxgui.Event.resume">resume</a></code></li>
+<li><code><a title="termuxgui.Event.selected" href="#termuxgui.Event.selected">selected</a></code></li>
+<li><code><a title="termuxgui.Event.start" href="#termuxgui.Event.start">start</a></code></li>
+<li><code><a title="termuxgui.Event.stop" href="#termuxgui.Event.stop">stop</a></code></li>
+<li><code><a title="termuxgui.Event.touch" href="#termuxgui.Event.touch">touch</a></code></li>
+<li><code><a title="termuxgui.Event.userleavehint" href="#termuxgui.Event.userleavehint">userleavehint</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.FrameLayout" href="#termuxgui.FrameLayout">FrameLayout</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.ImageView" href="#termuxgui.ImageView">ImageView</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.ImageView.refresh" href="#termuxgui.ImageView.refresh">refresh</a></code></li>
+<li><code><a title="termuxgui.ImageView.setbuffer" href="#termuxgui.ImageView.setbuffer">setbuffer</a></code></li>
+<li><code><a title="termuxgui.ImageView.setimage" href="#termuxgui.ImageView.setimage">setimage</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.LinearLayout" href="#termuxgui.LinearLayout">LinearLayout</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.NestedScrollView" href="#termuxgui.NestedScrollView">NestedScrollView</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.RadioButton" href="#termuxgui.RadioButton">RadioButton</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.RadioGroup" href="#termuxgui.RadioGroup">RadioGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.Space" href="#termuxgui.Space">Space</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.Spinner" href="#termuxgui.Spinner">Spinner</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.Spinner.setlist" href="#termuxgui.Spinner.setlist">setlist</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.Task" href="#termuxgui.Task">Task</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.Task.bringtofront" href="#termuxgui.Task.bringtofront">bringtofront</a></code></li>
+<li><code><a title="termuxgui.Task.finish" href="#termuxgui.Task.finish">finish</a></code></li>
+<li><code><a title="termuxgui.Task.movetoback" href="#termuxgui.Task.movetoback">movetoback</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.TextView" href="#termuxgui.TextView">TextView</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.TextView.gettext" href="#termuxgui.TextView.gettext">gettext</a></code></li>
+<li><code><a title="termuxgui.TextView.settext" href="#termuxgui.TextView.settext">settext</a></code></li>
+<li><code><a title="termuxgui.TextView.settextsize" href="#termuxgui.TextView.settextsize">settextsize</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.View" href="#termuxgui.View">View</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.View.delete" href="#termuxgui.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.View.handleevent" href="#termuxgui.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.View.setdimensions" href="#termuxgui.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.View.setheight" href="#termuxgui.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.View.setlinearlayoutparams" href="#termuxgui.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.View.setmargin" href="#termuxgui.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.View.setwidth" href="#termuxgui.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.ViewGroup" href="#termuxgui.ViewGroup">ViewGroup</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.ViewGroup.clearchildren" href="#termuxgui.ViewGroup.clearchildren">clearchildren</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

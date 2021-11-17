@@ -5,9 +5,9 @@ from termuxgui.task import Task
 
 
 class Activity:
-    def __init__(self, connection, tid=None,dialog=None,pip=False,overlay=None,lockscreen=None):
+    def __init__(self, connection, tid=None, dialog=None, pip=False, overlay=None, lockscreen=None, canceloutside=True):
         self.c = connection
-        params = {}
+        params = {"canceloutside": canceloutside}
         if dialog != None:
             params["dialog"] = dialog
         if tid != None:
