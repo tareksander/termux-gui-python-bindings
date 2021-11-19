@@ -2,16 +2,21 @@ from json import dumps
 
 
 class Task:
+    """This represents an Android Task. It is automatically created with the Activity."""
+    
     def __init__(self, connection, tid):
         self.c = connection
         self.tid = tid
     
     def finish(self):
+        """Finishes this Task."""
         self.c.send_msg({"method": "finishTask", "params": {"tid": self.tid}})
     
     def bringtofront(self):
+        """Bring this Task to the front and make it visible to the user. Might require "overlay over other apps" permission."""
         self.c.send_msg({"method": "bringTaskToFront", "params": {"tid": self.tid}})
     
     def movetoback(self):
+        """Moves this Task to the recents screen and hide it."""
         self.c.send_msg({"method": "moveTaskToBack", "params": {"tid": self.tid}})
  

@@ -1,5 +1,13 @@
 
 class Event:
+    """This represents an Event in the GUI.
+    
+    The class variables are the available event types.
+    
+    Use ev.type == Event.eventtype to check for event types.
+    
+    ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any."""
+    
     
     # Event types
     # View events
@@ -31,6 +39,7 @@ class Event:
     
     def __init__(self, ev):
         self.type = ev["type"]
+        self.value = {}
         try:
             self.value = ev["value"]
             if type(self.value) is dict:

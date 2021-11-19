@@ -3,6 +3,7 @@ from json import dumps
 from termuxgui.viewgroup import ViewGroup
 
 class FrameLayout(ViewGroup):
+    """This represents a FrameLayout."""
     
     def __init__(self, activity, parent=None):
         args = {"aid": activity.aid}

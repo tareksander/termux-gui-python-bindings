@@ -5,7 +5,12 @@ from termuxgui.task import Task
 
 
 class Activity:
+    """This represents an Android Activity.
+    
+    Use a.c to access the Connection object of an Activity and a.t to access the Task object."""
+    
     def __init__(self, connection, tid=None, dialog=None, pip=False, overlay=None, lockscreen=None, canceloutside=True):
+        """When an Activity could not be created, a RuntimeError is raised."""
         self.c = connection
         params = {"canceloutside": canceloutside}
         if dialog != None:
@@ -37,16 +42,21 @@ class Activity:
         self.c.send_msg({"method": "setInputMode", "params": {"aid": self.aid, "mode": mode}})
     
     def keepscreenon(on):
+        """Sets whether the Activity should keep the screen on while it is showing."""
         self.c.send_msg({"method": "keepScreenOn", "params": {"aid": self.aid, "on": on}})
     
     def setpipmode(self, pip):
+        """Goes into / out of picture-in-picture mode.
+        
+        When you exit pip, you Activity is put in the recent tasks list and not shown to the user."""
         self.c.send_msg({"method": "setPiPMode", "params": {"aid": self.aid, "pip": pip}})
     
     def setpipmodeauto(self, pip):
+        """Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity."""
         self.c.send_msg({"method": "setPiPModeAuto", "params": {"aid": self.aid, "pip": pip}})
     
     def setpipparams(self, num, den):
-        '''Sets the PiP parameters for the Activity, the aspect ration.'''
+        '''Sets the PiP parameters for the Activity, currently only the aspect ration.'''
         self.c.send_msg({"method": "setPiPParams", "params": {"aid": self.aid, "num": num, "den": den}})
     
     def settaskdescription(self, text, img):
@@ -54,21 +64,24 @@ class Activity:
         self.c.send_msg({"method": "setTaskDescription", "params": {"aid": self.aid, "img": img, "label": text}})
     
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
-        '''Sets the Theme fro an Activity.'''
+        '''Sets the Theme for the Activity.'''
         self.c.send_msg({"method": "setTheme", "params": {"aid": self.aid, "statusBarColor": statusbarcolor, "colorPrimary": colorprimary, "windowBackground": windowbackground, "textColor": textcolor, "colorAccent": coloraccent}})
     
     def setorientation(orientation):
+        """Sets the preferred orientation of the Activity."""
         self.c.send_msg({"method": "setOrientation", "params": {"aid": self.aid, "orientation": orientation}})
     
     
     
 
     def setposition(x, y):
+        """Sets the screen position of the Activity if it is an overlay."""
         self.c.send_msg({"method": "setPosition", "params": {"aid": self.aid, "x": x, "y": y}})
 
 
 
     def sendoverlayevents(send):
+        """Sets whether or not you want to receive overlay events if the Activity is an overlay."""
         self.c.send_msg({"method": "sendOverlayTouchEvent", "params": {"aid": self.aid, "send": send}})
     
     

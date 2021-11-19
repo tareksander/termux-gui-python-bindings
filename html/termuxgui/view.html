@@ -30,7 +30,8 @@
 
 
 class View:
-
+    &#34;&#34;&#34;This represents a generic View.&#34;&#34;&#34;
+    
     def __init__(self, activity, id):
         self.a = activity
         self.id = id
@@ -44,30 +45,37 @@ class View:
             return self.id == other.id
     
     def delete(self):
+        &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
     def setmargin(self, margin, dir=None):
+        &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
         args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
         if dir != None:
             args[&#34;dir&#34;] = dir
         self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})
 
     def setwidth(self, width):
+        &#34;&#34;&#34;Sets the width of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width}})
 
     def setheight(self, height):
+        &#34;&#34;&#34;Sets the height of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height}})
 
     def setdimensions(self, width, height):
+        &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.&#34;&#34;&#34;
         self.a.setwidth(width)
         self.a.setheight(height)
 
     def setlinearlayoutparams(self, weight):
+        &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})
 
 
 
     def handleevent(self, e):
+        &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
 </details>
 </section>
@@ -85,13 +93,14 @@ class View:
 <span>(</span><span>activity, id)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This represents a generic View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class View:
-
+    &#34;&#34;&#34;This represents a generic View.&#34;&#34;&#34;
+    
     def __init__(self, activity, id):
         self.a = activity
         self.id = id
@@ -105,30 +114,37 @@ class View:
             return self.id == other.id
     
     def delete(self):
+        &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
     def setmargin(self, margin, dir=None):
+        &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
         args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
         if dir != None:
             args[&#34;dir&#34;] = dir
         self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})
 
     def setwidth(self, width):
+        &#34;&#34;&#34;Sets the width of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width}})
 
     def setheight(self, height):
+        &#34;&#34;&#34;Sets the height of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height}})
 
     def setdimensions(self, width, height):
+        &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.&#34;&#34;&#34;
         self.a.setwidth(width)
         self.a.setheight(height)
 
     def setlinearlayoutparams(self, weight):
+        &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})
 
 
 
     def handleevent(self, e):
+        &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
 </details>
 <h3>Subclasses</h3>
@@ -145,12 +161,13 @@ class View:
 <span>def <span class="ident">delete</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Deletes this View from the layout.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def delete(self):
+    &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
 </details>
 </dd>
@@ -158,12 +175,13 @@ class View:
 <span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Handles an Event for this View. Subclasses can override this to provide event handling.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def handleevent(self, e):
+    &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
     pass</code></pre>
 </details>
 </dd>
@@ -171,12 +189,13 @@ class View:
 <span>def <span class="ident">setdimensions</span></span>(<span>self, width, height)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Sets the dimensions of this view. width and height are the same as for setwidth and setheight.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setdimensions(self, width, height):
+    &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.&#34;&#34;&#34;
     self.a.setwidth(width)
     self.a.setheight(height)</code></pre>
 </details>
@@ -185,12 +204,13 @@ class View:
 <span>def <span class="ident">setheight</span></span>(<span>self, height)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Sets the height of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT".</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setheight(self, height):
+    &#34;&#34;&#34;Sets the height of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height}})</code></pre>
 </details>
 </dd>
@@ -198,12 +218,13 @@ class View:
 <span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Sets the LinearLayout weight for this view.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setlinearlayoutparams(self, weight):
+    &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})</code></pre>
 </details>
 </dd>
@@ -211,12 +232,13 @@ class View:
 <span>def <span class="ident">setmargin</span></span>(<span>self, margin, dir=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Sets the margins of this View for one or all directions.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setmargin(self, margin, dir=None):
+    &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
     args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
     if dir != None:
         args[&#34;dir&#34;] = dir
@@ -227,12 +249,13 @@ class View:
 <span>def <span class="ident">setwidth</span></span>(<span>self, width)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Sets the width of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT".</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setwidth(self, width):
+    &#34;&#34;&#34;Sets the width of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width}})</code></pre>
 </details>
 </dd>

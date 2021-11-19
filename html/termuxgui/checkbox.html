@@ -28,10 +28,11 @@
 </summary>
 <pre><code class="python">from json import dumps
 
-from termuxgui.textview import TextView
+from termuxgui.compoundbutton import CompoundButton
 from termuxgui.view import View
 
-class Checkbox(TextView):
+class Checkbox(CompoundButton):
+    &#34;&#34;&#34;This represents a CheckBox.&#34;&#34;&#34;
     
     def __init__(self, activity, text, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
@@ -41,12 +42,6 @@ class Checkbox(TextView):
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createCheckbox&#34;, &#34;params&#34;: args}))
      
     
-    
-    
-    def handleevent(self, e):
-        &#34;&#34;&#34;Use this to let the CheckBox track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
-        if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
-            self.checked = e.value[&#34;set&#34;]
     
     </code></pre>
 </details>
@@ -65,51 +60,46 @@ class Checkbox(TextView):
 <span>(</span><span>activity, text, parent=None, checked=False)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This represents a CheckBox.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Checkbox(TextView):
+<pre><code class="python">class Checkbox(CompoundButton):
+    &#34;&#34;&#34;This represents a CheckBox.&#34;&#34;&#34;
     
     def __init__(self, activity, text, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
         self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createCheckbox&#34;, &#34;params&#34;: args}))
-     
-    
-    
-    
-    def handleevent(self, e):
-        &#34;&#34;&#34;Use this to let the CheckBox track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
-        if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
-            self.checked = e.value[&#34;set&#34;]</code></pre>
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createCheckbox&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
+<li><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></li>
+<li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
 <li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
-<h3>Methods</h3>
-<dl>
-<dt id="termuxgui.checkbox.Checkbox.handleevent"><code class="name flex">
-<span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Use this to let the CheckBox track whether it is checked or not. Just pass every Event here.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def handleevent(self, e):
-    &#34;&#34;&#34;Use this to let the CheckBox track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
-    if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
-        self.checked = e.value[&#34;set&#34;]</code></pre>
-</details>
-</dd>
-</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setchecked" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.setchecked">setchecked</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.settext" href="textview.html#termuxgui.textview.TextView.settext">settext</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 </dl>
 </section>
@@ -129,9 +119,6 @@ class Checkbox(TextView):
 <ul>
 <li>
 <h4><code><a title="termuxgui.checkbox.Checkbox" href="#termuxgui.checkbox.Checkbox">Checkbox</a></code></h4>
-<ul class="">
-<li><code><a title="termuxgui.checkbox.Checkbox.handleevent" href="#termuxgui.checkbox.Checkbox.handleevent">handleevent</a></code></li>
-</ul>
 </li>
 </ul>
 </li>

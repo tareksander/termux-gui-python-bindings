@@ -5,6 +5,8 @@ from termuxgui.view import View
 
 
 class ToggleButton(CompoundButton):
+    """This represents a ToggleButton."""
+    
     def __init__(self, activity, parent=None, checked=False):
         args = {"aid": activity.aid, "checked": checked}
         if parent != None:

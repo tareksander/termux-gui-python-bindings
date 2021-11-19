@@ -33,6 +33,10 @@ from termuxgui.viewgroup import ViewGroup
 
 
 class RadioGroup(LinearLayout):
+    &#34;&#34;&#34;This represents a RadioGroup.
+    
+    Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.&#34;&#34;&#34;
+    
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
         if parent != None:
@@ -57,12 +61,17 @@ class RadioGroup(LinearLayout):
 <span>(</span><span>activity, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This represents a RadioGroup.</p>
+<p>Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class RadioGroup(LinearLayout):
+    &#34;&#34;&#34;This represents a RadioGroup.
+    
+    Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.&#34;&#34;&#34;
+    
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
         if parent != None:
@@ -74,6 +83,21 @@ class RadioGroup(LinearLayout):
 <li><a title="termuxgui.linearlayout.LinearLayout" href="linearlayout.html#termuxgui.linearlayout.LinearLayout">LinearLayout</a></li>
 <li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.linearlayout.LinearLayout" href="linearlayout.html#termuxgui.linearlayout.LinearLayout">LinearLayout</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.linearlayout.LinearLayout.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
 </ul>
 </dd>
 </dl>

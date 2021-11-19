@@ -27,6 +27,14 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Event:
+    &#34;&#34;&#34;This represents an Event in the GUI.
+    
+    The class variables are the available event types.
+    
+    Use ev.type == Event.eventtype to check for event types.
+    
+    ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any.&#34;&#34;&#34;
+    
     
     # Event types
     # View events
@@ -37,6 +45,9 @@
     touch = &#34;touch&#34;
     refresh = &#34;refresh&#34;
     selected = &#34;selected&#34; # used for RadioGroups
+    itemselected = &#34;itemselected&#34;
+    
+    
     
     # activity events
     create = &#34;create&#34;
@@ -55,6 +66,7 @@
     
     def __init__(self, ev):
         self.type = ev[&#34;type&#34;]
+        self.value = {}
         try:
             self.value = ev[&#34;value&#34;]
             if type(self.value) is dict:
@@ -80,12 +92,23 @@
 <span>(</span><span>ev)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This represents an Event in the GUI.</p>
+<p>The class variables are the available event types.</p>
+<p>Use ev.type == Event.eventtype to check for event types.</p>
+<p>ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Event:
+    &#34;&#34;&#34;This represents an Event in the GUI.
+    
+    The class variables are the available event types.
+    
+    Use ev.type == Event.eventtype to check for event types.
+    
+    ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any.&#34;&#34;&#34;
+    
     
     # Event types
     # View events
@@ -96,6 +119,9 @@
     touch = &#34;touch&#34;
     refresh = &#34;refresh&#34;
     selected = &#34;selected&#34; # used for RadioGroups
+    itemselected = &#34;itemselected&#34;
+    
+    
     
     # activity events
     create = &#34;create&#34;
@@ -114,6 +140,7 @@
     
     def __init__(self, ev):
         self.type = ev[&#34;type&#34;]
+        self.value = {}
         try:
             self.value = ev[&#34;value&#34;]
             if type(self.value) is dict:
@@ -137,6 +164,10 @@
 <div class="desc"></div>
 </dd>
 <dt id="termuxgui.event.Event.focusChange"><code class="name">var <span class="ident">focusChange</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.itemselected"><code class="name">var <span class="ident">itemselected</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -217,6 +248,7 @@
 <li><code><a title="termuxgui.event.Event.create" href="#termuxgui.event.Event.create">create</a></code></li>
 <li><code><a title="termuxgui.event.Event.destroy" href="#termuxgui.event.Event.destroy">destroy</a></code></li>
 <li><code><a title="termuxgui.event.Event.focusChange" href="#termuxgui.event.Event.focusChange">focusChange</a></code></li>
+<li><code><a title="termuxgui.event.Event.itemselected" href="#termuxgui.event.Event.itemselected">itemselected</a></code></li>
 <li><code><a title="termuxgui.event.Event.key" href="#termuxgui.event.Event.key">key</a></code></li>
 <li><code><a title="termuxgui.event.Event.longClick" href="#termuxgui.event.Event.longClick">longClick</a></code></li>
 <li><code><a title="termuxgui.event.Event.overlayScale" href="#termuxgui.event.Event.overlayScale">overlayScale</a></code></li>

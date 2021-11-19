@@ -32,6 +32,7 @@
 from termuxgui.viewgroup import ViewGroup
 
 class LinearLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a LinearLayout.&#34;&#34;&#34;
     
     def __init__(self, activity, parent=None, vertical=True):
         args = {&#34;aid&#34;: activity.aid, &#34;vertical&#34;: vertical}
@@ -65,12 +66,13 @@ class LinearLayout(ViewGroup):
 <span>(</span><span>activity, parent=None, vertical=True)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This represents a LinearLayout.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class LinearLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a LinearLayout.&#34;&#34;&#34;
     
     def __init__(self, activity, parent=None, vertical=True):
         args = {&#34;aid&#34;: activity.aid, &#34;vertical&#34;: vertical}
@@ -86,6 +88,21 @@ class LinearLayout(ViewGroup):
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="termuxgui.radiogroup.RadioGroup" href="radiogroup.html#termuxgui.radiogroup.RadioGroup">RadioGroup</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
 </ul>
 </dd>
 </dl>

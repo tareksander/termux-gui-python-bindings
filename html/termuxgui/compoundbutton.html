@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>termuxgui.space API documentation</title>
+<title>termuxgui.compoundbutton API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>termuxgui.space</code></h1>
+<h1 class="title">Module <code>termuxgui.compoundbutton</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -28,16 +28,26 @@
 </summary>
 <pre><code class="python">from json import dumps
 
-from termuxgui.view import View
+from termuxgui.button import Button
 
-class Space(View):
-    &#34;&#34;&#34;This represents a Space. You can use this to create empty space in your layout.&#34;&#34;&#34;
+class CompoundButton(Button):
+    &#34;&#34;&#34;This represents a CompoundButton.
     
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
-            args[&#34;parent&#34;] = parent.id
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpace&#34;, &#34;params&#34;: args}))
+    This class doesn&#39;t correspond to a particular View, it is used to provide common methods for all CompoundButtons.&#34;&#34;&#34;
+
+    def handleevent(self, e):
+        &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
+        if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
+            self.checked = e.value[&#34;set&#34;]
+    
+    
+    
+    
+    
+    def setchecked(self, checked):
+        &#34;&#34;&#34;Explicitly set the checked status of this CompoundButton.&#34;&#34;&#34;
+        self.checked = checked
+        self.a.c.send_msg({&#34;method&#34;: &#34;setChecked&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;checked&#34;: checked}})
     </code></pre>
 </details>
 </section>
@@ -50,40 +60,95 @@ class Space(View):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="termuxgui.space.Space"><code class="flex name class">
-<span>class <span class="ident">Space</span></span>
-<span>(</span><span>activity, parent=None)</span>
+<dt id="termuxgui.compoundbutton.CompoundButton"><code class="flex name class">
+<span>class <span class="ident">CompoundButton</span></span>
+<span>(</span><span>activity, text, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This represents a Space. You can use this to create empty space in your layout.</p></div>
+<div class="desc"><p>This represents a CompoundButton.</p>
+<p>This class doesn't correspond to a particular View, it is used to provide common methods for all CompoundButtons.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Space(View):
-    &#34;&#34;&#34;This represents a Space. You can use this to create empty space in your layout.&#34;&#34;&#34;
+<pre><code class="python">class CompoundButton(Button):
+    &#34;&#34;&#34;This represents a CompoundButton.
     
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
-            args[&#34;parent&#34;] = parent.id
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpace&#34;, &#34;params&#34;: args}))</code></pre>
+    This class doesn&#39;t correspond to a particular View, it is used to provide common methods for all CompoundButtons.&#34;&#34;&#34;
+
+    def handleevent(self, e):
+        &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
+        if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
+            self.checked = e.value[&#34;set&#34;]
+    
+    
+    
+    
+    
+    def setchecked(self, checked):
+        &#34;&#34;&#34;Explicitly set the checked status of this CompoundButton.&#34;&#34;&#34;
+        self.checked = checked
+        self.a.c.send_msg({&#34;method&#34;: &#34;setChecked&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;checked&#34;: checked}})</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
+<li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
+<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.checkbox.Checkbox" href="checkbox.html#termuxgui.checkbox.Checkbox">Checkbox</a></li>
+<li><a title="termuxgui.radiobutton.RadioButton" href="radiobutton.html#termuxgui.radiobutton.RadioButton">RadioButton</a></li>
+<li><a title="termuxgui.switch.Switch" href="switch.html#termuxgui.switch.Switch">Switch</a></li>
+<li><a title="termuxgui.togglebutton.ToggleButton" href="togglebutton.html#termuxgui.togglebutton.ToggleButton">ToggleButton</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.compoundbutton.CompoundButton.handleevent"><code class="name flex">
+<span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def handleevent(self, e):
+    &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
+    if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
+        self.checked = e.value[&#34;set&#34;]</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.compoundbutton.CompoundButton.setchecked"><code class="name flex">
+<span>def <span class="ident">setchecked</span></span>(<span>self, checked)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Explicitly set the checked status of this CompoundButton.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setchecked(self, checked):
+    &#34;&#34;&#34;Explicitly set the checked status of this CompoundButton.&#34;&#34;&#34;
+    self.checked = checked
+    self.a.c.send_msg({&#34;method&#34;: &#34;setChecked&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;checked&#34;: checked}})</code></pre>
+</details>
+</dd>
+</dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
+<li><code><b><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></b></code>:
 <ul class="hlist">
-<li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
-<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
-<li><code><a title="termuxgui.view.View.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
-<li><code><a title="termuxgui.view.View.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
-<li><code><a title="termuxgui.view.View.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
-<li><code><a title="termuxgui.view.View.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
-<li><code><a title="termuxgui.view.View.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+<li><code><a title="termuxgui.button.Button.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.button.Button.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
+<li><code><a title="termuxgui.button.Button.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.button.Button.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.button.Button.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.button.Button.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.button.Button.settext" href="textview.html#termuxgui.textview.TextView.settext">settext</a></code></li>
+<li><code><a title="termuxgui.button.Button.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
+<li><code><a title="termuxgui.button.Button.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
 </ul>
 </li>
 </ul>
@@ -105,7 +170,11 @@ class Space(View):
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="termuxgui.space.Space" href="#termuxgui.space.Space">Space</a></code></h4>
+<h4><code><a title="termuxgui.compoundbutton.CompoundButton" href="#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setchecked" href="#termuxgui.compoundbutton.CompoundButton.setchecked">setchecked</a></code></li>
+</ul>
 </li>
 </ul>
 </li>

@@ -28,19 +28,23 @@
 </summary>
 <pre><code class="python">from json import dumps
 
-from termuxgui.button import Button
-from termuxgui.viewgroup import ViewGroup
+from termuxgui.compoundbutton import CompoundButton
+from termuxgui.view import View
 
 
-class RadioButton(Button):
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
+class RadioButton(CompoundButton):
+    &#34;&#34;&#34;This represents a RadioButton.&#34;&#34;&#34;
+    
+    def __init__(self, activity, text, parent=None, checked=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioButton&#34;, &#34;params&#34;: args}))
+        self.checked = checked
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioButton&#34;, &#34;params&#34;: args}))
     
     
-     </code></pre>
+    
+    </code></pre>
 </details>
 </section>
 <section>
@@ -54,26 +58,48 @@ class RadioButton(Button):
 <dl>
 <dt id="termuxgui.radiobutton.RadioButton"><code class="flex name class">
 <span>class <span class="ident">RadioButton</span></span>
-<span>(</span><span>activity, parent=None)</span>
+<span>(</span><span>activity, text, parent=None, checked=False)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This represents a RadioButton.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class RadioButton(Button):
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
+<pre><code class="python">class RadioButton(CompoundButton):
+    &#34;&#34;&#34;This represents a RadioButton.&#34;&#34;&#34;
+    
+    def __init__(self, activity, text, parent=None, checked=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioButton&#34;, &#34;params&#34;: args}))</code></pre>
+        self.checked = checked
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioButton&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
+<li><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></li>
 <li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
 <li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setchecked" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.setchecked">setchecked</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.settext" href="textview.html#termuxgui.textview.TextView.settext">settext</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
 </ul>
 </dd>
 </dl>

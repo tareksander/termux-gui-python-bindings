@@ -5,6 +5,10 @@ from termuxgui.viewgroup import ViewGroup
 
 
 class RadioGroup(LinearLayout):
+    """This represents a RadioGroup.
+    
+    Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed."""
+    
     def __init__(self, activity, parent=None):
         args = {"aid": activity.aid}
         if parent != None:
