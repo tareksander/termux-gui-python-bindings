@@ -36,6 +36,15 @@ class Event:
     overlaytouch = "overlayTouch"
     overlayScale = "overlayScale"
     
+    # touch event action
+    touch_up = "up"
+    touch_down = "down"
+    touch_pointer_up = "pointer_up"
+    touch_pointer_down = "pointer_down"
+    touch_cancel = "cancel"
+    touch_move = "move"
+    
+    
     
     def __init__(self, ev):
         self.type = ev["type"]

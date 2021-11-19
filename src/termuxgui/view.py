@@ -43,9 +43,14 @@ class View:
     def setlinearlayoutparams(self, weight):
         """Sets the LinearLayout weight for this view."""
         self.a.c.send_msg({"method": "setLinearLayoutParams", "params": {"aid": self.a.aid, "id": self.id, "weight": weight}})
-
-
-
+    
+    
+    def sendtouchevent(self, send):
+        """Sets whether ot not touch events are send for this View."""
+        self.a.c.send_msg({"method": "sendTouchEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
+    
+    
+    
     def handleevent(self, e):
         """Handles an Event for this View. Subclasses can override this to provide event handling."""
         pass

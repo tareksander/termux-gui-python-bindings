@@ -5,6 +5,7 @@ from string import ascii_letters, digits
 from os import getuid
 from struct import unpack
 from json import dumps
+from select import select
 
 
 from termuxgui.event import Event
@@ -64,6 +65,13 @@ class Connection:
         """Waits for events. Use this with "for in" to iterate over incoming events and block while waiting."""
         while True:
             yield Event(tgmsg.read_msg(self._event))
+    
+    def checkevent(self):
+        """If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it."""
+        r, _, _ = select([self._event], [], [], 0)
+        if len(r) != 0:
+            return Event(tgmsg.read_msg(self._event))
+        
     
     def toast(self, text, long=False):
         """Sends a Toast. Set long to True if you want to display the text for longer."""
