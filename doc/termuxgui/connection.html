@@ -33,6 +33,7 @@ from string import ascii_letters, digits
 from os import getuid
 from struct import unpack
 from json import dumps
+from select import select
 
 
 from termuxgui.event import Event
@@ -92,6 +93,13 @@ class Connection:
         &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
         while True:
             yield Event(tgmsg.read_msg(self._event))
+    
+    def checkevent(self):
+        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        r, _, _ = select([self._event], [], [], 0)
+        if len(r) != 0:
+            return Event(tgmsg.read_msg(self._event))
+        
     
     def toast(self, text, long=False):
         &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
@@ -204,6 +212,13 @@ class Connection:
         while True:
             yield Event(tgmsg.read_msg(self._event))
     
+    def checkevent(self):
+        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        r, _, _ = select([self._event], [], [], 0)
+        if len(r) != 0:
+            return Event(tgmsg.read_msg(self._event))
+        
+    
     def toast(self, text, long=False):
         &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) 
@@ -244,6 +259,22 @@ class Connection:
 </details>
 <h3>Methods</h3>
 <dl>
+<dt id="termuxgui.connection.Connection.checkevent"><code class="name flex">
+<span>def <span class="ident">checkevent</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def checkevent(self):
+    &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+    r, _, _ = select([self._event], [], [], 0)
+    if len(r) != 0:
+        return Event(tgmsg.read_msg(self._event))</code></pre>
+</details>
+</dd>
 <dt id="termuxgui.connection.Connection.close"><code class="name flex">
 <span>def <span class="ident">close</span></span>(<span>self)</span>
 </code></dt>
@@ -371,6 +402,7 @@ class Connection:
 <li>
 <h4><code><a title="termuxgui.connection.Connection" href="#termuxgui.connection.Connection">Connection</a></code></h4>
 <ul class="two-column">
+<li><code><a title="termuxgui.connection.Connection.checkevent" href="#termuxgui.connection.Connection.checkevent">checkevent</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.close" href="#termuxgui.connection.Connection.close">close</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.events" href="#termuxgui.connection.Connection.events">events</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.read_msg" href="#termuxgui.connection.Connection.read_msg">read_msg</a></code></li>

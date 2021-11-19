@@ -63,6 +63,15 @@
     overlaytouch = &#34;overlayTouch&#34;
     overlayScale = &#34;overlayScale&#34;
     
+    # touch event action
+    touch_up = &#34;up&#34;
+    touch_down = &#34;down&#34;
+    touch_pointer_up = &#34;pointer_up&#34;
+    touch_pointer_down = &#34;pointer_down&#34;
+    touch_cancel = &#34;cancel&#34;
+    touch_move = &#34;move&#34;
+    
+    
     
     def __init__(self, ev):
         self.type = ev[&#34;type&#34;]
@@ -136,6 +145,15 @@
     # special overlay events
     overlaytouch = &#34;overlayTouch&#34;
     overlayScale = &#34;overlayScale&#34;
+    
+    # touch event action
+    touch_up = &#34;up&#34;
+    touch_down = &#34;down&#34;
+    touch_pointer_up = &#34;pointer_up&#34;
+    touch_pointer_down = &#34;pointer_down&#34;
+    touch_cancel = &#34;cancel&#34;
+    touch_move = &#34;move&#34;
+    
     
     
     def __init__(self, ev):
@@ -219,6 +237,30 @@
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="termuxgui.event.Event.touch_cancel"><code class="name">var <span class="ident">touch_cancel</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.touch_down"><code class="name">var <span class="ident">touch_down</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.touch_move"><code class="name">var <span class="ident">touch_move</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.touch_pointer_down"><code class="name">var <span class="ident">touch_pointer_down</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.touch_pointer_up"><code class="name">var <span class="ident">touch_pointer_up</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.touch_up"><code class="name">var <span class="ident">touch_up</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="termuxgui.event.Event.userleavehint"><code class="name">var <span class="ident">userleavehint</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -261,6 +303,12 @@
 <li><code><a title="termuxgui.event.Event.start" href="#termuxgui.event.Event.start">start</a></code></li>
 <li><code><a title="termuxgui.event.Event.stop" href="#termuxgui.event.Event.stop">stop</a></code></li>
 <li><code><a title="termuxgui.event.Event.touch" href="#termuxgui.event.Event.touch">touch</a></code></li>
+<li><code><a title="termuxgui.event.Event.touch_cancel" href="#termuxgui.event.Event.touch_cancel">touch_cancel</a></code></li>
+<li><code><a title="termuxgui.event.Event.touch_down" href="#termuxgui.event.Event.touch_down">touch_down</a></code></li>
+<li><code><a title="termuxgui.event.Event.touch_move" href="#termuxgui.event.Event.touch_move">touch_move</a></code></li>
+<li><code><a title="termuxgui.event.Event.touch_pointer_down" href="#termuxgui.event.Event.touch_pointer_down">touch_pointer_down</a></code></li>
+<li><code><a title="termuxgui.event.Event.touch_pointer_up" href="#termuxgui.event.Event.touch_pointer_up">touch_pointer_up</a></code></li>
+<li><code><a title="termuxgui.event.Event.touch_up" href="#termuxgui.event.Event.touch_up">touch_up</a></code></li>
 <li><code><a title="termuxgui.event.Event.userleavehint" href="#termuxgui.event.Event.userleavehint">userleavehint</a></code></li>
 </ul>
 </li>

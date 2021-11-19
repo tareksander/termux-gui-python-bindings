@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>termuxgui.nestedscrollview API documentation</title>
+<title>termuxgui.framelayout API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>termuxgui.nestedscrollview</code></h1>
+<h1 class="title">Module <code>termuxgui.framelayout</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -28,21 +28,19 @@
 </summary>
 <pre><code class="python">from json import dumps
 
-from termuxgui.framelayout import FrameLayout
 from termuxgui.viewgroup import ViewGroup
 
-class NestedScrollView(FrameLayout):
-    &#34;&#34;&#34;This represents a NestedScrollView.&#34;&#34;&#34;
+class FrameLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a FrameLayout.&#34;&#34;&#34;
     
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createNestedScrollView&#34;, &#34;params&#34;: args}))
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createFrameLayout&#34;, &#34;params&#34;: args}))
     
     
-    
- </code></pre>
+    </code></pre>
 </details>
 </section>
 <section>
@@ -54,43 +52,47 @@ class NestedScrollView(FrameLayout):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="termuxgui.nestedscrollview.NestedScrollView"><code class="flex name class">
-<span>class <span class="ident">NestedScrollView</span></span>
+<dt id="termuxgui.framelayout.FrameLayout"><code class="flex name class">
+<span>class <span class="ident">FrameLayout</span></span>
 <span>(</span><span>activity, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This represents a NestedScrollView.</p></div>
+<div class="desc"><p>This represents a FrameLayout.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class NestedScrollView(FrameLayout):
-    &#34;&#34;&#34;This represents a NestedScrollView.&#34;&#34;&#34;
+<pre><code class="python">class FrameLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a FrameLayout.&#34;&#34;&#34;
     
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createNestedScrollView&#34;, &#34;params&#34;: args}))</code></pre>
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createFrameLayout&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></li>
 <li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.nestedscrollview.NestedScrollView" href="nestedscrollview.html#termuxgui.nestedscrollview.NestedScrollView">NestedScrollView</a></li>
+</ul>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></b></code>:
+<li><code><b><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></b></code>:
 <ul class="hlist">
-<li><code><a title="termuxgui.framelayout.FrameLayout.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
 </ul>
 </li>
 </ul>
@@ -112,7 +114,7 @@ class NestedScrollView(FrameLayout):
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="termuxgui.nestedscrollview.NestedScrollView" href="#termuxgui.nestedscrollview.NestedScrollView">NestedScrollView</a></code></h4>
+<h4><code><a title="termuxgui.framelayout.FrameLayout" href="#termuxgui.framelayout.FrameLayout">FrameLayout</a></code></h4>
 </li>
 </ul>
 </li>

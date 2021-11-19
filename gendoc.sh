@@ -1,2 +1,3 @@
 #!/bin/bash
-pdoc --force --html src/termuxgui
+cd "$(dirname "$0")"
+pdoc --force --html -o doc/ src/termuxgui

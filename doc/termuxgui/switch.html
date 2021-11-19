@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>termuxgui.msg API documentation</title>
+<title>termuxgui.switch API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,62 +19,31 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>termuxgui.msg</code></h1>
+<h1 class="title">Module <code>termuxgui.switch</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import loads
+<pre><code class="python">from json import dumps
 
-def read_msg(s):
-    b = b&#39;&#39;
-    togo = 4
-    while togo &gt; 0:
-        read = s.recv(togo)
-        b = b + read
-        togo = togo - len(read)
-    togo = int.from_bytes(b, &#34;big&#34;)
-    b = b&#39;&#39;
-    while togo &gt; 0:
-        read = s.recv(togo)
-        b = b + read
-        togo = togo - len(read)
-    return loads(b.decode(&#34;utf-8&#34;))
-
-def send_msg(c, msg):
-    m = bytes(msg, &#34;utf-8&#34;)
-    c.sendall((len(m)).to_bytes(4,&#34;big&#34;))
-    c.sendall(m)
-
-def send_read_msg(s, msg):
-    send_msg(s, msg)
-    return read_msg(s)
+from termuxgui.compoundbutton import CompoundButton
+from termuxgui.view import View
 
 
-
-def read_msg_fd(s):
-    b = b&#39;&#39;
-    togo = 4
-    while togo &gt; 0:
-        read = s.recv(togo)
-        b = b + read
-        togo = togo - len(read)
-    togo = int.from_bytes(b, &#34;big&#34;)
-    b = b&#39;&#39;
-    fds = array.array(&#34;i&#34;)
-    while togo &gt; 0:
-        read, ancdata, _, _ = s.recvmsg(togo, socket.CMSG_LEN(fds.itemsize))
-        for cmsg_level, cmsg_type, cmsg_data in ancdata:
-            if cmsg_level == socket.SOL_SOCKET and cmsg_type == socket.SCM_RIGHTS:
-                fds.frombytes(cmsg_data[:len(cmsg_data) - (len(cmsg_data) % fds.itemsize)])
-        b = b + read
-        togo = togo - len(read)
-    if len(fds) != 0:
-        return (json.loads(b.decode(&#34;utf-8&#34;)), fds[0])
-    else:
-        return (json.loads(b.decode(&#34;utf-8&#34;)),)</code></pre>
+class Switch(CompoundButton):
+    &#34;&#34;&#34;This represents a Switch.&#34;&#34;&#34;
+    
+    def __init__(self, activity, text, parent=None, checked=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        self.checked = checked
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwitch&#34;, &#34;params&#34;: args}))
+    
+    
+    </code></pre>
 </details>
 </section>
 <section>
@@ -82,97 +51,58 @@ def read_msg_fd(s):
 <section>
 </section>
 <section>
-<h2 class="section-title" id="header-functions">Functions</h2>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="termuxgui.msg.read_msg"><code class="name flex">
-<span>def <span class="ident">read_msg</span></span>(<span>s)</span>
+<dt id="termuxgui.switch.Switch"><code class="flex name class">
+<span>class <span class="ident">Switch</span></span>
+<span>(</span><span>activity, text, parent=None, checked=False)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>This represents a Switch.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def read_msg(s):
-    b = b&#39;&#39;
-    togo = 4
-    while togo &gt; 0:
-        read = s.recv(togo)
-        b = b + read
-        togo = togo - len(read)
-    togo = int.from_bytes(b, &#34;big&#34;)
-    b = b&#39;&#39;
-    while togo &gt; 0:
-        read = s.recv(togo)
-        b = b + read
-        togo = togo - len(read)
-    return loads(b.decode(&#34;utf-8&#34;))</code></pre>
+<pre><code class="python">class Switch(CompoundButton):
+    &#34;&#34;&#34;This represents a Switch.&#34;&#34;&#34;
+    
+    def __init__(self, activity, text, parent=None, checked=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        self.checked = checked
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwitch&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
-</dd>
-<dt id="termuxgui.msg.read_msg_fd"><code class="name flex">
-<span>def <span class="ident">read_msg_fd</span></span>(<span>s)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def read_msg_fd(s):
-    b = b&#39;&#39;
-    togo = 4
-    while togo &gt; 0:
-        read = s.recv(togo)
-        b = b + read
-        togo = togo - len(read)
-    togo = int.from_bytes(b, &#34;big&#34;)
-    b = b&#39;&#39;
-    fds = array.array(&#34;i&#34;)
-    while togo &gt; 0:
-        read, ancdata, _, _ = s.recvmsg(togo, socket.CMSG_LEN(fds.itemsize))
-        for cmsg_level, cmsg_type, cmsg_data in ancdata:
-            if cmsg_level == socket.SOL_SOCKET and cmsg_type == socket.SCM_RIGHTS:
-                fds.frombytes(cmsg_data[:len(cmsg_data) - (len(cmsg_data) % fds.itemsize)])
-        b = b + read
-        togo = togo - len(read)
-    if len(fds) != 0:
-        return (json.loads(b.decode(&#34;utf-8&#34;)), fds[0])
-    else:
-        return (json.loads(b.decode(&#34;utf-8&#34;)),)</code></pre>
-</details>
-</dd>
-<dt id="termuxgui.msg.send_msg"><code class="name flex">
-<span>def <span class="ident">send_msg</span></span>(<span>c, msg)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def send_msg(c, msg):
-    m = bytes(msg, &#34;utf-8&#34;)
-    c.sendall((len(m)).to_bytes(4,&#34;big&#34;))
-    c.sendall(m)</code></pre>
-</details>
-</dd>
-<dt id="termuxgui.msg.send_read_msg"><code class="name flex">
-<span>def <span class="ident">send_read_msg</span></span>(<span>s, msg)</span>
-</code></dt>
-<dd>
-<div class="desc"></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def send_read_msg(s, msg):
-    send_msg(s, msg)
-    return read_msg(s)</code></pre>
-</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></li>
+<li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
+<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setchecked" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.setchecked">setchecked</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.settext" href="textview.html#termuxgui.textview.TextView.settext">settext</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 </dl>
-</section>
-<section>
 </section>
 </article>
 <nav id="sidebar">
@@ -186,12 +116,11 @@ def read_msg_fd(s):
 <li><code><a title="termuxgui" href="index.html">termuxgui</a></code></li>
 </ul>
 </li>
-<li><h3><a href="#header-functions">Functions</a></h3>
-<ul class="">
-<li><code><a title="termuxgui.msg.read_msg" href="#termuxgui.msg.read_msg">read_msg</a></code></li>
-<li><code><a title="termuxgui.msg.read_msg_fd" href="#termuxgui.msg.read_msg_fd">read_msg_fd</a></code></li>
-<li><code><a title="termuxgui.msg.send_msg" href="#termuxgui.msg.send_msg">send_msg</a></code></li>
-<li><code><a title="termuxgui.msg.send_read_msg" href="#termuxgui.msg.send_read_msg">send_read_msg</a></code></li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="termuxgui.switch.Switch" href="#termuxgui.switch.Switch">Switch</a></code></h4>
+</li>
 </ul>
 </li>
 </ul>

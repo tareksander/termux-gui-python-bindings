@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>termuxgui.buffer API documentation</title>
+<title>termuxgui.linearlayout API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,57 +19,32 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>termuxgui.buffer</code></h1>
+<h1 class="title">Module <code>termuxgui.linearlayout</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from mmap import mmap
-import os
+<pre><code class="python">from json import dumps
 
-import termuxgui.msg as msg
 
-class Buffer:
-    &#34;&#34;&#34;This represents a raw ARGB888 image buffer.
+from termuxgui.viewgroup import ViewGroup
+
+class LinearLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a LinearLayout.&#34;&#34;&#34;
     
-    This is only available on Android 8.1+.
-    Buffers consume much memory, so be sure to close any Buffer you don&#39;t need any more.
-    Preferably use &#34;with&#34; to get the memory object of the buffer so it is automatically closed.
-    The memory object is a shared memory object that can be used like a bytes object or a file object.
-    You can also directly access the memory object as b.mem.
-    
-    A RuntimeError is raised when a Buffer can&#39;t be created.&#34;&#34;&#34;
-    
-    def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
-        
-        self.c = connection
-        c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
-        ret = msg.read_msg_fd(self.c._main,)
-        if len(ret) == 1:
-            raise RuntimeError(&#34;Could not create Buffer&#34;)
-        self.bid, self.fd = ret
-        self.mem = mmap(self.fd, w*h*4)
-    
-    def __enter__(self):
-        return self.mem
-    
-    def __exit__(self, type, value, traceback):
-        self.remove()
-        return False
+    def __init__(self, activity, parent=None, vertical=True):
+        args = {&#34;aid&#34;: activity.aid, &#34;vertical&#34;: vertical}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createLinearLayout&#34;, &#34;params&#34;: args}))
     
     
-    def remove(self):
-        &#34;&#34;&#34;Removes this buffer, freeing the memory.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
-        self.mem.close()
-        os.close(self.fd)
     
-    def blit(self):
-        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
-        self.mem.flush()
-        self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
+    
+    
+    
     
     
     
@@ -86,96 +61,50 @@ class Buffer:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="termuxgui.buffer.Buffer"><code class="flex name class">
-<span>class <span class="ident">Buffer</span></span>
-<span>(</span><span>connection, w, h, format='ARGB888')</span>
+<dt id="termuxgui.linearlayout.LinearLayout"><code class="flex name class">
+<span>class <span class="ident">LinearLayout</span></span>
+<span>(</span><span>activity, parent=None, vertical=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This represents a raw ARGB888 image buffer.</p>
-<p>This is only available on Android 8.1+.
-Buffers consume much memory, so be sure to close any Buffer you don't need any more.
-Preferably use "with" to get the memory object of the buffer so it is automatically closed.
-The memory object is a shared memory object that can be used like a bytes object or a file object.
-You can also directly access the memory object as b.mem.</p>
-<p>A RuntimeError is raised when a Buffer can't be created.</p></div>
+<div class="desc"><p>This represents a LinearLayout.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Buffer:
-    &#34;&#34;&#34;This represents a raw ARGB888 image buffer.
+<pre><code class="python">class LinearLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a LinearLayout.&#34;&#34;&#34;
     
-    This is only available on Android 8.1+.
-    Buffers consume much memory, so be sure to close any Buffer you don&#39;t need any more.
-    Preferably use &#34;with&#34; to get the memory object of the buffer so it is automatically closed.
-    The memory object is a shared memory object that can be used like a bytes object or a file object.
-    You can also directly access the memory object as b.mem.
-    
-    A RuntimeError is raised when a Buffer can&#39;t be created.&#34;&#34;&#34;
-    
-    def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
-        
-        self.c = connection
-        c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
-        ret = msg.read_msg_fd(self.c._main,)
-        if len(ret) == 1:
-            raise RuntimeError(&#34;Could not create Buffer&#34;)
-        self.bid, self.fd = ret
-        self.mem = mmap(self.fd, w*h*4)
-    
-    def __enter__(self):
-        return self.mem
-    
-    def __exit__(self, type, value, traceback):
-        self.remove()
-        return False
-    
-    
-    def remove(self):
-        &#34;&#34;&#34;Removes this buffer, freeing the memory.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
-        self.mem.close()
-        os.close(self.fd)
-    
-    def blit(self):
-        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
-        self.mem.flush()
-        self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
+    def __init__(self, activity, parent=None, vertical=True):
+        args = {&#34;aid&#34;: activity.aid, &#34;vertical&#34;: vertical}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createLinearLayout&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
-<h3>Methods</h3>
-<dl>
-<dt id="termuxgui.buffer.Buffer.blit"><code class="name flex">
-<span>def <span class="ident">blit</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def blit(self):
-    &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
-    self.mem.flush()
-    self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
-</details>
-</dd>
-<dt id="termuxgui.buffer.Buffer.remove"><code class="name flex">
-<span>def <span class="ident">remove</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Removes this buffer, freeing the memory.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def remove(self):
-    &#34;&#34;&#34;Removes this buffer, freeing the memory.&#34;&#34;&#34;
-    self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
-    self.mem.close()
-    os.close(self.fd)</code></pre>
-</details>
-</dd>
-</dl>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.radiogroup.RadioGroup" href="radiogroup.html#termuxgui.radiogroup.RadioGroup">RadioGroup</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 </dl>
 </section>
@@ -194,11 +123,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="termuxgui.buffer.Buffer" href="#termuxgui.buffer.Buffer">Buffer</a></code></h4>
-<ul class="">
-<li><code><a title="termuxgui.buffer.Buffer.blit" href="#termuxgui.buffer.Buffer.blit">blit</a></code></li>
-<li><code><a title="termuxgui.buffer.Buffer.remove" href="#termuxgui.buffer.Buffer.remove">remove</a></code></li>
-</ul>
+<h4><code><a title="termuxgui.linearlayout.LinearLayout" href="#termuxgui.linearlayout.LinearLayout">LinearLayout</a></code></h4>
 </li>
 </ul>
 </li>

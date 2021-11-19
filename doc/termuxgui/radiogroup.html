@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>termuxgui.togglebutton API documentation</title>
+<title>termuxgui.radiogroup API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>termuxgui.togglebutton</code></h1>
+<h1 class="title">Module <code>termuxgui.radiogroup</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -28,19 +28,21 @@
 </summary>
 <pre><code class="python">from json import dumps
 
-from termuxgui.compoundbutton import CompoundButton
-from termuxgui.view import View
+from termuxgui.linearlayout import LinearLayout
+from termuxgui.viewgroup import ViewGroup
 
 
-class ToggleButton(CompoundButton):
-    &#34;&#34;&#34;This represents a ToggleButton.&#34;&#34;&#34;
+class RadioGroup(LinearLayout):
+    &#34;&#34;&#34;This represents a RadioGroup.
     
-    def __init__(self, activity, parent=None, checked=False):
-        args = {&#34;aid&#34;: activity.aid, &#34;checked&#34;: checked}
+    Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.&#34;&#34;&#34;
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioGroup&#34;, &#34;params&#34;: args}))
+    
     
     </code></pre>
 </details>
@@ -54,48 +56,47 @@ class ToggleButton(CompoundButton):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="termuxgui.togglebutton.ToggleButton"><code class="flex name class">
-<span>class <span class="ident">ToggleButton</span></span>
-<span>(</span><span>activity, parent=None, checked=False)</span>
+<dt id="termuxgui.radiogroup.RadioGroup"><code class="flex name class">
+<span>class <span class="ident">RadioGroup</span></span>
+<span>(</span><span>activity, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This represents a ToggleButton.</p></div>
+<div class="desc"><p>This represents a RadioGroup.</p>
+<p>Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class ToggleButton(CompoundButton):
-    &#34;&#34;&#34;This represents a ToggleButton.&#34;&#34;&#34;
+<pre><code class="python">class RadioGroup(LinearLayout):
+    &#34;&#34;&#34;This represents a RadioGroup.
     
-    def __init__(self, activity, parent=None, checked=False):
-        args = {&#34;aid&#34;: activity.aid, &#34;checked&#34;: checked}
+    Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.&#34;&#34;&#34;
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))</code></pre>
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioGroup&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></li>
-<li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
-<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.linearlayout.LinearLayout" href="linearlayout.html#termuxgui.linearlayout.LinearLayout">LinearLayout</a></li>
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
+<li><code><b><a title="termuxgui.linearlayout.LinearLayout" href="linearlayout.html#termuxgui.linearlayout.LinearLayout">LinearLayout</a></b></code>:
 <ul class="hlist">
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.setchecked" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.setchecked">setchecked</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.settext" href="textview.html#termuxgui.textview.TextView.settext">settext</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
-<li><code><a title="termuxgui.compoundbutton.CompoundButton.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
 </ul>
 </li>
 </ul>
@@ -117,7 +118,7 @@ class ToggleButton(CompoundButton):
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="termuxgui.togglebutton.ToggleButton" href="#termuxgui.togglebutton.ToggleButton">ToggleButton</a></code></h4>
+<h4><code><a title="termuxgui.radiogroup.RadioGroup" href="#termuxgui.radiogroup.RadioGroup">RadioGroup</a></code></h4>
 </li>
 </ul>
 </li>
