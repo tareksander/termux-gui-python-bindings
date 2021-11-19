@@ -20,9 +20,9 @@ class ImageView(View):
     
     def setbuffer(self, b):
         """Makes the ImageView use a shared buffer as the image source."""
-        self.a.c.send_msg({"method": "setImage", "params": {"aid": self.a.aid, "id": self.id, "bid": b.bid}})
+        self.a.c.send_msg({"method": "setBuffer", "params": {"aid": self.a.aid, "id": self.id, "bid": b.bid}})
     
     def refresh(self):
         """Redraws the ImageView. You have to use this after blitting the Buffer when using a buffer."""
-        self.a.c.send_msg({"method": "setImage", "params": {"aid": self.a.aid, "id": self.id}})
+        self.a.c.send_msg({"method": "refreshImageView", "params": {"aid": self.a.aid, "id": self.id}})
     

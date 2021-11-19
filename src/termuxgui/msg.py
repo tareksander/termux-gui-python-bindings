@@ -1,4 +1,6 @@
 from json import loads
+import array
+import socket
 
 def read_msg(s):
     b = b''
@@ -44,8 +46,8 @@ def read_msg_fd(s):
         b = b + read
         togo = togo - len(read)
     if len(fds) != 0:
-        return (json.loads(b.decode("utf-8")), fds[0])
+        return (loads(b.decode("utf-8")), fds[0])
     else:
-        return (json.loads(b.decode("utf-8")),)
+        return (loads(b.decode("utf-8")),)
 
 

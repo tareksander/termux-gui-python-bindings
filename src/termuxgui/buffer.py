@@ -17,8 +17,8 @@ class Buffer:
     def __init__(self, connection, w, h, format="ARGB888"):
         
         self.c = connection
-        c.send_msg({"method": "addBuffer", "params": {"w": w, "h": h, "format": format}})
-        ret = msg.read_msg_fd(self.c._main,)
+        self.c.send_msg({"method": "addBuffer", "params": {"w": w, "h": h, "format": format}})
+        ret = msg.read_msg_fd(self.c._main)
         if len(ret) == 1:
             raise RuntimeError("Could not create Buffer")
         self.bid, self.fd = ret
