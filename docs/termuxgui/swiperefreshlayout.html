@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>termuxgui.edittext API documentation</title>
+<title>termuxgui.swiperefreshlayout API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>termuxgui.edittext</code></h1>
+<h1 class="title">Module <code>termuxgui.swiperefreshlayout</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -28,27 +28,22 @@
 </summary>
 <pre><code class="python">from json import dumps
 
-from termuxgui.textview import TextView
-from termuxgui.view import View
+from termuxgui.viewgroup import ViewGroup
 
-class EditText(TextView):
-    &#34;&#34;&#34;This represents an EditText.&#34;&#34;&#34;
+class SwipeRefreshLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a SwipeRefreshLayout.&#34;&#34;&#34;
     
-    def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=&#34;text&#34;):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput, &#34;type&#34;: inputtype}
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
     
-    
-    
-    def showcursor(self, show):
-        &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})
-    
-    
-    
-    
+    def setrefreshing(self, refreshing):
+        &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
+        
+        You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})
     
     
     </code></pre>
@@ -63,76 +58,75 @@ class EditText(TextView):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="termuxgui.edittext.EditText"><code class="flex name class">
-<span>class <span class="ident">EditText</span></span>
-<span>(</span><span>activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype='text')</span>
+<dt id="termuxgui.swiperefreshlayout.SwipeRefreshLayout"><code class="flex name class">
+<span>class <span class="ident">SwipeRefreshLayout</span></span>
+<span>(</span><span>activity, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>This represents an EditText.</p></div>
+<div class="desc"><p>This represents a SwipeRefreshLayout.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class EditText(TextView):
-    &#34;&#34;&#34;This represents an EditText.&#34;&#34;&#34;
+<pre><code class="python">class SwipeRefreshLayout(ViewGroup):
+    &#34;&#34;&#34;This represents a SwipeRefreshLayout.&#34;&#34;&#34;
     
-    def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=&#34;text&#34;):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput, &#34;type&#34;: inputtype}
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
     
-    
-    
-    def showcursor(self, show):
-        &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
+    def setrefreshing(self, refreshing):
+        &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
+        
+        You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="termuxgui.edittext.EditText.showcursor"><code class="name flex">
-<span>def <span class="ident">showcursor</span></span>(<span>self, show)</span>
+<dt id="termuxgui.swiperefreshlayout.SwipeRefreshLayout.setrefreshing"><code class="name flex">
+<span>def <span class="ident">setrefreshing</span></span>(<span>self, refreshing)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets whether the cursor position should be shown.</p></div>
+<div class="desc"><p>Sets whether the SwipeRefreshLayout displays the refresh animation.</p>
+<p>You have to call this with False when you refreshed the contents.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def showcursor(self, show):
-    &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
+<pre><code class="python">def setrefreshing(self, refreshing):
+    &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
+    
+    You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
 </details>
 </dd>
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></b></code>:
+<li><code><b><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></b></code>:
 <ul class="hlist">
-<li><code><a title="termuxgui.textview.TextView.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.sendtextevent" href="textview.html#termuxgui.textview.TextView.sendtextevent">sendtextevent</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.settext" href="textview.html#termuxgui.textview.TextView.settext">settext</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.settextcolor" href="textview.html#termuxgui.textview.TextView.settextcolor">settextcolor</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
 </ul>
 </li>
 </ul>
@@ -154,9 +148,9 @@ class EditText(TextView):
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="termuxgui.edittext.EditText" href="#termuxgui.edittext.EditText">EditText</a></code></h4>
+<h4><code><a title="termuxgui.swiperefreshlayout.SwipeRefreshLayout" href="#termuxgui.swiperefreshlayout.SwipeRefreshLayout">SwipeRefreshLayout</a></code></h4>
 <ul class="">
-<li><code><a title="termuxgui.edittext.EditText.showcursor" href="#termuxgui.edittext.EditText.showcursor">showcursor</a></code></li>
+<li><code><a title="termuxgui.swiperefreshlayout.SwipeRefreshLayout.setrefreshing" href="#termuxgui.swiperefreshlayout.SwipeRefreshLayout.setrefreshing">setrefreshing</a></code></li>
 </ul>
 </li>
 </ul>
