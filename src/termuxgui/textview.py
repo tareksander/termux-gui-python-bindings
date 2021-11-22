@@ -25,5 +25,13 @@ class TextView(View):
         self.a.c.send_msg({"method": "setText", "params": {"aid": self.a.aid, "id": self.id, "text": text}})
     
     
+    def settextcolor(self, color):
+        """Sets the text color of this TextView. The color format is the same as for Activity.settheme()."""
+        self.a.c.send_msg({"method": "setTextColor", "params": {"aid": self.a.aid, "id": self.id, "color": color}})
+    
+    
+    def sendtextevent(self, send):
+        """Sets whether ot not text events are send for this TextView."""
+        self.a.c.send_msg({"method": "sendTextEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
     
     

@@ -30,7 +30,7 @@ After connecting to the plugin you can set up your gui.
 Then you have to wait for user input (or sleep for some time) and decide when to quit your program.  
 If you only use one Activity you can use
 ```python
-if ev.type == "destroy" and ev.value["finishing"]:
+if ev.type == tg.Event.destroy and ev.value["finishing"]:
     sys.exit()
 ```
 in the event loop to quit you program when the activity exits.  
@@ -320,8 +320,6 @@ The make it a practical example, we will make a dialog frontend for the `youtube
 You can install that package if you want to try it out, but the UI works without that.  
 
 ```python
-#!/usr/bin/env python3
-
 import termuxgui as tg
 import sys
 import time
@@ -388,6 +386,182 @@ with tg.Connection() as c:
 
 
 [inputs.py](tutorial/inputs.py)<!-- @IGNORE PREVIOUS: link -->  
+<br>
+<br>
+
+  
+There are some more Views you can use to get user input:  
+
+
+```python
+import termuxgui as tg
+import sys
+import time
+from subprocess import run
+
+with tg.Connection() as c:
+    a = tg.Activity(c, dialog=True)
+    
+    layout = tg.LinearLayout(a)
+    
+    title = tg.TextView(a, "Input Demo", layout)
+    title.settextsize(30)
+    title.setmargin(5)
+    
+    # Switches have a text displayed on the left and a switch that can be set on the right
+    switch = tg.Switch(a, "Switch", layout)
+    
+    # ToggleButtons are more like Buttons, but have an on/off state, but you can't set the text
+    tb = tg.ToggleButton(a, layout)
+    
+    # RadioGoups are containers for RadioButtons.
+    # Inside a RadioGroup, only one RadioButton can be set.
+    rg = tg.RadioGroup(a, layout)
+    
+    # The RadioButtons are created in a list, so you can check which of them is checked more easily
+    rbs = [tg.RadioButton(a, "Radio 1", rg), tg.RadioButton(a, "Radio 2", rg), tg.RadioButton(a, "Radio 3", rg)]
+    
+    # Spinners display a drop-down menu with strings to choose from
+    spinner = tg.Spinner(a, layout)
+    
+    strings = ["Option 1", "Option 2", "Option 3"]
+    
+    # You can set the list of values to choose from
+    spinner.setlist(strings)
+    
+    for ev in c.events():
+        if ev.type == tg.Event.destroy and ev.value["finishing"]:
+            sys.exit()
+        # Checked events work the same for Switches, ToggleButtons and Checkboxes
+        if ev.type == tg.Event.click and ev.value["id"] == switch:
+            print("Switch checked: ", ev.value["set"])
+        if ev.type == tg.Event.click and ev.value["id"] == tb:
+            print("ToggleButton checked: ", ev.value["set"])
+        # A RadioGroup emits a selected event when a RadioButton is selected
+        if ev.type == tg.Event.selected and ev.value["id"] == rg:
+            # We can now use the index method of the list to find out which RadioButton is checked
+            print("RadioButton checked: ", rbs.index(ev.value["selected"]))
+        # Spinners evit an itemselected event
+        if ev.type == tg.Event.itemselected and ev.value["id"] == spinner:
+            # for itemselected events, selected is the selected value as a string
+            print("Spinner selected: ", ev.value["selected"])
+```
+
+[inputs2.py](tutorial/inputs2.py)<!-- @IGNORE PREVIOUS: link -->  
+
+## Buffers
+
+You can use a shared memory buffer to draw to ImageViews without having to convert it to an image file first or even sending the data.  
+Using a shared buffer is much faster than setting the image for an ImageView every time.  
+  
+This example uses SDL2 and a python wrapper to draw to the buffer.  
+You can install both using
+
+    pkg install x11-repo
+    pkg install sdl2
+    pip install pysdl2
+
+You might need to do
+
+    export PYSDL2_DLL_PATH=$PREFIX/lib
+
+for pysdl2 to find the sdl2 library.
+
+```python
+import time
+import sys
+from ctypes import *
+from sdl2 import *
+import sdl2.ext
+import gc
+
+import termuxgui as tg
+
+with tg.Connection() as c:
+    
+    a = tg.Activity(c)
+    time.sleep(0.5) # wait for the activity to show
+    
+    im = tg.ImageView(a)
+    
+    # This create a pixel buffer with size 500x500
+    b = tg.Buffer(c, 500,500)
+    
+    # This sets the ImageView to display the buffer
+    im.setbuffer(b)
+    
+    
+    with b as mem:
+        # This creates a c void pointer from the shared memory
+        memp = cast(pointer(c_uint8.from_buffer(mem, 0)), c_void_p)
+        
+        # We initialize the video system of SDL
+        SDL_Init(SDL_INIT_VIDEO)
+        
+        # Then we create a SDL surface from our buffer. We pass in the pointer to our buffer, the buffer width and height,
+        # the bit depth (the format is always ARGB8888, so it's 32 bits), wthe pitch (bytes per row), and the masks for the color values.
+        # The mask determines the format and is the same for all buffers
+        surf = SDL_CreateRGBSurfaceFrom(memp, 500, 500, 32, 4*500, c_uint(0xff), c_uint(0xff00), c_uint(0xff0000), c_uint(0xff000000))
+        
+        # in general you would write:
+        # SDL_CreateRGBSurfaceFrom(memp, width, height, 32, 4*width, c_uint(0xff), c_uint(0xff00), c_uint(0xff0000), c_uint(0xff000000))
+        
+        
+        white = sdl2.ext.Color(255, 255, 255, 255) # Color in RGBA format
+        red = sdl2.ext.Color(255, 0, 0, 255)
+        green = sdl2.ext.Color(0, 255, 0, 255)
+        blue = sdl2.ext.Color(0, 0, 255, 255)
+        
+        
+        for i in range(490):
+            
+            # clear the buffer
+            sdl2.ext.fill(surf, white)
+            
+            # make a red square go from the top left to the bottom right
+            sdl2.ext.fill(surf, red, (i,i,10,10))
+            
+            # make a green square go from the top right to the bottom left
+            sdl2.ext.fill(surf, green, (490-i,i,10,10))
+            
+            # make a blue square go from the top middle to the bottom middle
+            sdl2.ext.fill(surf, blue, (245,i,10,10))
+            
+            
+            
+            # and blit the shared memory buffer
+            b.blit()
+            # now we have to request that the ImageView redraws itself to reflect the new contents of the buffer
+            im.refresh()
+            
+            time.sleep(0.01)
+        
+        # Make sure the shared memory can be closed
+        del memp # free the pointer
+        gc.collect() # let the garbage collector run, so the pointer is really discarded
+        
+        
+        # do proper cleanup of SDL
+        SDL_FreeSurface(surf)
+        SDL_Quit()
+        
+        time.sleep(0.2)
+```
+
+[buffers.py](tutorial/buffers.py)<!-- @IGNORE PREVIOUS: link -->  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

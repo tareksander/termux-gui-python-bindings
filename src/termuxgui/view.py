@@ -27,18 +27,18 @@ class View:
             args["dir"] = dir
         self.a.c.send_msg({"method": "setMargin", "params": args})
 
-    def setwidth(self, width):
-        """Sets the width of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT"."""
-        self.a.c.send_msg({"method": "setWidth", "params": {"aid": self.a.aid, "id": self.id, "width": width}})
+    def setwidth(self, width, px=False):
+        """Sets the width of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT". If px is true, the values are in pixels instead."""
+        self.a.c.send_msg({"method": "setWidth", "params": {"aid": self.a.aid, "id": self.id, "width": width, "px": px}})
 
-    def setheight(self, height):
-        """Sets the height of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT"."""
-        self.a.c.send_msg({"method": "setHeight", "params": {"aid": self.a.aid, "id": self.id, "height": height}})
+    def setheight(self, height, px=False):
+        """Sets the height of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT". If px is true, the values are in pixels instead."""
+        self.a.c.send_msg({"method": "setHeight", "params": {"aid": self.a.aid, "id": self.id, "height": height, "px": px}})
 
-    def setdimensions(self, width, height):
-        """Sets the dimensions of this view. width and height are the same as for setwidth and setheight."""
-        self.a.setwidth(width)
-        self.a.setheight(height)
+    def setdimensions(self, width, height, px=False):
+        """Sets the dimensions of this view. width and height are the same as for setwidth and setheight. If px is true, the values are in pixels instead."""
+        self.setwidth(width, px)
+        self.setheight(height, px)
 
     def setlinearlayoutparams(self, weight):
         """Sets the LinearLayout weight for this view."""
@@ -49,6 +49,34 @@ class View:
         """Sets whether ot not touch events are send for this View."""
         self.a.c.send_msg({"method": "sendTouchEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
     
+    def sendclickevent(self, send):
+        """Sets whether ot not click events are send for this View."""
+        self.a.c.send_msg({"method": "sendClickEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
+    
+    
+    def sendlongclickevent(self, send):
+        """Sets whether ot not long click events are send for this View."""
+        self.a.c.send_msg({"method": "sendLongClickEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
+    
+    def sendfocuschangeevent(self, send):
+        """Sets whether ot not focus change events are send for this View."""
+        self.a.c.send_msg({"method": "sendFocusChangeEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
+    
+    
+    def getdimensions(self):
+        """Gets the width and height of a View in the layout as a list. The values are in pixels."""
+        return self.a.c.send_read_msg({"method": "getDimensions", "params": {"aid": self.a.aid, "id": self.id}})
+    
+    
+    def setbackgroundcolor(self, color):
+        """Sets the background color for this view."""
+        self.a.c.send_msg({"method": "setBackgroundColor", "params": {"aid": self.a.aid, "id": self.id, "color": color}})
+    
+    def setvisibility(self, vis):
+        """Sets the visibilityr for this view.
+        
+        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space."""
+        self.a.c.send_msg({"method": "setVisibility", "params": {"aid": self.a.aid, "id": self.id, "vis": vis}})
     
     
     def handleevent(self, e):

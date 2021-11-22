@@ -1,6 +1,5 @@
 from json import dumps
 
-
 from termuxgui.viewgroup import ViewGroup
 
 class LinearLayout(ViewGroup):
