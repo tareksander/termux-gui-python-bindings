@@ -44,9 +44,6 @@ class Task:
         &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
     
-    def movetoback(self):
-        &#34;&#34;&#34;Moves this Task to the recents screen and hide it.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
  </code></pre>
 </details>
 </section>
@@ -82,11 +79,7 @@ class Task:
     
     def bringtofront(self):
         &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
-    
-    def movetoback(self):
-        &#34;&#34;&#34;Moves this Task to the recents screen and hide it.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
+        self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -118,20 +111,6 @@ class Task:
     self.c.send_msg({&#34;method&#34;: &#34;finishTask&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 </dd>
-<dt id="termuxgui.task.Task.movetoback"><code class="name flex">
-<span>def <span class="ident">movetoback</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Moves this Task to the recents screen and hide it.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def movetoback(self):
-    &#34;&#34;&#34;Moves this Task to the recents screen and hide it.&#34;&#34;&#34;
-    self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
-</details>
-</dd>
 </dl>
 </dd>
 </dl>
@@ -155,7 +134,6 @@ class Task:
 <ul class="">
 <li><code><a title="termuxgui.task.Task.bringtofront" href="#termuxgui.task.Task.bringtofront">bringtofront</a></code></li>
 <li><code><a title="termuxgui.task.Task.finish" href="#termuxgui.task.Task.finish">finish</a></code></li>
-<li><code><a title="termuxgui.task.Task.movetoback" href="#termuxgui.task.Task.movetoback">movetoback</a></code></li>
 </ul>
 </li>
 </ul>

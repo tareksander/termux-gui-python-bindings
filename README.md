@@ -7,7 +7,7 @@ There is also [documentation](https://tareksander.github.io/termux-gui-python-bi
 
 
 Installing and updating:  
-Download a wheel from the releases and then run `pip install wheel.whl` to install or update the library.
+Download a wheel from the releases and then run `pip install wheel.whl` to install or update the library, or just use `pip install termuxgui` to install from pypi.
 
 
 

@@ -35,12 +35,16 @@ You don&#39;t need to include all the submodules, all needed classes are automat
 
 __all__ = [&#34;Activity&#34;, &#34;Connection&#34;, &#34;Event&#34;, &#34;Task&#34;, &#34;View&#34;, &#34;ViewGroup&#34;, &#34;LinearLayout&#34;,
            &#34;FrameLayout&#34;, &#34;Space&#34;, &#34;TextView&#34;, &#34;EditText&#34;, &#34;ImageView&#34;, &#34;Button&#34;,
-           &#34;Checkbox&#34;, &#34;NestedScrollView&#34;, &#34;Buffer&#34;, &#34;RadioGroup&#34;, &#34;RadioButton&#34;, &#34;Spinner&#34;, &#34;ToggleButton&#34;, &#34;Switch&#34;, &#34;CompoundButton&#34;, &#34;ProgressBar&#34;, &#34;SwipeRefreshLayout&#34;]
+           &#34;Checkbox&#34;, &#34;NestedScrollView&#34;, &#34;Buffer&#34;, &#34;RadioGroup&#34;, &#34;RadioButton&#34;, &#34;Spinner&#34;, &#34;ToggleButton&#34;, &#34;Switch&#34;, &#34;CompoundButton&#34;, &#34;ProgressBar&#34;, &#34;SwipeRefreshLayout&#34;, &#34;HorizontalScrollView&#34;, &#34;TabLayout&#34;]
 
 
 for m in __all__:
     exec(&#34;from termuxgui.&#34;+m.lower()+&#34; import &#34;+m)
-del m</code></pre>
+del m
+
+
+WRAP_CONTENT = &#34;WRAP_CONTENT&#34;
+MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 </details>
 </section>
 <section>
@@ -79,6 +83,10 @@ del m</code></pre>
 <div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="termuxgui.framelayout" href="framelayout.html">termuxgui.framelayout</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.horizontalscrollview" href="horizontalscrollview.html">termuxgui.horizontalscrollview</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -123,6 +131,10 @@ del m</code></pre>
 <div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="termuxgui.switch" href="switch.html">termuxgui.switch</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.tablayout" href="tablayout.html">termuxgui.tablayout</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -222,9 +234,9 @@ del m</code></pre>
         &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})
     
-    def settaskdescription(self, text, img):
+    def settaskdescription(self, label, img):
         &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
-        self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: text}})
+        self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})
     
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
         &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
@@ -245,7 +257,25 @@ del m</code></pre>
 
     def sendoverlayevents(send):
         &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})</code></pre>
+        self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})
+    
+    
+    def movetoback(self):
+        &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    
+    def requestunlock(self):
+        &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    def getconfiguration(self):
+        &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+        return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    def hidesoftkeyboard(self):
+        &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -263,6 +293,34 @@ del m</code></pre>
     self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
+<dt id="termuxgui.Activity.getconfiguration"><code class="name flex">
+<span>def <span class="ident">getconfiguration</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Moves this Activity's Task to the recents screen and hides it.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getconfiguration(self):
+    &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+    return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.hidesoftkeyboard"><code class="name flex">
+<span>def <span class="ident">hidesoftkeyboard</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Hides the soft keyboard if this Activity has the soft keyboard focus.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hidesoftkeyboard(self):
+    &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
+</details>
+</dd>
 <dt id="termuxgui.Activity.keepscreenon"><code class="name flex">
 <span>def <span class="ident">keepscreenon</span></span>(<span>on)</span>
 </code></dt>
@@ -275,6 +333,34 @@ del m</code></pre>
 <pre><code class="python">def keepscreenon(on):
     &#34;&#34;&#34;Sets whether the Activity should keep the screen on while it is showing.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.movetoback"><code class="name flex">
+<span>def <span class="ident">movetoback</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Moves this Activity's Task to the recents screen and hides it.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def movetoback(self):
+    &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Activity.requestunlock"><code class="name flex">
+<span>def <span class="ident">requestunlock</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def requestunlock(self):
+    &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.sendoverlayevents"><code class="name flex">
@@ -379,7 +465,7 @@ del m</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.settaskdescription"><code class="name flex">
-<span>def <span class="ident">settaskdescription</span></span>(<span>self, text, img)</span>
+<span>def <span class="ident">settaskdescription</span></span>(<span>self, label, img)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.</p></div>
@@ -387,9 +473,9 @@ del m</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def settaskdescription(self, text, img):
+<pre><code class="python">def settaskdescription(self, label, img):
     &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
-    self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: text}})</code></pre>
+    self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.settheme"><code class="name flex">
@@ -532,6 +618,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.textview.TextView.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.textview.TextView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
@@ -586,6 +673,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
@@ -690,6 +778,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.button.Button.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.button.Button.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.button.Button.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.button.Button.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.button.Button.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -814,7 +903,16 @@ You can also directly access the memory object as b.mem.</p>
     def send_read_msg(self, msg):
         &#34;&#34;&#34;Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         self.send_msg(msg)
-        return self.read_msg()</code></pre>
+        return self.read_msg()
+    
+    def turnscreenon(self):
+        &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+        self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
+    
+    
+    def islocked(self):
+        &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
+        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -865,6 +963,20 @@ You can also directly access the memory object as b.mem.</p>
     &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
     while True:
         yield Event(tgmsg.read_msg(self._event))</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.Connection.islocked"><code class="name flex">
+<span>def <span class="ident">islocked</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns whether the device is locked.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def islocked(self):
+    &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
+    return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Connection.read_msg"><code class="name flex">
@@ -940,6 +1052,20 @@ You can also directly access the memory object as b.mem.</p>
     run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)</code></pre>
 </details>
 </dd>
+<dt id="termuxgui.Connection.turnscreenon"><code class="name flex">
+<span>def <span class="ident">turnscreenon</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Truns the screen on.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def turnscreenon(self):
+    &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+    self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 <dt id="termuxgui.EditText"><code class="flex name class">
@@ -994,6 +1120,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.textview.TextView.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.textview.TextView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
@@ -1061,6 +1188,15 @@ You can also directly access the memory object as b.mem.</p>
     destroy = &#34;destroy&#34;
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
+    config = &#34;config&#34;
+    
+    # general events
+    screenon = &#34;screen_on&#34;
+    screen_off = &#34;screen_off&#34;
+    timezone = &#34;timezone&#34;
+    locale = &#34;locale&#34;
+    airplane = &#34;airplane&#34;
+    
     
     # special overlay events
     overlaytouch = &#34;overlayTouch&#34;
@@ -1089,7 +1225,15 @@ You can also directly access the memory object as b.mem.</p>
 </details>
 <h3>Class variables</h3>
 <dl>
+<dt id="termuxgui.Event.airplane"><code class="name">var <span class="ident">airplane</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="termuxgui.Event.click"><code class="name">var <span class="ident">click</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.config"><code class="name">var <span class="ident">config</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -1110,6 +1254,10 @@ You can also directly access the memory object as b.mem.</p>
 <div class="desc"></div>
 </dd>
 <dt id="termuxgui.Event.key"><code class="name">var <span class="ident">key</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.locale"><code class="name">var <span class="ident">locale</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -1141,6 +1289,14 @@ You can also directly access the memory object as b.mem.</p>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="termuxgui.Event.screen_off"><code class="name">var <span class="ident">screen_off</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.screenon"><code class="name">var <span class="ident">screenon</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="termuxgui.Event.selected"><code class="name">var <span class="ident">selected</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -1150,6 +1306,10 @@ You can also directly access the memory object as b.mem.</p>
 <div class="desc"></div>
 </dd>
 <dt id="termuxgui.Event.stop"><code class="name">var <span class="ident">stop</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.Event.timezone"><code class="name">var <span class="ident">timezone</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -1213,6 +1373,7 @@ You can also directly access the memory object as b.mem.</p>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
+<li><a title="termuxgui.horizontalscrollview.HorizontalScrollView" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView">HorizontalScrollView</a></li>
 <li><a title="termuxgui.nestedscrollview.NestedScrollView" href="nestedscrollview.html#termuxgui.nestedscrollview.NestedScrollView">NestedScrollView</a></li>
 </ul>
 <h3>Inherited members</h3>
@@ -1221,6 +1382,7 @@ You can also directly access the memory object as b.mem.</p>
 <ul class="hlist">
 <li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1234,6 +1396,98 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="termuxgui.HorizontalScrollView"><code class="flex name class">
+<span>class <span class="ident">HorizontalScrollView</span></span>
+<span>(</span><span>activity, parent=None, fillviewport=False, snapping=False, nobar=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This represents a HorizontalScrollView.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HorizontalScrollView(FrameLayout):
+    &#34;&#34;&#34;This represents a HorizontalScrollView.&#34;&#34;&#34;
+    
+    def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createHorizontalScrollView&#34;, &#34;params&#34;: args}))
+    
+    def getscrollposition(self):
+        &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
+        return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
+    
+    def setscrollposition(self, x, y, smooth=True):
+        &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></li>
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="termuxgui.tablayout.TabLayout" href="tablayout.html#termuxgui.tablayout.TabLayout">TabLayout</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.HorizontalScrollView.getscrollposition"><code class="name flex">
+<span>def <span class="ident">getscrollposition</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the x and x scroll positions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getscrollposition(self):
+    &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
+    return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.HorizontalScrollView.setscrollposition"><code class="name flex">
+<span>def <span class="ident">setscrollposition</span></span>(<span>self, x, y, smooth=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the x and x scroll positions. smooth specifies whether is's a smooth scoll or not.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setscrollposition(self, x, y, smooth=True):
+    &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.framelayout.FrameLayout.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
 </ul>
 </li>
 </ul>
@@ -1325,6 +1579,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1376,6 +1631,7 @@ You can also directly access the memory object as b.mem.</p>
 <ul class="hlist">
 <li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1395,7 +1651,7 @@ You can also directly access the memory object as b.mem.</p>
 </dd>
 <dt id="termuxgui.NestedScrollView"><code class="flex name class">
 <span>class <span class="ident">NestedScrollView</span></span>
-<span>(</span><span>activity, parent=None)</span>
+<span>(</span><span>activity, parent=None, fillviewport=False, snapping=False, nobar=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a NestedScrollView.</p></div>
@@ -1406,11 +1662,19 @@ You can also directly access the memory object as b.mem.</p>
 <pre><code class="python">class NestedScrollView(FrameLayout):
     &#34;&#34;&#34;This represents a NestedScrollView.&#34;&#34;&#34;
     
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
+    def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createNestedScrollView&#34;, &#34;params&#34;: args}))</code></pre>
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createNestedScrollView&#34;, &#34;params&#34;: args}))
+    
+    def getscrollposition(self):
+        &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
+        return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
+    
+    def setscrollposition(self, x, y, smooth=True):
+        &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1418,12 +1682,44 @@ You can also directly access the memory object as b.mem.</p>
 <li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.NestedScrollView.getscrollposition"><code class="name flex">
+<span>def <span class="ident">getscrollposition</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gets the x and x scroll positions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getscrollposition(self):
+    &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
+    return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.NestedScrollView.setscrollposition"><code class="name flex">
+<span>def <span class="ident">setscrollposition</span></span>(<span>self, x, y, smooth=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the x and x scroll positions. smooth specifies whether is's a smooth scoll or not.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setscrollposition(self, x, y, smooth=True):
+    &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
+</details>
+</dd>
+</dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
 <li><code><b><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.framelayout.FrameLayout.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1491,6 +1787,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1540,6 +1837,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
@@ -1597,6 +1895,7 @@ You can also directly access the memory object as b.mem.</p>
 <ul class="hlist">
 <li><code><a title="termuxgui.linearlayout.LinearLayout.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.linearlayout.LinearLayout.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1642,6 +1941,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1709,6 +2009,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1782,6 +2083,7 @@ You can also directly access the memory object as b.mem.</p>
 <ul class="hlist">
 <li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -1831,6 +2133,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
@@ -1850,6 +2153,81 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="termuxgui.TabLayout"><code class="flex name class">
+<span>class <span class="ident">TabLayout</span></span>
+<span>(</span><span>activity, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This represents a TabLayout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TabLayout(HorizontalScrollView):
+    &#34;&#34;&#34;This represents a TabLayout.&#34;&#34;&#34;
+    
+    def __init__(self, activity, parent=None):
+        args = {&#34;aid&#34;: activity.aid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent.id
+        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTabLayout&#34;, &#34;params&#34;: args}))
+    
+    
+    
+    def setlist(self, list):
+        &#34;&#34;&#34;Sets the list tabs. list has to be a list containing strings.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="termuxgui.horizontalscrollview.HorizontalScrollView" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView">HorizontalScrollView</a></li>
+<li><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></li>
+<li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.TabLayout.setlist"><code class="name flex">
+<span>def <span class="ident">setlist</span></span>(<span>self, list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the list tabs. list has to be a list containing strings.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setlist(self, list):
+    &#34;&#34;&#34;Sets the list tabs. list has to be a list containing strings.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="termuxgui.horizontalscrollview.HorizontalScrollView" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView">HorizontalScrollView</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition">getscrollposition</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setscrollposition" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView.setscrollposition">setscrollposition</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
 </ul>
 </li>
 </ul>
@@ -1877,11 +2255,7 @@ You can also directly access the memory object as b.mem.</p>
     
     def bringtofront(self):
         &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
-    
-    def movetoback(self):
-        &#34;&#34;&#34;Moves this Task to the recents screen and hide it.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
+        self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -1911,20 +2285,6 @@ You can also directly access the memory object as b.mem.</p>
 <pre><code class="python">def finish(self):
     &#34;&#34;&#34;Finishes this Task.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;finishTask&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
-</details>
-</dd>
-<dt id="termuxgui.Task.movetoback"><code class="name flex">
-<span>def <span class="ident">movetoback</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Moves this Task to the recents screen and hide it.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def movetoback(self):
-    &#34;&#34;&#34;Moves this Task to the recents screen and hide it.&#34;&#34;&#34;
-    self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 </dd>
 </dl>
@@ -2058,6 +2418,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -2107,6 +2468,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.compoundbutton.CompoundButton" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton">CompoundButton</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.compoundbutton.CompoundButton.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.compoundbutton.CompoundButton.handleevent" href="compoundbutton.html#termuxgui.compoundbutton.CompoundButton.handleevent">handleevent</a></code></li>
@@ -2218,6 +2580,11 @@ You can also directly access the memory object as b.mem.</p>
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
     
     
+    def focus(self, forcesoft=False):
+        &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})
+    
+    
     def handleevent(self, e):
         &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
@@ -2245,6 +2612,20 @@ You can also directly access the memory object as b.mem.</p>
 <pre><code class="python">def delete(self):
     &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.View.focus"><code class="name flex">
+<span>def <span class="ident">focus</span></span>(<span>self, forcesoft=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def focus(self, forcesoft=False):
+    &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.getdimensions"><code class="name flex">
@@ -2491,6 +2872,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
 <ul class="hlist">
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
@@ -2528,6 +2910,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.edittext" href="edittext.html">termuxgui.edittext</a></code></li>
 <li><code><a title="termuxgui.event" href="event.html">termuxgui.event</a></code></li>
 <li><code><a title="termuxgui.framelayout" href="framelayout.html">termuxgui.framelayout</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview" href="horizontalscrollview.html">termuxgui.horizontalscrollview</a></code></li>
 <li><code><a title="termuxgui.imageview" href="imageview.html">termuxgui.imageview</a></code></li>
 <li><code><a title="termuxgui.linearlayout" href="linearlayout.html">termuxgui.linearlayout</a></code></li>
 <li><code><a title="termuxgui.msg" href="msg.html">termuxgui.msg</a></code></li>
@@ -2539,6 +2922,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.spinner" href="spinner.html">termuxgui.spinner</a></code></li>
 <li><code><a title="termuxgui.swiperefreshlayout" href="swiperefreshlayout.html">termuxgui.swiperefreshlayout</a></code></li>
 <li><code><a title="termuxgui.switch" href="switch.html">termuxgui.switch</a></code></li>
+<li><code><a title="termuxgui.tablayout" href="tablayout.html">termuxgui.tablayout</a></code></li>
 <li><code><a title="termuxgui.task" href="task.html">termuxgui.task</a></code></li>
 <li><code><a title="termuxgui.textview" href="textview.html">termuxgui.textview</a></code></li>
 <li><code><a title="termuxgui.togglebutton" href="togglebutton.html">termuxgui.togglebutton</a></code></li>
@@ -2552,7 +2936,11 @@ You can also directly access the memory object as b.mem.</p>
 <h4><code><a title="termuxgui.Activity" href="#termuxgui.Activity">Activity</a></code></h4>
 <ul class="two-column">
 <li><code><a title="termuxgui.Activity.finish" href="#termuxgui.Activity.finish">finish</a></code></li>
+<li><code><a title="termuxgui.Activity.getconfiguration" href="#termuxgui.Activity.getconfiguration">getconfiguration</a></code></li>
+<li><code><a title="termuxgui.Activity.hidesoftkeyboard" href="#termuxgui.Activity.hidesoftkeyboard">hidesoftkeyboard</a></code></li>
 <li><code><a title="termuxgui.Activity.keepscreenon" href="#termuxgui.Activity.keepscreenon">keepscreenon</a></code></li>
+<li><code><a title="termuxgui.Activity.movetoback" href="#termuxgui.Activity.movetoback">movetoback</a></code></li>
+<li><code><a title="termuxgui.Activity.requestunlock" href="#termuxgui.Activity.requestunlock">requestunlock</a></code></li>
 <li><code><a title="termuxgui.Activity.sendoverlayevents" href="#termuxgui.Activity.sendoverlayevents">sendoverlayevents</a></code></li>
 <li><code><a title="termuxgui.Activity.setinputmode" href="#termuxgui.Activity.setinputmode">setinputmode</a></code></li>
 <li><code><a title="termuxgui.Activity.setorientation" href="#termuxgui.Activity.setorientation">setorientation</a></code></li>
@@ -2590,11 +2978,13 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.Connection.checkevent" href="#termuxgui.Connection.checkevent">checkevent</a></code></li>
 <li><code><a title="termuxgui.Connection.close" href="#termuxgui.Connection.close">close</a></code></li>
 <li><code><a title="termuxgui.Connection.events" href="#termuxgui.Connection.events">events</a></code></li>
+<li><code><a title="termuxgui.Connection.islocked" href="#termuxgui.Connection.islocked">islocked</a></code></li>
 <li><code><a title="termuxgui.Connection.read_msg" href="#termuxgui.Connection.read_msg">read_msg</a></code></li>
 <li><code><a title="termuxgui.Connection.send_msg" href="#termuxgui.Connection.send_msg">send_msg</a></code></li>
 <li><code><a title="termuxgui.Connection.send_read_msg" href="#termuxgui.Connection.send_read_msg">send_read_msg</a></code></li>
 <li><code><a title="termuxgui.Connection.toast" href="#termuxgui.Connection.toast">toast</a></code></li>
 <li><code><a title="termuxgui.Connection.totermux" href="#termuxgui.Connection.totermux">totermux</a></code></li>
+<li><code><a title="termuxgui.Connection.turnscreenon" href="#termuxgui.Connection.turnscreenon">turnscreenon</a></code></li>
 </ul>
 </li>
 <li>
@@ -2606,12 +2996,15 @@ You can also directly access the memory object as b.mem.</p>
 <li>
 <h4><code><a title="termuxgui.Event" href="#termuxgui.Event">Event</a></code></h4>
 <ul class="two-column">
+<li><code><a title="termuxgui.Event.airplane" href="#termuxgui.Event.airplane">airplane</a></code></li>
 <li><code><a title="termuxgui.Event.click" href="#termuxgui.Event.click">click</a></code></li>
+<li><code><a title="termuxgui.Event.config" href="#termuxgui.Event.config">config</a></code></li>
 <li><code><a title="termuxgui.Event.create" href="#termuxgui.Event.create">create</a></code></li>
 <li><code><a title="termuxgui.Event.destroy" href="#termuxgui.Event.destroy">destroy</a></code></li>
 <li><code><a title="termuxgui.Event.focusChange" href="#termuxgui.Event.focusChange">focusChange</a></code></li>
 <li><code><a title="termuxgui.Event.itemselected" href="#termuxgui.Event.itemselected">itemselected</a></code></li>
 <li><code><a title="termuxgui.Event.key" href="#termuxgui.Event.key">key</a></code></li>
+<li><code><a title="termuxgui.Event.locale" href="#termuxgui.Event.locale">locale</a></code></li>
 <li><code><a title="termuxgui.Event.longClick" href="#termuxgui.Event.longClick">longClick</a></code></li>
 <li><code><a title="termuxgui.Event.overlayScale" href="#termuxgui.Event.overlayScale">overlayScale</a></code></li>
 <li><code><a title="termuxgui.Event.overlaytouch" href="#termuxgui.Event.overlaytouch">overlaytouch</a></code></li>
@@ -2619,9 +3012,12 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.Event.pipchanged" href="#termuxgui.Event.pipchanged">pipchanged</a></code></li>
 <li><code><a title="termuxgui.Event.refresh" href="#termuxgui.Event.refresh">refresh</a></code></li>
 <li><code><a title="termuxgui.Event.resume" href="#termuxgui.Event.resume">resume</a></code></li>
+<li><code><a title="termuxgui.Event.screen_off" href="#termuxgui.Event.screen_off">screen_off</a></code></li>
+<li><code><a title="termuxgui.Event.screenon" href="#termuxgui.Event.screenon">screenon</a></code></li>
 <li><code><a title="termuxgui.Event.selected" href="#termuxgui.Event.selected">selected</a></code></li>
 <li><code><a title="termuxgui.Event.start" href="#termuxgui.Event.start">start</a></code></li>
 <li><code><a title="termuxgui.Event.stop" href="#termuxgui.Event.stop">stop</a></code></li>
+<li><code><a title="termuxgui.Event.timezone" href="#termuxgui.Event.timezone">timezone</a></code></li>
 <li><code><a title="termuxgui.Event.touch" href="#termuxgui.Event.touch">touch</a></code></li>
 <li><code><a title="termuxgui.Event.touch_cancel" href="#termuxgui.Event.touch_cancel">touch_cancel</a></code></li>
 <li><code><a title="termuxgui.Event.touch_down" href="#termuxgui.Event.touch_down">touch_down</a></code></li>
@@ -2636,6 +3032,13 @@ You can also directly access the memory object as b.mem.</p>
 <h4><code><a title="termuxgui.FrameLayout" href="#termuxgui.FrameLayout">FrameLayout</a></code></h4>
 </li>
 <li>
+<h4><code><a title="termuxgui.HorizontalScrollView" href="#termuxgui.HorizontalScrollView">HorizontalScrollView</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.HorizontalScrollView.getscrollposition" href="#termuxgui.HorizontalScrollView.getscrollposition">getscrollposition</a></code></li>
+<li><code><a title="termuxgui.HorizontalScrollView.setscrollposition" href="#termuxgui.HorizontalScrollView.setscrollposition">setscrollposition</a></code></li>
+</ul>
+</li>
+<li>
 <h4><code><a title="termuxgui.ImageView" href="#termuxgui.ImageView">ImageView</a></code></h4>
 <ul class="">
 <li><code><a title="termuxgui.ImageView.refresh" href="#termuxgui.ImageView.refresh">refresh</a></code></li>
@@ -2648,6 +3051,10 @@ You can also directly access the memory object as b.mem.</p>
 </li>
 <li>
 <h4><code><a title="termuxgui.NestedScrollView" href="#termuxgui.NestedScrollView">NestedScrollView</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.NestedScrollView.getscrollposition" href="#termuxgui.NestedScrollView.getscrollposition">getscrollposition</a></code></li>
+<li><code><a title="termuxgui.NestedScrollView.setscrollposition" href="#termuxgui.NestedScrollView.setscrollposition">setscrollposition</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="termuxgui.ProgressBar" href="#termuxgui.ProgressBar">ProgressBar</a></code></h4>
@@ -2680,11 +3087,16 @@ You can also directly access the memory object as b.mem.</p>
 <h4><code><a title="termuxgui.Switch" href="#termuxgui.Switch">Switch</a></code></h4>
 </li>
 <li>
+<h4><code><a title="termuxgui.TabLayout" href="#termuxgui.TabLayout">TabLayout</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.TabLayout.setlist" href="#termuxgui.TabLayout.setlist">setlist</a></code></li>
+</ul>
+</li>
+<li>
 <h4><code><a title="termuxgui.Task" href="#termuxgui.Task">Task</a></code></h4>
 <ul class="">
 <li><code><a title="termuxgui.Task.bringtofront" href="#termuxgui.Task.bringtofront">bringtofront</a></code></li>
 <li><code><a title="termuxgui.Task.finish" href="#termuxgui.Task.finish">finish</a></code></li>
-<li><code><a title="termuxgui.Task.movetoback" href="#termuxgui.Task.movetoback">movetoback</a></code></li>
 </ul>
 </li>
 <li>
@@ -2704,6 +3116,7 @@ You can also directly access the memory object as b.mem.</p>
 <h4><code><a title="termuxgui.View" href="#termuxgui.View">View</a></code></h4>
 <ul class="">
 <li><code><a title="termuxgui.View.delete" href="#termuxgui.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.View.focus" href="#termuxgui.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.View.getdimensions" href="#termuxgui.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.View.handleevent" href="#termuxgui.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.View.sendclickevent" href="#termuxgui.View.sendclickevent">sendclickevent</a></code></li>

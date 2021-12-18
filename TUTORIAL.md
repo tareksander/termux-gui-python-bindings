@@ -1,7 +1,7 @@
 # Python Bindings Tutorial
   
 Make sure you installed the library like explained in the README.  
-This tutorial assumes you have the basic understanding of the Android GUI from the [crash course](https://github.com/tareksander/termux-gui).  
+This tutorial assumes you have the basic understanding of the Android GUI from the [crash course](https://github.com/termux/termux-gui).  
 The full source code can also be found in the tutorial folder.  
   
 ## Basic structure

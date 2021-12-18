@@ -139,7 +139,14 @@ class Connection:
         self.send_msg(msg)
         return self.read_msg()
     
+    def turnscreenon(self):
+        &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+        self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
     
+    
+    def islocked(self):
+        &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
+        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})
     </code></pre>
 </details>
 </section>
@@ -255,7 +262,16 @@ class Connection:
     def send_read_msg(self, msg):
         &#34;&#34;&#34;Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         self.send_msg(msg)
-        return self.read_msg()</code></pre>
+        return self.read_msg()
+    
+    def turnscreenon(self):
+        &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+        self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
+    
+    
+    def islocked(self):
+        &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
+        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -306,6 +322,20 @@ class Connection:
     &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
     while True:
         yield Event(tgmsg.read_msg(self._event))</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.connection.Connection.islocked"><code class="name flex">
+<span>def <span class="ident">islocked</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns whether the device is locked.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def islocked(self):
+    &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
+    return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.read_msg"><code class="name flex">
@@ -381,6 +411,20 @@ class Connection:
     run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)</code></pre>
 </details>
 </dd>
+<dt id="termuxgui.connection.Connection.turnscreenon"><code class="name flex">
+<span>def <span class="ident">turnscreenon</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Truns the screen on.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def turnscreenon(self):
+    &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+    self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})</code></pre>
+</details>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -405,11 +449,13 @@ class Connection:
 <li><code><a title="termuxgui.connection.Connection.checkevent" href="#termuxgui.connection.Connection.checkevent">checkevent</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.close" href="#termuxgui.connection.Connection.close">close</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.events" href="#termuxgui.connection.Connection.events">events</a></code></li>
+<li><code><a title="termuxgui.connection.Connection.islocked" href="#termuxgui.connection.Connection.islocked">islocked</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.read_msg" href="#termuxgui.connection.Connection.read_msg">read_msg</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.send_msg" href="#termuxgui.connection.Connection.send_msg">send_msg</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.send_read_msg" href="#termuxgui.connection.Connection.send_read_msg">send_read_msg</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.toast" href="#termuxgui.connection.Connection.toast">toast</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.totermux" href="#termuxgui.connection.Connection.totermux">totermux</a></code></li>
+<li><code><a title="termuxgui.connection.Connection.turnscreenon" href="#termuxgui.connection.Connection.turnscreenon">turnscreenon</a></code></li>
 </ul>
 </li>
 </ul>

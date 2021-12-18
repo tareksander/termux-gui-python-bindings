@@ -58,6 +58,15 @@
     destroy = &#34;destroy&#34;
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
+    config = &#34;config&#34;
+    
+    # general events
+    screenon = &#34;screen_on&#34;
+    screen_off = &#34;screen_off&#34;
+    timezone = &#34;timezone&#34;
+    locale = &#34;locale&#34;
+    airplane = &#34;airplane&#34;
+    
     
     # special overlay events
     overlaytouch = &#34;overlayTouch&#34;
@@ -141,6 +150,15 @@
     destroy = &#34;destroy&#34;
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
+    config = &#34;config&#34;
+    
+    # general events
+    screenon = &#34;screen_on&#34;
+    screen_off = &#34;screen_off&#34;
+    timezone = &#34;timezone&#34;
+    locale = &#34;locale&#34;
+    airplane = &#34;airplane&#34;
+    
     
     # special overlay events
     overlaytouch = &#34;overlayTouch&#34;
@@ -169,7 +187,15 @@
 </details>
 <h3>Class variables</h3>
 <dl>
+<dt id="termuxgui.event.Event.airplane"><code class="name">var <span class="ident">airplane</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="termuxgui.event.Event.click"><code class="name">var <span class="ident">click</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.config"><code class="name">var <span class="ident">config</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -190,6 +216,10 @@
 <div class="desc"></div>
 </dd>
 <dt id="termuxgui.event.Event.key"><code class="name">var <span class="ident">key</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.locale"><code class="name">var <span class="ident">locale</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -221,6 +251,14 @@
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="termuxgui.event.Event.screen_off"><code class="name">var <span class="ident">screen_off</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.screenon"><code class="name">var <span class="ident">screenon</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="termuxgui.event.Event.selected"><code class="name">var <span class="ident">selected</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -230,6 +268,10 @@
 <div class="desc"></div>
 </dd>
 <dt id="termuxgui.event.Event.stop"><code class="name">var <span class="ident">stop</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.timezone"><code class="name">var <span class="ident">timezone</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -286,12 +328,15 @@
 <li>
 <h4><code><a title="termuxgui.event.Event" href="#termuxgui.event.Event">Event</a></code></h4>
 <ul class="two-column">
+<li><code><a title="termuxgui.event.Event.airplane" href="#termuxgui.event.Event.airplane">airplane</a></code></li>
 <li><code><a title="termuxgui.event.Event.click" href="#termuxgui.event.Event.click">click</a></code></li>
+<li><code><a title="termuxgui.event.Event.config" href="#termuxgui.event.Event.config">config</a></code></li>
 <li><code><a title="termuxgui.event.Event.create" href="#termuxgui.event.Event.create">create</a></code></li>
 <li><code><a title="termuxgui.event.Event.destroy" href="#termuxgui.event.Event.destroy">destroy</a></code></li>
 <li><code><a title="termuxgui.event.Event.focusChange" href="#termuxgui.event.Event.focusChange">focusChange</a></code></li>
 <li><code><a title="termuxgui.event.Event.itemselected" href="#termuxgui.event.Event.itemselected">itemselected</a></code></li>
 <li><code><a title="termuxgui.event.Event.key" href="#termuxgui.event.Event.key">key</a></code></li>
+<li><code><a title="termuxgui.event.Event.locale" href="#termuxgui.event.Event.locale">locale</a></code></li>
 <li><code><a title="termuxgui.event.Event.longClick" href="#termuxgui.event.Event.longClick">longClick</a></code></li>
 <li><code><a title="termuxgui.event.Event.overlayScale" href="#termuxgui.event.Event.overlayScale">overlayScale</a></code></li>
 <li><code><a title="termuxgui.event.Event.overlaytouch" href="#termuxgui.event.Event.overlaytouch">overlaytouch</a></code></li>
@@ -299,9 +344,12 @@
 <li><code><a title="termuxgui.event.Event.pipchanged" href="#termuxgui.event.Event.pipchanged">pipchanged</a></code></li>
 <li><code><a title="termuxgui.event.Event.refresh" href="#termuxgui.event.Event.refresh">refresh</a></code></li>
 <li><code><a title="termuxgui.event.Event.resume" href="#termuxgui.event.Event.resume">resume</a></code></li>
+<li><code><a title="termuxgui.event.Event.screen_off" href="#termuxgui.event.Event.screen_off">screen_off</a></code></li>
+<li><code><a title="termuxgui.event.Event.screenon" href="#termuxgui.event.Event.screenon">screenon</a></code></li>
 <li><code><a title="termuxgui.event.Event.selected" href="#termuxgui.event.Event.selected">selected</a></code></li>
 <li><code><a title="termuxgui.event.Event.start" href="#termuxgui.event.Event.start">start</a></code></li>
 <li><code><a title="termuxgui.event.Event.stop" href="#termuxgui.event.Event.stop">stop</a></code></li>
+<li><code><a title="termuxgui.event.Event.timezone" href="#termuxgui.event.Event.timezone">timezone</a></code></li>
 <li><code><a title="termuxgui.event.Event.touch" href="#termuxgui.event.Event.touch">touch</a></code></li>
 <li><code><a title="termuxgui.event.Event.touch_cancel" href="#termuxgui.event.Event.touch_cancel">touch_cancel</a></code></li>
 <li><code><a title="termuxgui.event.Event.touch_down" href="#termuxgui.event.Event.touch_down">touch_down</a></code></li>

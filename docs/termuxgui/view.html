@@ -107,6 +107,11 @@ class View:
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
     
     
+    def focus(self, forcesoft=False):
+        &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})
+    
+    
     def handleevent(self, e):
         &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
@@ -209,6 +214,11 @@ class View:
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
     
     
+    def focus(self, forcesoft=False):
+        &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})
+    
+    
     def handleevent(self, e):
         &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
@@ -236,6 +246,20 @@ class View:
 <pre><code class="python">def delete(self):
     &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.view.View.focus"><code class="name flex">
+<span>def <span class="ident">focus</span></span>(<span>self, forcesoft=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def focus(self, forcesoft=False):
+    &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.getdimensions"><code class="name flex">
@@ -449,6 +473,7 @@ class View:
 <h4><code><a title="termuxgui.view.View" href="#termuxgui.view.View">View</a></code></h4>
 <ul class="">
 <li><code><a title="termuxgui.view.View.delete" href="#termuxgui.view.View.delete">delete</a></code></li>
+<li><code><a title="termuxgui.view.View.focus" href="#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.view.View.handleevent" href="#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>

@@ -87,9 +87,9 @@ class Activity:
         &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})
     
-    def settaskdescription(self, text, img):
+    def settaskdescription(self, label, img):
         &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
-        self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: text}})
+        self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})
     
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
         &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
@@ -111,6 +111,24 @@ class Activity:
     def sendoverlayevents(send):
         &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})
+    
+    
+    def movetoback(self):
+        &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    
+    def requestunlock(self):
+        &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    def getconfiguration(self):
+        &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+        return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    def hidesoftkeyboard(self):
+        &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
     
     
     
@@ -193,9 +211,9 @@ class Activity:
         &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})
     
-    def settaskdescription(self, text, img):
+    def settaskdescription(self, label, img):
         &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
-        self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: text}})
+        self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})
     
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
         &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
@@ -216,7 +234,25 @@ class Activity:
 
     def sendoverlayevents(send):
         &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})</code></pre>
+        self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})
+    
+    
+    def movetoback(self):
+        &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    
+    def requestunlock(self):
+        &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    def getconfiguration(self):
+        &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+        return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
+    
+    def hidesoftkeyboard(self):
+        &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
@@ -234,6 +270,34 @@ class Activity:
     self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
+<dt id="termuxgui.activity.Activity.getconfiguration"><code class="name flex">
+<span>def <span class="ident">getconfiguration</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Moves this Activity's Task to the recents screen and hides it.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getconfiguration(self):
+    &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+    return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.activity.Activity.hidesoftkeyboard"><code class="name flex">
+<span>def <span class="ident">hidesoftkeyboard</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Hides the soft keyboard if this Activity has the soft keyboard focus.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hidesoftkeyboard(self):
+    &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
+</details>
+</dd>
 <dt id="termuxgui.activity.Activity.keepscreenon"><code class="name flex">
 <span>def <span class="ident">keepscreenon</span></span>(<span>on)</span>
 </code></dt>
@@ -246,6 +310,34 @@ class Activity:
 <pre><code class="python">def keepscreenon(on):
     &#34;&#34;&#34;Sets whether the Activity should keep the screen on while it is showing.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.activity.Activity.movetoback"><code class="name flex">
+<span>def <span class="ident">movetoback</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Moves this Activity's Task to the recents screen and hides it.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def movetoback(self):
+    &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.activity.Activity.requestunlock"><code class="name flex">
+<span>def <span class="ident">requestunlock</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def requestunlock(self):
+    &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.sendoverlayevents"><code class="name flex">
@@ -350,7 +442,7 @@ class Activity:
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.settaskdescription"><code class="name flex">
-<span>def <span class="ident">settaskdescription</span></span>(<span>self, text, img)</span>
+<span>def <span class="ident">settaskdescription</span></span>(<span>self, label, img)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.</p></div>
@@ -358,9 +450,9 @@ class Activity:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def settaskdescription(self, text, img):
+<pre><code class="python">def settaskdescription(self, label, img):
     &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
-    self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: text}})</code></pre>
+    self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.settheme"><code class="name flex">
@@ -399,7 +491,11 @@ class Activity:
 <h4><code><a title="termuxgui.activity.Activity" href="#termuxgui.activity.Activity">Activity</a></code></h4>
 <ul class="two-column">
 <li><code><a title="termuxgui.activity.Activity.finish" href="#termuxgui.activity.Activity.finish">finish</a></code></li>
+<li><code><a title="termuxgui.activity.Activity.getconfiguration" href="#termuxgui.activity.Activity.getconfiguration">getconfiguration</a></code></li>
+<li><code><a title="termuxgui.activity.Activity.hidesoftkeyboard" href="#termuxgui.activity.Activity.hidesoftkeyboard">hidesoftkeyboard</a></code></li>
 <li><code><a title="termuxgui.activity.Activity.keepscreenon" href="#termuxgui.activity.Activity.keepscreenon">keepscreenon</a></code></li>
+<li><code><a title="termuxgui.activity.Activity.movetoback" href="#termuxgui.activity.Activity.movetoback">movetoback</a></code></li>
+<li><code><a title="termuxgui.activity.Activity.requestunlock" href="#termuxgui.activity.Activity.requestunlock">requestunlock</a></code></li>
 <li><code><a title="termuxgui.activity.Activity.sendoverlayevents" href="#termuxgui.activity.Activity.sendoverlayevents">sendoverlayevents</a></code></li>
 <li><code><a title="termuxgui.activity.Activity.setinputmode" href="#termuxgui.activity.Activity.setinputmode">setinputmode</a></code></li>
 <li><code><a title="termuxgui.activity.Activity.setorientation" href="#termuxgui.activity.Activity.setorientation">setorientation</a></code></li>
