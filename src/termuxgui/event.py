@@ -31,6 +31,15 @@ class Event:
     destroy = "destroy"
     userleavehint = "UserLeaveHint"
     pipchanged = "pipchanged"
+    config = "config"
+    
+    # general events
+    screenon = "screen_on"
+    screen_off = "screen_off"
+    timezone = "timezone"
+    locale = "locale"
+    airplane = "airplane"
+    
     
     # special overlay events
     overlaytouch = "overlayTouch"

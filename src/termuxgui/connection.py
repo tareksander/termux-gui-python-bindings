@@ -111,5 +111,12 @@ class Connection:
         self.send_msg(msg)
         return self.read_msg()
     
+    def turnscreenon(self):
+        """Truns the screen on."""
+        self.send_msg({"method": "turnScreenOn", "params": {}})
     
+    
+    def islocked(self):
+        """Returns whether the device is locked."""
+        return self.send_read_msg({"method": "isLocked", "params": {}})
     

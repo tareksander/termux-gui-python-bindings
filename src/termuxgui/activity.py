@@ -59,9 +59,9 @@ class Activity:
         '''Sets the PiP parameters for the Activity, currently only the aspect ration.'''
         self.c.send_msg({"method": "setPiPParams", "params": {"aid": self.aid, "num": num, "den": den}})
     
-    def settaskdescription(self, text, img):
+    def settaskdescription(self, label, img):
         '''Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.'''
-        self.c.send_msg({"method": "setTaskDescription", "params": {"aid": self.aid, "img": img, "label": text}})
+        self.c.send_msg({"method": "setTaskDescription", "params": {"aid": self.aid, "img": img, "label": label}})
     
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
         '''Sets the Theme for the Activity.'''
@@ -85,6 +85,23 @@ class Activity:
         self.c.send_msg({"method": "sendOverlayTouchEvent", "params": {"aid": self.aid, "send": send}})
     
     
+    def movetoback(self):
+        """Moves this Activity's Task to the recents screen and hides it."""
+        self.c.send_msg({"method": "moveTaskToBack", "params": {"aid": self.aid}})
     
     
-
+    def requestunlock(self):
+        """Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen."""
+        self.c.send_msg({"method": "requestUnlock", "params": {"aid": self.aid}})
+    
+    def getconfiguration(self):
+        """Moves this Activity's Task to the recents screen and hides it."""
+        return self.c.send_read_msg({"method": "getConfiguration", "params": {"aid": self.aid}})
+    
+    def hidesoftkeyboard(self):
+        """Hides the soft keyboard if this Activity has the soft keyboard focus."""
+        self.c.send_msg({"method": "hideSoftKeyboard", "params": {"aid": self.aid}})
+    
+    
+    
+    

@@ -306,7 +306,7 @@ with tg.Connection() as c:
     time.sleep(5)
 ```
 
-As you can see, for nested LinearLayouts it is enough to set the height and weight of the nested Layout "WRAP_CONTENT" and 0.  
+As you can see, for nested LinearLayouts it is enough to set the height and weight of the nested Layout to "WRAP_CONTENT" and 0.  
 
 
 [linearlayout2.py](tutorial/linearlayout2.py)<!-- @IGNORE PREVIOUS: link -->  

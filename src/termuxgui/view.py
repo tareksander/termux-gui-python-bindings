@@ -79,6 +79,11 @@ class View:
         self.a.c.send_msg({"method": "setVisibility", "params": {"aid": self.a.aid, "id": self.id, "vis": vis}})
     
     
+    def focus(self, forcesoft=False):
+        """Sets the Focus to this View and opens the soft keyboard if the View has keyboard input."""
+        self.a.c.send_msg({"method": "requestFocus", "params": {"aid": self.a.aid, "id": self.id, "forcesoft": forcesoft}})
+    
+    
     def handleevent(self, e):
         """Handles an Event for this View. Subclasses can override this to provide event handling."""
         pass

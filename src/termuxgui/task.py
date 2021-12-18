@@ -16,7 +16,4 @@ class Task:
         """Bring this Task to the front and make it visible to the user. Might require "overlay over other apps" permission."""
         self.c.send_msg({"method": "bringTaskToFront", "params": {"tid": self.tid}})
     
-    def movetoback(self):
-        """Moves this Task to the recents screen and hide it."""
-        self.c.send_msg({"method": "moveTaskToBack", "params": {"tid": self.tid}})
  
