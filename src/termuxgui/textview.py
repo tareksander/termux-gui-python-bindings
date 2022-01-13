@@ -5,8 +5,8 @@ from termuxgui.view import View
 class TextView(View):
     """This represents a TextView."""
     
-    def __init__(self, activity, text, parent=None):
-        args = {"aid": activity.aid, "text": text}
+    def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
+        args = {"aid": activity.aid, "text": text, "selectableText": selectabletext, "clickableLinks": clickablelinks}
         if parent != None:
             args["parent"] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({"method": "createTextView", "params": args}))

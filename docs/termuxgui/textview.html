@@ -33,8 +33,8 @@ from termuxgui.view import View
 class TextView(View):
     &#34;&#34;&#34;This represents a TextView.&#34;&#34;&#34;
     
-    def __init__(self, activity, text, parent=None):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text}
+    def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
@@ -76,7 +76,7 @@ class TextView(View):
 <dl>
 <dt id="termuxgui.textview.TextView"><code class="flex name class">
 <span>class <span class="ident">TextView</span></span>
-<span>(</span><span>activity, text, parent=None)</span>
+<span>(</span><span>activity, text, parent=None, selectabletext=False, clickablelinks=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a TextView.</p></div>
@@ -87,8 +87,8 @@ class TextView(View):
 <pre><code class="python">class TextView(View):
     &#34;&#34;&#34;This represents a TextView.&#34;&#34;&#34;
     
-    def __init__(self, activity, text, parent=None):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text}
+    def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
