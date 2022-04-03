@@ -95,7 +95,7 @@ class Connection:
             yield Event(tgmsg.read_msg(self._event))
     
     def checkevent(self):
-        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
         r, _, _ = select([self._event], [], [], 0)
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
@@ -220,7 +220,7 @@ class Connection:
             yield Event(tgmsg.read_msg(self._event))
     
     def checkevent(self):
-        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
         r, _, _ = select([self._event], [], [], 0)
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
@@ -279,13 +279,13 @@ class Connection:
 <span>def <span class="ident">checkevent</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.</p></div>
+<div class="desc"><p>If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def checkevent(self):
-    &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+    &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
     r, _, _ = select([self._event], [], [], 0)
     if len(r) != 0:
         return Event(tgmsg.read_msg(self._event))</code></pre>

@@ -35,7 +35,7 @@ You don&#39;t need to include all the submodules, all needed classes are automat
 
 __all__ = [&#34;Activity&#34;, &#34;Connection&#34;, &#34;Event&#34;, &#34;Task&#34;, &#34;View&#34;, &#34;ViewGroup&#34;, &#34;LinearLayout&#34;,
            &#34;FrameLayout&#34;, &#34;Space&#34;, &#34;TextView&#34;, &#34;EditText&#34;, &#34;ImageView&#34;, &#34;Button&#34;,
-           &#34;Checkbox&#34;, &#34;NestedScrollView&#34;, &#34;Buffer&#34;, &#34;RadioGroup&#34;, &#34;RadioButton&#34;, &#34;Spinner&#34;, &#34;ToggleButton&#34;, &#34;Switch&#34;, &#34;CompoundButton&#34;, &#34;ProgressBar&#34;, &#34;SwipeRefreshLayout&#34;, &#34;HorizontalScrollView&#34;, &#34;TabLayout&#34;]
+           &#34;Checkbox&#34;, &#34;NestedScrollView&#34;, &#34;Buffer&#34;, &#34;RadioGroup&#34;, &#34;RadioButton&#34;, &#34;RemoteViews&#34;, &#34;Spinner&#34;, &#34;ToggleButton&#34;, &#34;Switch&#34;, &#34;CompoundButton&#34;, &#34;ProgressBar&#34;, &#34;SwipeRefreshLayout&#34;, &#34;HorizontalScrollView&#34;, &#34;TabLayout&#34;]
 
 
 for m in __all__:
@@ -115,6 +115,10 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <div class="desc"></div>
 </dd>
 <dt><code class="name"><a title="termuxgui.radiogroup" href="radiogroup.html">termuxgui.radiogroup</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="termuxgui.remoteviews" href="remoteviews.html">termuxgui.remoteviews</a></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -621,7 +625,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.textview.TextView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -715,8 +718,9 @@ You can also directly access the memory object as b.mem.</p>
 
     def handleevent(self, e):
         &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
-        if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
+        if e.type == Event.click and e.aid == self.a.aid and e.id == self.id:
             self.checked = e.value[&#34;set&#34;]
+        View.handleevent(self, e)
     
     
     
@@ -753,8 +757,9 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def handleevent(self, e):
     &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
-    if e.type == &#34;click&#34; and e.aid == self.a.aid and e.id == self.id:
-        self.checked = e.value[&#34;set&#34;]</code></pre>
+    if e.type == Event.click and e.aid == self.a.aid and e.id == self.id:
+        self.checked = e.value[&#34;set&#34;]
+    View.handleevent(self, e)</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.CompoundButton.setchecked"><code class="name flex">
@@ -861,7 +866,7 @@ You can also directly access the memory object as b.mem.</p>
             yield Event(tgmsg.read_msg(self._event))
     
     def checkevent(self):
-        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
         r, _, _ = select([self._event], [], [], 0)
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
@@ -920,13 +925,13 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">checkevent</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.</p></div>
+<div class="desc"><p>If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def checkevent(self):
-    &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+    &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
     r, _, _ = select([self._event], [], [], 0)
     if len(r) != 0:
         return Event(tgmsg.read_msg(self._event))</code></pre>
@@ -1123,7 +1128,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.textview.TextView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
-<li><code><a title="termuxgui.textview.TextView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1176,6 +1180,7 @@ You can also directly access the memory object as b.mem.</p>
     refresh = &#34;refresh&#34;
     selected = &#34;selected&#34; # used for RadioGroups
     itemselected = &#34;itemselected&#34;
+    text = &#34;text&#34;
     
     
     
@@ -1309,6 +1314,10 @@ You can also directly access the memory object as b.mem.</p>
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="termuxgui.Event.text"><code class="name">var <span class="ident">text</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 <dt id="termuxgui.Event.timezone"><code class="name">var <span class="ident">timezone</span></code></dt>
 <dd>
 <div class="desc"></div>
@@ -1384,7 +1393,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1476,7 +1484,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.framelayout.FrameLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1581,7 +1588,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1633,7 +1639,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1721,7 +1726,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.framelayout.FrameLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.framelayout.FrameLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1789,7 +1793,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1897,7 +1900,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.linearlayout.LinearLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.linearlayout.LinearLayout.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -1912,6 +1914,366 @@ You can also directly access the memory object as b.mem.</p>
 </ul>
 </li>
 </ul>
+</dd>
+<dt id="termuxgui.RemoteViews"><code class="flex name class">
+<span>class <span class="ident">RemoteViews</span></span>
+<span>(</span><span>connection)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class RemoteViews:
+    &#34;&#34;&#34;This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.&#34;&#34;&#34;
+    
+    def __init__(self, connection):
+        self.c = connection
+        self.rid = self.c.send_read_msg({&#34;method&#34;: &#34;createRemoteLayout&#34;})
+    
+    def __eq__(self, other):
+        if type(other) is int:
+            return self.rid == other
+        if isinstance(other, RemoteViews):
+            return self.rid == other.rid
+    
+    def delete(self):
+        &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
+    
+    def addFrameLayout(self, parent=None):
+        &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args =  {&#34;rid&#34;: self.rid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent
+        return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})
+    
+    def addLinearLayout(self, parent=None, vertical=None):
+        &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args =  {&#34;rid&#34;: self.rid}
+        if vertical != None:
+            args[&#34;vertical&#34;] = vertical
+        if parent != None:
+            args[&#34;parent&#34;] = parent
+        return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})
+    
+    def addTextView(self, parent=None):
+        &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args =  {&#34;rid&#34;: self.rid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent
+        return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})
+    
+    def addButton(self, parent=None):
+        &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args =  {&#34;rid&#34;: self.rid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent
+        return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})
+    
+    def addImageView(self, parent=None):
+        &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args =  {&#34;rid&#34;: self.rid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent
+        return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})
+    
+    def addProgressBar(self, parent=None):
+        &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args =  {&#34;rid&#34;: self.rid}
+        if parent != None:
+            args[&#34;parent&#34;] = parent
+        return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})
+    
+    def setBackgroundColor(self, id, color):
+        &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
+    
+    def setProgress(self, id, progress, max):
+        &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
+    
+    def setText(self, id, text):
+        &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})
+    
+    def setTextSize(self, id, size, px):
+        &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})
+    
+    def setTextColor(self, id, color):
+        &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
+    
+    def setVisibility(self, id, vis):
+        &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
+        
+        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})
+    
+    def setPadding(self, id, left, top, right, bottom):
+        &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34; : right, &#34;bottom&#34;: bottom}})
+    
+    def setImage(self, id, img):
+        &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})
+    
+    def updateWidget(self, wid):
+        &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="termuxgui.RemoteViews.addButton"><code class="name flex">
+<span>def <span class="ident">addButton</span></span>(<span>self, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addButton(self, parent=None):
+    &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args =  {&#34;rid&#34;: self.rid}
+    if parent != None:
+        args[&#34;parent&#34;] = parent
+    return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.addFrameLayout"><code class="name flex">
+<span>def <span class="ident">addFrameLayout</span></span>(<span>self, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addFrameLayout(self, parent=None):
+    &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args =  {&#34;rid&#34;: self.rid}
+    if parent != None:
+        args[&#34;parent&#34;] = parent
+    return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.addImageView"><code class="name flex">
+<span>def <span class="ident">addImageView</span></span>(<span>self, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addImageView(self, parent=None):
+    &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args =  {&#34;rid&#34;: self.rid}
+    if parent != None:
+        args[&#34;parent&#34;] = parent
+    return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.addLinearLayout"><code class="name flex">
+<span>def <span class="ident">addLinearLayout</span></span>(<span>self, parent=None, vertical=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addLinearLayout(self, parent=None, vertical=None):
+    &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args =  {&#34;rid&#34;: self.rid}
+    if vertical != None:
+        args[&#34;vertical&#34;] = vertical
+    if parent != None:
+        args[&#34;parent&#34;] = parent
+    return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.addProgressBar"><code class="name flex">
+<span>def <span class="ident">addProgressBar</span></span>(<span>self, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addProgressBar(self, parent=None):
+    &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args =  {&#34;rid&#34;: self.rid}
+    if parent != None:
+        args[&#34;parent&#34;] = parent
+    return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.addTextView"><code class="name flex">
+<span>def <span class="ident">addTextView</span></span>(<span>self, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addTextView(self, parent=None):
+    &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args =  {&#34;rid&#34;: self.rid}
+    if parent != None:
+        args[&#34;parent&#34;] = parent
+    return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete(self):
+    &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setBackgroundColor"><code class="name flex">
+<span>def <span class="ident">setBackgroundColor</span></span>(<span>self, id, color)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the background color of a View in this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setBackgroundColor(self, id, color):
+    &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setImage"><code class="name flex">
+<span>def <span class="ident">setImage</span></span>(<span>self, id, img)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the image of an ImageView in this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setImage(self, id, img):
+    &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setPadding"><code class="name flex">
+<span>def <span class="ident">setPadding</span></span>(<span>self, id, left, top, right, bottom)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the padding of a View in this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setPadding(self, id, left, top, right, bottom):
+    &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34; : right, &#34;bottom&#34;: bottom}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setProgress"><code class="name flex">
+<span>def <span class="ident">setProgress</span></span>(<span>self, id, progress, max)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the progress and maximum value of a ProgressBar in this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setProgress(self, id, progress, max):
+    &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setText"><code class="name flex">
+<span>def <span class="ident">setText</span></span>(<span>self, id, text)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the text of a TextView in this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setText(self, id, text):
+    &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setTextColor"><code class="name flex">
+<span>def <span class="ident">setTextColor</span></span>(<span>self, id, color)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the text color of a TextView in this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setTextColor(self, id, color):
+    &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setTextSize"><code class="name flex">
+<span>def <span class="ident">setTextSize</span></span>(<span>self, id, size, px)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setTextSize(self, id, size, px):
+    &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.setVisibility"><code class="name flex">
+<span>def <span class="ident">setVisibility</span></span>(<span>self, id, vis)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the visibility of a View in this remote Layout.</p>
+<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setVisibility(self, id, vis):
+    &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
+    
+    0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.RemoteViews.updateWidget"><code class="name flex">
+<span>def <span class="ident">updateWidget</span></span>(<span>self, wid)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the content of the Widget with ID wid to this remote Layout.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def updateWidget(self, wid):
+    &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
+</details>
+</dd>
+</dl>
 </dd>
 <dt id="termuxgui.Space"><code class="flex name class">
 <span>class <span class="ident">Space</span></span>
@@ -1943,7 +2305,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -2011,7 +2372,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -2085,7 +2445,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -2215,7 +2574,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition">getscrollposition</a></code></li>
-<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -2420,7 +2778,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -2541,9 +2898,9 @@ You can also directly access the memory object as b.mem.</p>
         self.setwidth(width, px)
         self.setheight(height, px)
 
-    def setlinearlayoutparams(self, weight):
-        &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})
+    def setlinearlayoutparams(self, weight, position=None):
+        &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})
     
     
     def sendtouchevent(self, send):
@@ -2553,7 +2910,6 @@ You can also directly access the memory object as b.mem.</p>
     def sendclickevent(self, send):
         &#34;&#34;&#34;Sets whether ot not click events are send for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
     
     def sendlongclickevent(self, send):
         &#34;&#34;&#34;Sets whether ot not long click events are send for this View.&#34;&#34;&#34;
@@ -2574,7 +2930,7 @@ You can also directly access the memory object as b.mem.</p>
         self.a.c.send_msg({&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
     
     def setvisibility(self, vis):
-        &#34;&#34;&#34;Sets the visibilityr for this view.
+        &#34;&#34;&#34;Sets the visibility for this view.
         
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
@@ -2586,6 +2942,8 @@ You can also directly access the memory object as b.mem.</p>
     
     
     def handleevent(self, e):
+        if hasattr(self, eventlistener):
+            eventlistener(self, e)
         &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
 </details>
@@ -2646,12 +3004,14 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Handles an Event for this View. Subclasses can override this to provide event handling.</p></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def handleevent(self, e):
+    if hasattr(self, eventlistener):
+        eventlistener(self, e)
     &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
     pass</code></pre>
 </details>
@@ -2756,17 +3116,17 @@ You can also directly access the memory object as b.mem.</p>
 </details>
 </dd>
 <dt id="termuxgui.View.setlinearlayoutparams"><code class="name flex">
-<span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight)</span>
+<span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight, position=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the LinearLayout weight for this view.</p></div>
+<div class="desc"><p>Sets the LinearLayout weight and/or position for this view.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setlinearlayoutparams(self, weight):
-    &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})</code></pre>
+<pre><code class="python">def setlinearlayoutparams(self, weight, position=None):
+    &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.setmargin"><code class="name flex">
@@ -2790,14 +3150,14 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">setvisibility</span></span>(<span>self, vis)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the visibilityr for this view.</p>
+<div class="desc"><p>Sets the visibility for this view.</p>
 <p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setvisibility(self, vis):
-    &#34;&#34;&#34;Sets the visibilityr for this view.
+    &#34;&#34;&#34;Sets the visibility for this view.
     
     0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})</code></pre>
@@ -2874,7 +3234,6 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
-<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
@@ -2918,6 +3277,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.progressbar" href="progressbar.html">termuxgui.progressbar</a></code></li>
 <li><code><a title="termuxgui.radiobutton" href="radiobutton.html">termuxgui.radiobutton</a></code></li>
 <li><code><a title="termuxgui.radiogroup" href="radiogroup.html">termuxgui.radiogroup</a></code></li>
+<li><code><a title="termuxgui.remoteviews" href="remoteviews.html">termuxgui.remoteviews</a></code></li>
 <li><code><a title="termuxgui.space" href="space.html">termuxgui.space</a></code></li>
 <li><code><a title="termuxgui.spinner" href="spinner.html">termuxgui.spinner</a></code></li>
 <li><code><a title="termuxgui.swiperefreshlayout" href="swiperefreshlayout.html">termuxgui.swiperefreshlayout</a></code></li>
@@ -3017,6 +3377,7 @@ You can also directly access the memory object as b.mem.</p>
 <li><code><a title="termuxgui.Event.selected" href="#termuxgui.Event.selected">selected</a></code></li>
 <li><code><a title="termuxgui.Event.start" href="#termuxgui.Event.start">start</a></code></li>
 <li><code><a title="termuxgui.Event.stop" href="#termuxgui.Event.stop">stop</a></code></li>
+<li><code><a title="termuxgui.Event.text" href="#termuxgui.Event.text">text</a></code></li>
 <li><code><a title="termuxgui.Event.timezone" href="#termuxgui.Event.timezone">timezone</a></code></li>
 <li><code><a title="termuxgui.Event.touch" href="#termuxgui.Event.touch">touch</a></code></li>
 <li><code><a title="termuxgui.Event.touch_cancel" href="#termuxgui.Event.touch_cancel">touch_cancel</a></code></li>
@@ -3067,6 +3428,27 @@ You can also directly access the memory object as b.mem.</p>
 </li>
 <li>
 <h4><code><a title="termuxgui.RadioGroup" href="#termuxgui.RadioGroup">RadioGroup</a></code></h4>
+</li>
+<li>
+<h4><code><a title="termuxgui.RemoteViews" href="#termuxgui.RemoteViews">RemoteViews</a></code></h4>
+<ul class="two-column">
+<li><code><a title="termuxgui.RemoteViews.addButton" href="#termuxgui.RemoteViews.addButton">addButton</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.addFrameLayout" href="#termuxgui.RemoteViews.addFrameLayout">addFrameLayout</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.addImageView" href="#termuxgui.RemoteViews.addImageView">addImageView</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.addLinearLayout" href="#termuxgui.RemoteViews.addLinearLayout">addLinearLayout</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.addProgressBar" href="#termuxgui.RemoteViews.addProgressBar">addProgressBar</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.addTextView" href="#termuxgui.RemoteViews.addTextView">addTextView</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.delete" href="#termuxgui.RemoteViews.delete">delete</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setBackgroundColor" href="#termuxgui.RemoteViews.setBackgroundColor">setBackgroundColor</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setImage" href="#termuxgui.RemoteViews.setImage">setImage</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setPadding" href="#termuxgui.RemoteViews.setPadding">setPadding</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setProgress" href="#termuxgui.RemoteViews.setProgress">setProgress</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setText" href="#termuxgui.RemoteViews.setText">setText</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setTextColor" href="#termuxgui.RemoteViews.setTextColor">setTextColor</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setTextSize" href="#termuxgui.RemoteViews.setTextSize">setTextSize</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.setVisibility" href="#termuxgui.RemoteViews.setVisibility">setVisibility</a></code></li>
+<li><code><a title="termuxgui.RemoteViews.updateWidget" href="#termuxgui.RemoteViews.updateWidget">updateWidget</a></code></li>
+</ul>
 </li>
 <li>
 <h4><code><a title="termuxgui.Space" href="#termuxgui.Space">Space</a></code></h4>

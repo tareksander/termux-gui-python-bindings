@@ -68,9 +68,9 @@ class View:
         self.setwidth(width, px)
         self.setheight(height, px)
 
-    def setlinearlayoutparams(self, weight):
-        &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})
+    def setlinearlayoutparams(self, weight, position=None):
+        &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})
     
     
     def sendtouchevent(self, send):
@@ -80,7 +80,6 @@ class View:
     def sendclickevent(self, send):
         &#34;&#34;&#34;Sets whether ot not click events are send for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
     
     def sendlongclickevent(self, send):
         &#34;&#34;&#34;Sets whether ot not long click events are send for this View.&#34;&#34;&#34;
@@ -101,7 +100,7 @@ class View:
         self.a.c.send_msg({&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
     
     def setvisibility(self, vis):
-        &#34;&#34;&#34;Sets the visibilityr for this view.
+        &#34;&#34;&#34;Sets the visibility for this view.
         
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
@@ -113,6 +112,8 @@ class View:
     
     
     def handleevent(self, e):
+        if hasattr(self, eventlistener):
+            eventlistener(self, e)
         &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
 </details>
@@ -175,9 +176,9 @@ class View:
         self.setwidth(width, px)
         self.setheight(height, px)
 
-    def setlinearlayoutparams(self, weight):
-        &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})
+    def setlinearlayoutparams(self, weight, position=None):
+        &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})
     
     
     def sendtouchevent(self, send):
@@ -187,7 +188,6 @@ class View:
     def sendclickevent(self, send):
         &#34;&#34;&#34;Sets whether ot not click events are send for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
     
     def sendlongclickevent(self, send):
         &#34;&#34;&#34;Sets whether ot not long click events are send for this View.&#34;&#34;&#34;
@@ -208,7 +208,7 @@ class View:
         self.a.c.send_msg({&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
     
     def setvisibility(self, vis):
-        &#34;&#34;&#34;Sets the visibilityr for this view.
+        &#34;&#34;&#34;Sets the visibility for this view.
         
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
@@ -220,6 +220,8 @@ class View:
     
     
     def handleevent(self, e):
+        if hasattr(self, eventlistener):
+            eventlistener(self, e)
         &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         pass</code></pre>
 </details>
@@ -280,12 +282,14 @@ class View:
 <span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Handles an Event for this View. Subclasses can override this to provide event handling.</p></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def handleevent(self, e):
+    if hasattr(self, eventlistener):
+        eventlistener(self, e)
     &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
     pass</code></pre>
 </details>
@@ -390,17 +394,17 @@ class View:
 </details>
 </dd>
 <dt id="termuxgui.view.View.setlinearlayoutparams"><code class="name flex">
-<span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight)</span>
+<span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight, position=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the LinearLayout weight for this view.</p></div>
+<div class="desc"><p>Sets the LinearLayout weight and/or position for this view.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setlinearlayoutparams(self, weight):
-    &#34;&#34;&#34;Sets the LinearLayout weight for this view.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight}})</code></pre>
+<pre><code class="python">def setlinearlayoutparams(self, weight, position=None):
+    &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.setmargin"><code class="name flex">
@@ -424,14 +428,14 @@ class View:
 <span>def <span class="ident">setvisibility</span></span>(<span>self, vis)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the visibilityr for this view.</p>
+<div class="desc"><p>Sets the visibility for this view.</p>
 <p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setvisibility(self, vis):
-    &#34;&#34;&#34;Sets the visibilityr for this view.
+    &#34;&#34;&#34;Sets the visibility for this view.
     
     0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})</code></pre>
