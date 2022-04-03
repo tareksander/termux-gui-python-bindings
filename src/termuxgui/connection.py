@@ -67,7 +67,7 @@ class Connection:
             yield Event(tgmsg.read_msg(self._event))
     
     def checkevent(self):
-        """If there is at least one event to be read, returns it. If there is no event, returns null. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it."""
+        """If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it."""
         r, _, _ = select([self._event], [], [], 0)
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))

@@ -19,6 +19,7 @@ class Event:
     refresh = "refresh"
     selected = "selected" # used for RadioGroups
     itemselected = "itemselected"
+    text = "text"
     
     
     

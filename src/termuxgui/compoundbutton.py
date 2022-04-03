@@ -1,6 +1,8 @@
 from json import dumps
 
 from termuxgui.button import Button
+from termuxgui.view import View
+from termuxgui.event import Event
 
 class CompoundButton(Button):
     """This represents a CompoundButton.
@@ -9,8 +11,9 @@ class CompoundButton(Button):
 
     def handleevent(self, e):
         """Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here."""
-        if e.type == "click" and e.aid == self.a.aid and e.id == self.id:
+        if e.type == Event.click and e.aid == self.a.aid and e.id == self.id:
             self.checked = e.value["set"]
+        View.handleevent(self, e)
     
     
     

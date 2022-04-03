@@ -5,7 +5,7 @@ You don't need to include all the submodules, all needed classes are automatical
 
 __all__ = ["Activity", "Connection", "Event", "Task", "View", "ViewGroup", "LinearLayout",
            "FrameLayout", "Space", "TextView", "EditText", "ImageView", "Button",
-           "Checkbox", "NestedScrollView", "Buffer", "RadioGroup", "RadioButton", "Spinner", "ToggleButton", "Switch", "CompoundButton", "ProgressBar", "SwipeRefreshLayout", "HorizontalScrollView", "TabLayout"]
+           "Checkbox", "NestedScrollView", "Buffer", "RadioGroup", "RadioButton", "RemoteViews", "Spinner", "ToggleButton", "Switch", "CompoundButton", "ProgressBar", "SwipeRefreshLayout", "HorizontalScrollView", "TabLayout"]
 
 
 for m in __all__:

@@ -40,9 +40,9 @@ class View:
         self.setwidth(width, px)
         self.setheight(height, px)
 
-    def setlinearlayoutparams(self, weight):
-        """Sets the LinearLayout weight for this view."""
-        self.a.c.send_msg({"method": "setLinearLayoutParams", "params": {"aid": self.a.aid, "id": self.id, "weight": weight}})
+    def setlinearlayoutparams(self, weight, position=None):
+        """Sets the LinearLayout weight and/or position for this view."""
+        self.a.c.send_msg({"method": "setLinearLayoutParams", "params": {"aid": self.a.aid, "id": self.id, "weight": weight, "position": position}})
     
     
     def sendtouchevent(self, send):
@@ -52,7 +52,6 @@ class View:
     def sendclickevent(self, send):
         """Sets whether ot not click events are send for this View."""
         self.a.c.send_msg({"method": "sendClickEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
-    
     
     def sendlongclickevent(self, send):
         """Sets whether ot not long click events are send for this View."""
@@ -73,7 +72,7 @@ class View:
         self.a.c.send_msg({"method": "setBackgroundColor", "params": {"aid": self.a.aid, "id": self.id, "color": color}})
     
     def setvisibility(self, vis):
-        """Sets the visibilityr for this view.
+        """Sets the visibility for this view.
         
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space."""
         self.a.c.send_msg({"method": "setVisibility", "params": {"aid": self.a.aid, "id": self.id, "vis": vis}})
@@ -85,6 +84,8 @@ class View:
     
     
     def handleevent(self, e):
+        if hasattr(self, eventlistener):
+            eventlistener(self, e)
         """Handles an Event for this View. Subclasses can override this to provide event handling."""
         pass
 
