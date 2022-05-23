@@ -31,50 +31,45 @@ import os
 
 import termuxgui.msg as msg
 
+
 class Buffer:
     &#34;&#34;&#34;This represents a raw ARGB888 image buffer.
-    
+
     This is only available on Android 8.1+.
     Buffers consume much memory, so be sure to close any Buffer you don&#39;t need any more.
     Preferably use &#34;with&#34; to get the memory object of the buffer so it is automatically closed.
     The memory object is a shared memory object that can be used like a bytes object or a file object.
     You can also directly access the memory object as b.mem.
-    
+
     A RuntimeError is raised when a Buffer can&#39;t be created.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
-        
         self.c = connection
         self.c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
         ret = msg.read_msg_fd(self.c._main)
         if len(ret) == 1:
             raise RuntimeError(&#34;Could not create Buffer&#34;)
         self.bid, self.fd = ret
-        self.mem = mmap(self.fd, w*h*4)
-    
+        self.mem = mmap(self.fd, w * h * 4)
+
     def __enter__(self):
         return self.mem
-    
+
     def __exit__(self, type, value, traceback):
         self.remove()
         return False
-    
-    
+
     def remove(self):
         &#34;&#34;&#34;Removes this buffer, freeing the memory.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
         self.mem.close()
         os.close(self.fd)
-    
+
     def blit(self):
-        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
+        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin.
+        To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
         self.mem.flush()
-        self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
-    
-    
-    
-    
-    </code></pre>
+        self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
 </details>
 </section>
 <section>
@@ -104,41 +99,40 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Buffer:
     &#34;&#34;&#34;This represents a raw ARGB888 image buffer.
-    
+
     This is only available on Android 8.1+.
     Buffers consume much memory, so be sure to close any Buffer you don&#39;t need any more.
     Preferably use &#34;with&#34; to get the memory object of the buffer so it is automatically closed.
     The memory object is a shared memory object that can be used like a bytes object or a file object.
     You can also directly access the memory object as b.mem.
-    
+
     A RuntimeError is raised when a Buffer can&#39;t be created.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
-        
         self.c = connection
         self.c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
         ret = msg.read_msg_fd(self.c._main)
         if len(ret) == 1:
             raise RuntimeError(&#34;Could not create Buffer&#34;)
         self.bid, self.fd = ret
-        self.mem = mmap(self.fd, w*h*4)
-    
+        self.mem = mmap(self.fd, w * h * 4)
+
     def __enter__(self):
         return self.mem
-    
+
     def __exit__(self, type, value, traceback):
         self.remove()
         return False
-    
-    
+
     def remove(self):
         &#34;&#34;&#34;Removes this buffer, freeing the memory.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
         self.mem.close()
         os.close(self.fd)
-    
+
     def blit(self):
-        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
+        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin.
+        To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
         self.mem.flush()
         self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
 </details>
@@ -148,13 +142,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">blit</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.</p></div>
+<div class="desc"><p>Blits the buffer to the underlying image in the plugin.
+To update ImageViews using this buffer, they have to be refreshed afterwards.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def blit(self):
-    &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
+    &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin.
+    To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
     self.mem.flush()
     self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
 </details>

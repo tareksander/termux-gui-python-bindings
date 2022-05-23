@@ -7,7 +7,6 @@ The full source code can also be found in the tutorial folder.
 ## Basic structure
 
 ```python
-import sys
 
 # you can also use from termuxgui import * to leave out the tg. to access methods and classes
 import termuxgui as tg
@@ -54,7 +53,6 @@ We will display hello world in a new Activity and exit after 5 seconds.
 
 ```python
 import termuxgui as tg
-import sys
 import time
 
 with tg.Connection() as c:
@@ -87,11 +85,10 @@ Congratulations!
 
 To use more than one View we need to use Layouts.  
 The simplest Layout is LinearLayout.  
-It displays it's children vertically or horizontally (vertically by default) and gives each child an equal part of the available space (by default again).  
+It displays its children vertically or horizontally (vertically by default) and gives each child an equal part of the available space (by default again).  
 Let's create a program with more views:
 ```python
 import termuxgui as tg
-import sys
 import time
 
 with tg.Connection() as c:
@@ -133,7 +130,6 @@ Maybe we want to count the number of times the user could click the button in ou
 
 ```python
 import termuxgui as tg
-import sys
 import time
 import threading
 
@@ -191,7 +187,6 @@ With picture-in-picture mode you can display an Activity in a small window.
 import termuxgui as tg
 import sys
 import time
-import threading
 import io
 
 image = None
@@ -222,9 +217,7 @@ It happens often that you want Views to only occupy the space they need in a Lin
 
 ```python
 import termuxgui as tg
-import sys
 import time
-import threading
     
 with tg.Connection() as c:
     a = tg.Activity(c)
@@ -264,9 +257,7 @@ Let's add a row of buttons and also make them as small as they need to be.
 
 ```python
 import termuxgui as tg
-import sys
 import time
-import threading
     
 with tg.Connection() as c:
     a = tg.Activity(c)
@@ -322,7 +313,6 @@ You can install that package if you want to try it out, but the UI works without
 ```python
 import termuxgui as tg
 import sys
-import time
 from subprocess import run
 
 with tg.Connection() as c:
@@ -396,8 +386,6 @@ There are some more Views you can use to get user input:
 ```python
 import termuxgui as tg
 import sys
-import time
-from subprocess import run
 
 with tg.Connection() as c:
     a = tg.Activity(c, dialog=True)
@@ -469,7 +457,6 @@ for pysdl2 to find the sdl2 library.
 
 ```python
 import time
-import sys
 from ctypes import *
 from sdl2 import *
 import sdl2.ext

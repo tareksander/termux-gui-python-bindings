@@ -2,43 +2,38 @@
 
 import termuxgui as tg
 import sys
-import time
 from subprocess import run
 
 with tg.Connection() as c:
+    a = tg.Activity(c, dialog=True)  # make this activity a dialog
 
-    a = tg.Activity(c, dialog=True) # make this activity a dialog
-    
     layout = tg.LinearLayout(a)
-    
+
     title = tg.TextView(a, "Download Video", layout)
     title.settextsize(30)
-    
+
     # Let's also create a small margin around the title so it looks nicer.
     title.setmargin(5)
-    
-    
+
     # For dialogs, we don't need to set "WRAP_CONTENT", in dialogs views are automatically packed as close as possible.
-    
-    tv1 = tg.TextView( a, "Video link:", layout)
+
+    tv1 = tg.TextView(a, "Video link:", layout)
     et1 = tg.EditText(a, "", layout)
-    
-    tv2 = tg.TextView( a, "Filename (empty for automatic filename):", layout)
-    et2 = tg.EditText( a, "", layout)
-    
-    
+
+    tv2 = tg.TextView(a, "Filename (empty for automatic filename):", layout)
+    et2 = tg.EditText(a, "", layout)
+
     # This creates an unchecked Checkbox
     check = tg.Checkbox(a, "high quality", layout, False)
-    
+
     # Create 2 buttons next to each other
     buttons = tg.LinearLayout(a, layout, False)
-    
+
     dl = tg.Button(a, "download", buttons)
     cancel = tg.Button(a, "cancel", buttons)
-    
-    
+
     hd = False
-    
+
     for ev in c.events():
         if ev.type == tg.Event.destroy and ev.value["finishing"]:
             sys.exit()
@@ -62,4 +57,4 @@ with tg.Connection() as c:
                 except:
                     pass
         if ev.type == tg.Event.click and ev.value["id"] == cancel:
-            a.finish() # this handily also exits the program, because finishing the activity destroys it, and that event is send to us
+            a.finish()  # this handily also exits the program, because finishing the activity destroys it, and that event is send to us

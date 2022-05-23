@@ -23,25 +23,49 @@
 </header>
 <section id="section-intro">
 <p>This is a library for interacting with the Termux:GUI plugin from python.</p>
-<p>You don't need to include all the submodules, all needed classes are automatically included in the package scope upon importing the package.</p>
+<p>You don't need to include all the submodules, all needed classes are automatically included in the package scope upon
+importing the package.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;This is a library for interacting with the Termux:GUI plugin from python.
 
-You don&#39;t need to include all the submodules, all needed classes are automatically included in the package scope upon importing the package.
-&#34;&#34;&#34;
+You don&#39;t need to include all the submodules, all needed classes are automatically included in the package scope upon
+importing the package. &#34;&#34;&#34;
 
-__all__ = [&#34;Activity&#34;, &#34;Connection&#34;, &#34;Event&#34;, &#34;Task&#34;, &#34;View&#34;, &#34;ViewGroup&#34;, &#34;LinearLayout&#34;,
-           &#34;FrameLayout&#34;, &#34;Space&#34;, &#34;TextView&#34;, &#34;EditText&#34;, &#34;ImageView&#34;, &#34;Button&#34;,
-           &#34;Checkbox&#34;, &#34;NestedScrollView&#34;, &#34;Buffer&#34;, &#34;RadioGroup&#34;, &#34;RadioButton&#34;, &#34;RemoteViews&#34;, &#34;Spinner&#34;, &#34;ToggleButton&#34;, &#34;Switch&#34;, &#34;CompoundButton&#34;, &#34;ProgressBar&#34;, &#34;SwipeRefreshLayout&#34;, &#34;HorizontalScrollView&#34;, &#34;TabLayout&#34;]
+__all__ = [&#39;Activity&#39;, &#39;Buffer&#39;, &#39;Button&#39;, &#39;Checkbox&#39;, &#39;CompoundButton&#39;, &#39;Connection&#39;, &#39;EditText&#39;, &#39;Event&#39;,
+           &#39;FrameLayout&#39;, &#39;HorizontalScrollView&#39;, &#39;ImageView&#39;, &#39;LinearLayout&#39;, &#39;NestedScrollView&#39;, &#39;ProgressBar&#39;,
+           &#39;RadioButton&#39;, &#39;RadioGroup&#39;, &#39;RemoteViews&#39;, &#39;Space&#39;, &#39;Spinner&#39;, &#39;SwipeRefreshLayout&#39;, &#39;Switch&#39;, &#39;TabLayout&#39;,
+           &#39;Task&#39;, &#39;TextView&#39;, &#39;ToggleButton&#39;, &#39;View&#39;, &#39;ViewGroup&#39;]
 
-
-for m in __all__:
-    exec(&#34;from termuxgui.&#34;+m.lower()+&#34; import &#34;+m)
-del m
-
+from termuxgui.activity import Activity
+from termuxgui.buffer import Buffer
+from termuxgui.button import Button
+from termuxgui.checkbox import Checkbox
+from termuxgui.compoundbutton import CompoundButton
+from termuxgui.connection import Connection
+from termuxgui.edittext import EditText
+from termuxgui.event import Event
+from termuxgui.framelayout import FrameLayout
+from termuxgui.horizontalscrollview import HorizontalScrollView
+from termuxgui.imageview import ImageView
+from termuxgui.linearlayout import LinearLayout
+from termuxgui.nestedscrollview import NestedScrollView
+from termuxgui.progressbar import ProgressBar
+from termuxgui.radiobutton import RadioButton
+from termuxgui.radiogroup import RadioGroup
+from termuxgui.remoteviews import RemoteViews
+from termuxgui.space import Space
+from termuxgui.spinner import Spinner
+from termuxgui.swiperefreshlayout import SwipeRefreshLayout
+from termuxgui.switch import Switch
+from termuxgui.tablayout import TabLayout
+from termuxgui.task import Task
+from termuxgui.textview import TextView
+from termuxgui.togglebutton import ToggleButton
+from termuxgui.view import View
+from termuxgui.viewgroup import ViewGroup
 
 WRAP_CONTENT = &#34;WRAP_CONTENT&#34;
 MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
@@ -185,98 +209,95 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 </summary>
 <pre><code class="python">class Activity:
     &#34;&#34;&#34;This represents an Android Activity.
-    
+
     Use a.c to access the Connection object of an Activity and a.t to access the Task object.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, tid=None, dialog=None, pip=False, overlay=None, lockscreen=None, canceloutside=True):
         &#34;&#34;&#34;When an Activity could not be created, a RuntimeError is raised.&#34;&#34;&#34;
         self.c = connection
         params = {&#34;canceloutside&#34;: canceloutside}
-        if dialog != None:
+        if dialog is not None:
             params[&#34;dialog&#34;] = dialog
-        if tid != None:
+        if tid is not None:
             params[&#34;tid&#34;] = tid
-        if pip != None:
+        if pip is not None:
             params[&#34;pip&#34;] = pip
-        if overlay != None:
+        if overlay is not None:
             params[&#34;overlay&#34;] = overlay
-        if lockscreen != None:
+        if lockscreen is not None:
             params[&#34;lockscreen&#34;] = lockscreen
-        if tid == None:
+        if tid is None:
             self.aid, tid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
         else:
             self.aid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
         self.t = Task(connection, tid)
         if self.aid == -1:
             raise RuntimeError(&#34;Could not create Activity&#34;)
-    
-    
+
     def finish(self):
-        &#39;&#39;&#39;Finishes an Activity.&#39;&#39;&#39;
+        &#34;&#34;&#34;Finishes an Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
-    
-    def setinputmode(mode):
-        &#39;&#39;&#39;Sets the input mode for an Activity.&#39;&#39;&#39;
+
+    def setinputmode(self, mode):
+        &#34;&#34;&#34;Sets the input mode for an Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setInputMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;mode&#34;: mode}})
-    
-    def keepscreenon(on):
+
+    def keepscreenon(self, on):
         &#34;&#34;&#34;Sets whether the Activity should keep the screen on while it is showing.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})
-    
+
     def setpipmode(self, pip):
         &#34;&#34;&#34;Goes into / out of picture-in-picture mode.
-        
+
         When you exit pip, you Activity is put in the recent tasks list and not shown to the user.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
-    
+
     def setpipmodeauto(self, pip):
-        &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity.&#34;&#34;&#34;
+        &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode
+        when the user leaves the Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPModeAuto&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
-    
+
     def setpipparams(self, num, den):
-        &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
+        &#34;&#34;&#34;Sets the PiP parameters for the Activity, currently only the aspect ration.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})
-    
+
     def settaskdescription(self, label, img):
-        &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
+        &#34;&#34;&#34;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})
-    
+
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
-        &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
-        self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary, &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor, &#34;colorAccent&#34;: coloraccent}})
-    
-    def setorientation(orientation):
+        &#34;&#34;&#34;Sets the Theme for the Activity.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;,
+                         &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary,
+                                    &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor,
+                                    &#34;colorAccent&#34;: coloraccent}})
+
+    def setorientation(self, orientation):
         &#34;&#34;&#34;Sets the preferred orientation of the Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setOrientation&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;orientation&#34;: orientation}})
-    
-    
-    
 
-    def setposition(x, y):
+    def setposition(self, x, y):
         &#34;&#34;&#34;Sets the screen position of the Activity if it is an overlay.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;x&#34;: x, &#34;y&#34;: y}})
 
-
-
-    def sendoverlayevents(send):
+    def sendoverlayevents(self, send):
         &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})
-    
-    
+
     def movetoback(self):
         &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
-    
+
     def requestunlock(self):
-        &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+        &#34;&#34;&#34;Requests the lockscreen to unlock.
+        If the lockscreen is just protected by a swipe, it is unlocked immediately.
+        If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
+
     def getconfiguration(self):
         &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
         return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
+
     def hidesoftkeyboard(self):
         &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
@@ -293,7 +314,7 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def finish(self):
-    &#39;&#39;&#39;Finishes an Activity.&#39;&#39;&#39;
+    &#34;&#34;&#34;Finishes an Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
@@ -326,7 +347,7 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.keepscreenon"><code class="name flex">
-<span>def <span class="ident">keepscreenon</span></span>(<span>on)</span>
+<span>def <span class="ident">keepscreenon</span></span>(<span>self, on)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether the Activity should keep the screen on while it is showing.</p></div>
@@ -334,7 +355,7 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def keepscreenon(on):
+<pre><code class="python">def keepscreenon(self, on):
     &#34;&#34;&#34;Sets whether the Activity should keep the screen on while it is showing.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})</code></pre>
 </details>
@@ -357,18 +378,22 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <span>def <span class="ident">requestunlock</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.</p></div>
+<div class="desc"><p>Requests the lockscreen to unlock.
+If the lockscreen is just protected by a swipe, it is unlocked immediately.
+If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def requestunlock(self):
-    &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+    &#34;&#34;&#34;Requests the lockscreen to unlock.
+    If the lockscreen is just protected by a swipe, it is unlocked immediately.
+    If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.sendoverlayevents"><code class="name flex">
-<span>def <span class="ident">sendoverlayevents</span></span>(<span>send)</span>
+<span>def <span class="ident">sendoverlayevents</span></span>(<span>self, send)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether or not you want to receive overlay events if the Activity is an overlay.</p></div>
@@ -376,13 +401,13 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sendoverlayevents(send):
+<pre><code class="python">def sendoverlayevents(self, send):
     &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.setinputmode"><code class="name flex">
-<span>def <span class="ident">setinputmode</span></span>(<span>mode)</span>
+<span>def <span class="ident">setinputmode</span></span>(<span>self, mode)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the input mode for an Activity.</p></div>
@@ -390,13 +415,13 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setinputmode(mode):
-    &#39;&#39;&#39;Sets the input mode for an Activity.&#39;&#39;&#39;
+<pre><code class="python">def setinputmode(self, mode):
+    &#34;&#34;&#34;Sets the input mode for an Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setInputMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;mode&#34;: mode}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.setorientation"><code class="name flex">
-<span>def <span class="ident">setorientation</span></span>(<span>orientation)</span>
+<span>def <span class="ident">setorientation</span></span>(<span>self, orientation)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the preferred orientation of the Activity.</p></div>
@@ -404,7 +429,7 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setorientation(orientation):
+<pre><code class="python">def setorientation(self, orientation):
     &#34;&#34;&#34;Sets the preferred orientation of the Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setOrientation&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;orientation&#34;: orientation}})</code></pre>
 </details>
@@ -421,7 +446,7 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 </summary>
 <pre><code class="python">def setpipmode(self, pip):
     &#34;&#34;&#34;Goes into / out of picture-in-picture mode.
-    
+
     When you exit pip, you Activity is put in the recent tasks list and not shown to the user.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPiPMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})</code></pre>
 </details>
@@ -430,13 +455,15 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <span>def <span class="ident">setpipmodeauto</span></span>(<span>self, pip)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity.</p></div>
+<div class="desc"><p>Set whether the Activity should automatically enter picture-in-picture mode
+when the user leaves the Activity.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setpipmodeauto(self, pip):
-    &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity.&#34;&#34;&#34;
+    &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode
+    when the user leaves the Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPiPModeAuto&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})</code></pre>
 </details>
 </dd>
@@ -450,12 +477,12 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setpipparams(self, num, den):
-    &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
+    &#34;&#34;&#34;Sets the PiP parameters for the Activity, currently only the aspect ration.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Activity.setposition"><code class="name flex">
-<span>def <span class="ident">setposition</span></span>(<span>x, y)</span>
+<span>def <span class="ident">setposition</span></span>(<span>self, x, y)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the screen position of the Activity if it is an overlay.</p></div>
@@ -463,7 +490,7 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setposition(x, y):
+<pre><code class="python">def setposition(self, x, y):
     &#34;&#34;&#34;Sets the screen position of the Activity if it is an overlay.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;x&#34;: x, &#34;y&#34;: y}})</code></pre>
 </details>
@@ -478,7 +505,7 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def settaskdescription(self, label, img):
-    &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
+    &#34;&#34;&#34;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})</code></pre>
 </details>
 </dd>
@@ -492,8 +519,11 @@ MATCH_PARENT = &#34;MATCH_PARENT&#34;</code></pre>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
-    &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
-    self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary, &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor, &#34;colorAccent&#34;: coloraccent}})</code></pre>
+    &#34;&#34;&#34;Sets the Theme for the Activity.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;,
+                     &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary,
+                                &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor,
+                                &#34;colorAccent&#34;: coloraccent}})</code></pre>
 </details>
 </dd>
 </dl>
@@ -516,41 +546,40 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Buffer:
     &#34;&#34;&#34;This represents a raw ARGB888 image buffer.
-    
+
     This is only available on Android 8.1+.
     Buffers consume much memory, so be sure to close any Buffer you don&#39;t need any more.
     Preferably use &#34;with&#34; to get the memory object of the buffer so it is automatically closed.
     The memory object is a shared memory object that can be used like a bytes object or a file object.
     You can also directly access the memory object as b.mem.
-    
+
     A RuntimeError is raised when a Buffer can&#39;t be created.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
-        
         self.c = connection
         self.c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
         ret = msg.read_msg_fd(self.c._main)
         if len(ret) == 1:
             raise RuntimeError(&#34;Could not create Buffer&#34;)
         self.bid, self.fd = ret
-        self.mem = mmap(self.fd, w*h*4)
-    
+        self.mem = mmap(self.fd, w * h * 4)
+
     def __enter__(self):
         return self.mem
-    
+
     def __exit__(self, type, value, traceback):
         self.remove()
         return False
-    
-    
+
     def remove(self):
         &#34;&#34;&#34;Removes this buffer, freeing the memory.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;deleteBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})
         self.mem.close()
         os.close(self.fd)
-    
+
     def blit(self):
-        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
+        &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin.
+        To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
         self.mem.flush()
         self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
 </details>
@@ -560,13 +589,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">blit</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.</p></div>
+<div class="desc"><p>Blits the buffer to the underlying image in the plugin.
+To update ImageViews using this buffer, they have to be refreshed afterwards.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def blit(self):
-    &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin. To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
+    &#34;&#34;&#34;Blits the buffer to the underlying image in the plugin.
+    To update ImageViews using this buffer, they have to be refreshed afterwards.&#34;&#34;&#34;
     self.mem.flush()
     self.c.send_msg({&#34;method&#34;: &#34;blitBuffer&#34;, &#34;params&#34;: {&#34;bid&#34;: self.bid}})</code></pre>
 </details>
@@ -601,7 +632,7 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Button(TextView):
     &#34;&#34;&#34;This represents a Button.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text}
         if parent != None:
@@ -656,10 +687,10 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Checkbox(CompoundButton):
     &#34;&#34;&#34;This represents a CheckBox.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         self.checked = checked
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createCheckbox&#34;, &#34;params&#34;: args}))</code></pre>
@@ -702,7 +733,7 @@ You can also directly access the memory object as b.mem.</p>
 </dd>
 <dt id="termuxgui.CompoundButton"><code class="flex name class">
 <span>class <span class="ident">CompoundButton</span></span>
-<span>(</span><span>activity, text, parent=None)</span>
+<span>(</span><span>activity, id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a CompoundButton.</p>
@@ -713,19 +744,19 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class CompoundButton(Button):
     &#34;&#34;&#34;This represents a CompoundButton.
-    
+
     This class doesn&#39;t correspond to a particular View, it is used to provide common methods for all CompoundButtons.&#34;&#34;&#34;
+
+    def __init__(self, activity, id):
+        View.__init__(self, activity, id)
+        self.checked = False
 
     def handleevent(self, e):
         &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
         if e.type == Event.click and e.aid == self.a.aid and e.id == self.id:
             self.checked = e.value[&#34;set&#34;]
         View.handleevent(self, e)
-    
-    
-    
-    
-    
+
     def setchecked(self, checked):
         &#34;&#34;&#34;Explicitly set the checked status of this CompoundButton.&#34;&#34;&#34;
         self.checked = checked
@@ -809,28 +840,32 @@ You can also directly access the memory object as b.mem.</p>
 <span>class <span class="ident">Connection</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>This represents a connection to the Termux:GUI plugin and contains all functions that don't act on any particular View, Activity or Task.</p>
+<div class="desc"><p>This represents a connection to the Termux:GUI plugin and contains all functions that don't act on any
+particular View, Activity or Task. </p>
 <p>When a connection can't be established, a RuntimeError is raised.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Connection:
-    &#34;&#34;&#34;This represents a connection to the Termux:GUI plugin and contains all functions that don&#39;t act on any particular View, Activity or Task.&#34;&#34;&#34;
+    &#34;&#34;&#34;This represents a connection to the Termux:GUI plugin and contains all functions that don&#39;t act on any
+    particular View, Activity or Task. &#34;&#34;&#34;
+
     def __init__(self):
         &#34;&#34;&#34;When a connection can&#39;t be established, a RuntimeError is raised.&#34;&#34;&#34;
-        adrMain = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
-        adrEvent = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
+        adrMain = &#39;&#39;.join(choice(ascii_letters + digits) for i in range(50))
+        adrEvent = &#39;&#39;.join(choice(ascii_letters + digits) for i in range(50))
         mainss = socket(AF_UNIX, SOCK_STREAM)
         eventss = socket(AF_UNIX, SOCK_STREAM)
         with mainss, eventss:
-            mainss.bind(&#39;\0&#39;+adrMain)
-            eventss.bind(&#39;\0&#39;+adrEvent)
+            mainss.bind(&#39;\0&#39; + adrMain)
+            eventss.bind(&#39;\0&#39; + adrEvent)
             mainss.listen(1)
             eventss.listen(1)
             mainss.settimeout(5)
             eventss.settimeout(5)
-            run([&#34;am&#34;,&#34;broadcast&#34;,&#34;-n&#34;,&#34;com.termux.gui/.GUIReceiver&#34;,&#34;--es&#34;, &#34;mainSocket&#34;,adrMain,&#34;--es&#34;, &#34;eventSocket&#34;,adrEvent],stdout=DEVNULL,stderr=DEVNULL)
+            run([&#34;am&#34;, &#34;broadcast&#34;, &#34;-n&#34;, &#34;com.termux.gui/.GUIReceiver&#34;, &#34;--es&#34;, &#34;mainSocket&#34;, adrMain, &#34;--es&#34;,
+                 &#34;eventSocket&#34;, adrEvent], stdout=DEVNULL, stderr=DEVNULL)
             try:
                 main = mainss.accept()[0]
                 try:
@@ -859,62 +894,65 @@ You can also directly access the memory object as b.mem.</p>
                     raise e
             except timeout:
                 raise RuntimeError(&#34;Could not connect to Termux:GUI. Is the plugin installed?&#34;)
-    
+
     def events(self):
         &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
         while True:
             yield Event(tgmsg.read_msg(self._event))
-    
+
     def checkevent(self):
-        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        &#34;&#34;&#34;If there is at least one event to be read, returns it.
+        If there is no event, returns None.
+        You can use this to e.g. check for events between drawing a frame instead of
+        having to use a separate thread and blocking it.&#34;&#34;&#34;
         r, _, _ = select([self._event], [], [], 0)
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
-        
-    
+
     def toast(self, text, long=False):
         &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
-        self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) 
-    
+        self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})
+
     def totermux(self):
-        &#39;&#39;&#39;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#39;&#39;&#39;
-        run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)
-    
+        &#34;&#34;&#34;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#34;&#34;&#34;
+        run([&#34;am&#34;, &#34;start&#34;, &#34;-n&#34;, &#34;com.termux/.app.TermuxActivity&#34;], stdout=DEVNULL, stderr=DEVNULL)
+
     def close(self):
         &#34;&#34;&#34;Closes the connection.
-        
+
         The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
         self._main.close()
         self._event.close()
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, type, value, traceback):
         self.close()
         return False
-    
-    
+
     def send_msg(self, msg):
-        &#34;&#34;&#34;Send a message to the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Send a message to the main socket.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         if type(msg) is dict:
             msg = dumps(msg)
         tgmsg.send_msg(self._main, msg)
-    
+
     def read_msg(self):
-        &#34;&#34;&#34;Read a message from the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Read a message from the main socket.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         return tgmsg.read_msg(self._main)
-    
+
     def send_read_msg(self, msg):
-        &#34;&#34;&#34;Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         self.send_msg(msg)
         return self.read_msg()
-    
+
     def turnscreenon(self):
-        &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+        &#34;&#34;&#34;Turns the screen on.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
-    
-    
+
     def islocked(self):
         &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
         return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
@@ -925,13 +963,19 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">checkevent</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.</p></div>
+<div class="desc"><p>If there is at least one event to be read, returns it.
+If there is no event, returns None.
+You can use this to e.g. check for events between drawing a frame instead of
+having to use a separate thread and blocking it.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def checkevent(self):
-    &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+    &#34;&#34;&#34;If there is at least one event to be read, returns it.
+    If there is no event, returns None.
+    You can use this to e.g. check for events between drawing a frame instead of
+    having to use a separate thread and blocking it.&#34;&#34;&#34;
     r, _, _ = select([self._event], [], [], 0)
     if len(r) != 0:
         return Event(tgmsg.read_msg(self._event))</code></pre>
@@ -949,7 +993,7 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def close(self):
     &#34;&#34;&#34;Closes the connection.
-    
+
     The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
     self._main.close()
     self._event.close()</code></pre>
@@ -988,13 +1032,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">read_msg</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Read a message from the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
+<div class="desc"><p>Read a message from the main socket.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def read_msg(self):
-    &#34;&#34;&#34;Read a message from the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+    &#34;&#34;&#34;Read a message from the main socket.
+    You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     return tgmsg.read_msg(self._main)</code></pre>
 </details>
 </dd>
@@ -1002,13 +1048,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">send_msg</span></span>(<span>self, msg)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Send a message to the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
+<div class="desc"><p>Send a message to the main socket.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def send_msg(self, msg):
-    &#34;&#34;&#34;Send a message to the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+    &#34;&#34;&#34;Send a message to the main socket.
+    You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     if type(msg) is dict:
         msg = dumps(msg)
     tgmsg.send_msg(self._main, msg)</code></pre>
@@ -1018,13 +1066,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">send_read_msg</span></span>(<span>self, msg)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
+<div class="desc"><p>Send a message to the main socket and read a message afterwards.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def send_read_msg(self, msg):
-    &#34;&#34;&#34;Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+    &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
+    You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     self.send_msg(msg)
     return self.read_msg()</code></pre>
 </details>
@@ -1040,7 +1090,7 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def toast(self, text, long=False):
     &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
-    self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) </code></pre>
+    self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Connection.totermux"><code class="name flex">
@@ -1053,21 +1103,21 @@ You can also directly access the memory object as b.mem.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def totermux(self):
-    &#39;&#39;&#39;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#39;&#39;&#39;
-    run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)</code></pre>
+    &#34;&#34;&#34;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#34;&#34;&#34;
+    run([&#34;am&#34;, &#34;start&#34;, &#34;-n&#34;, &#34;com.termux/.app.TermuxActivity&#34;], stdout=DEVNULL, stderr=DEVNULL)</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.Connection.turnscreenon"><code class="name flex">
 <span>def <span class="ident">turnscreenon</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Truns the screen on.</p></div>
+<div class="desc"><p>Turns the screen on.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def turnscreenon(self):
-    &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+    &#34;&#34;&#34;Turns the screen on.&#34;&#34;&#34;
     self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 </dd>
@@ -1085,15 +1135,14 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class EditText(TextView):
     &#34;&#34;&#34;This represents an EditText.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=&#34;text&#34;):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput, &#34;type&#34;: inputtype}
-        if parent != None:
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput,
+                &#34;type&#34;: inputtype}
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
-    
-    
-    
+
     def showcursor(self, show):
         &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
@@ -1162,14 +1211,13 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Event:
     &#34;&#34;&#34;This represents an Event in the GUI.
-    
+
     The class variables are the available event types.
-    
+
     Use ev.type == Event.eventtype to check for event types.
-    
+
     ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any.&#34;&#34;&#34;
-    
-    
+
     # Event types
     # View events
     click = &#34;click&#34;
@@ -1178,12 +1226,10 @@ You can also directly access the memory object as b.mem.</p>
     key = &#34;key&#34;
     touch = &#34;touch&#34;
     refresh = &#34;refresh&#34;
-    selected = &#34;selected&#34; # used for RadioGroups
+    selected = &#34;selected&#34;  # used for RadioGroups
     itemselected = &#34;itemselected&#34;
     text = &#34;text&#34;
-    
-    
-    
+
     # activity events
     create = &#34;create&#34;
     start = &#34;start&#34;
@@ -1194,19 +1240,18 @@ You can also directly access the memory object as b.mem.</p>
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
     config = &#34;config&#34;
-    
+
     # general events
     screenon = &#34;screen_on&#34;
     screen_off = &#34;screen_off&#34;
     timezone = &#34;timezone&#34;
     locale = &#34;locale&#34;
     airplane = &#34;airplane&#34;
-    
-    
+
     # special overlay events
     overlaytouch = &#34;overlayTouch&#34;
     overlayScale = &#34;overlayScale&#34;
-    
+
     # touch event action
     touch_up = &#34;up&#34;
     touch_down = &#34;down&#34;
@@ -1214,9 +1259,7 @@ You can also directly access the memory object as b.mem.</p>
     touch_pointer_down = &#34;pointer_down&#34;
     touch_cancel = &#34;cancel&#34;
     touch_move = &#34;move&#34;
-    
-    
-    
+
     def __init__(self, ev):
         self.type = ev[&#34;type&#34;]
         self.value = {}
@@ -1368,10 +1411,10 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class FrameLayout(ViewGroup):
     &#34;&#34;&#34;This represents a FrameLayout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createFrameLayout&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
@@ -1420,17 +1463,17 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class HorizontalScrollView(FrameLayout):
     &#34;&#34;&#34;This represents a HorizontalScrollView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
         args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createHorizontalScrollView&#34;, &#34;params&#34;: args}))
-    
+
     def getscrollposition(self):
         &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
+
     def setscrollposition(self, x, y, smooth=True):
         &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
@@ -1511,23 +1554,23 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class ImageView(View):
     &#34;&#34;&#34;This represents an ImageView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createImageView&#34;, &#34;params&#34;: args}))
-    
-    
-    
+
     def setimage(self, img):
-        &#34;&#34;&#34;Sets the image of the ImageView. The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})
-    
+        &#34;&#34;&#34;Sets the image of the ImageView.
+        The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id,
+                                                            &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})
+
     def setbuffer(self, b):
         &#34;&#34;&#34;Makes the ImageView use a shared buffer as the image source.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setBuffer&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;bid&#34;: b.bid}})
-    
+
     def refresh(self):
         &#34;&#34;&#34;Redraws the ImageView. You have to use this after blitting the Buffer when using a buffer.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;refreshImageView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
@@ -1570,14 +1613,17 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">setimage</span></span>(<span>self, img)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the image of the ImageView. The image has to be a bytes object containing the image in png or jpeg format.</p></div>
+<div class="desc"><p>Sets the image of the ImageView.
+The image has to be a bytes object containing the image in png or jpeg format.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setimage(self, img):
-    &#34;&#34;&#34;Sets the image of the ImageView. The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})</code></pre>
+    &#34;&#34;&#34;Sets the image of the ImageView.
+    The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id,
+                                                        &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})</code></pre>
 </details>
 </dd>
 </dl>
@@ -1615,10 +1661,10 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class LinearLayout(ViewGroup):
     &#34;&#34;&#34;This represents a LinearLayout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, vertical=True):
         args = {&#34;aid&#34;: activity.aid, &#34;vertical&#34;: vertical}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createLinearLayout&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
@@ -1666,20 +1712,22 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class NestedScrollView(FrameLayout):
     &#34;&#34;&#34;This represents a NestedScrollView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
         args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createNestedScrollView&#34;, &#34;params&#34;: args}))
-    
+        ViewGroup.__init__(self, activity,
+                           activity.c.send_read_msg({&#34;method&#34;: &#34;createNestedScrollView&#34;, &#34;params&#34;: args}))
+
     def getscrollposition(self):
         &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
+
     def setscrollposition(self, x, y, smooth=True):
-        &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
+        &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether it&#39;s a smooth scroll or not.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;,
+                           &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1707,14 +1755,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">setscrollposition</span></span>(<span>self, x, y, smooth=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the x and x scroll positions. smooth specifies whether is's a smooth scoll or not.</p></div>
+<div class="desc"><p>Sets the x and x scroll positions. smooth specifies whether it's a smooth scroll or not.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setscrollposition(self, x, y, smooth=True):
-    &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
+    &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether it&#39;s a smooth scroll or not.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;,
+                       &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
 </details>
 </dd>
 </dl>
@@ -1753,14 +1802,13 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class ProgressBar(View):
     &#34;&#34;&#34;This represents a ProgressBar.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createProgressBar&#34;, &#34;params&#34;: args}))
-    
-    
+
     def setprogress(self, progress):
         &#34;&#34;&#34;Sets the progress of the ProgressBar. The progress has to be an integer from 0 to 100 (inclusive).&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setProgress&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;progress&#34;: progress}})</code></pre>
@@ -1820,13 +1868,13 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class RadioButton(CompoundButton):
     &#34;&#34;&#34;This represents a RadioButton.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioButton&#34;, &#34;params&#34;: args}))</code></pre>
+        CompoundButton.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioButton&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1877,12 +1925,12 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class RadioGroup(LinearLayout):
     &#34;&#34;&#34;This represents a RadioGroup.
-    
+
     Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createRadioGroup&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
@@ -1927,99 +1975,110 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class RemoteViews:
     &#34;&#34;&#34;This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.&#34;&#34;&#34;
-    
+
     def __init__(self, connection):
         self.c = connection
         self.rid = self.c.send_read_msg({&#34;method&#34;: &#34;createRemoteLayout&#34;})
-    
+
     def __eq__(self, other):
         if type(other) is int:
             return self.rid == other
         if isinstance(other, RemoteViews):
             return self.rid == other.rid
-    
+
     def delete(self):
         &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
-    
+        self.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
+
     def addFrameLayout(self, parent=None):
-        &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})
-    
+
     def addLinearLayout(self, parent=None, vertical=None):
-        &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if vertical != None:
+        &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if vertical is not None:
             args[&#34;vertical&#34;] = vertical
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})
-    
+
     def addTextView(self, parent=None):
-        &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})
-    
+
     def addButton(self, parent=None):
-        &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})
-    
+
     def addImageView(self, parent=None):
-        &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})
-    
+
     def addProgressBar(self, parent=None):
-        &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})
-    
+
     def setBackgroundColor(self, id, color):
         &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
-    
+
     def setProgress(self, id, progress, max):
         &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
-    
+        self.c.send_msg(
+            {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
+
     def setText(self, id, text):
         &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})
-    
+
     def setTextSize(self, id, size, px):
-        &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
+        &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
+        If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})
-    
+
     def setTextColor(self, id, color):
         &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
-    
+
     def setVisibility(self, id, vis):
         &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
-        
-        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+
+        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+        Gone views do not take up layout space.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})
-    
+
     def setPadding(self, id, left, top, right, bottom):
         &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34; : right, &#34;bottom&#34;: bottom}})
-    
+        self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
+                         &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
+                                    &#34;bottom&#34;: bottom}})
+
     def setImage(self, id, img):
         &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})
-    
+
     def updateWidget(self, wid):
         &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
@@ -2030,15 +2089,17 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">addButton</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addButton(self, parent=None):
-    &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -2047,15 +2108,17 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">addFrameLayout</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addFrameLayout(self, parent=None):
-    &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -2064,15 +2127,17 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">addImageView</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addImageView(self, parent=None):
-    &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -2081,17 +2146,19 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">addLinearLayout</span></span>(<span>self, parent=None, vertical=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addLinearLayout(self, parent=None, vertical=None):
-    &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if vertical != None:
+    &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if vertical is not None:
         args[&#34;vertical&#34;] = vertical
-    if parent != None:
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -2100,15 +2167,17 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">addProgressBar</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addProgressBar(self, parent=None):
-    &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -2117,15 +2186,17 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">addTextView</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addTextView(self, parent=None):
-    &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -2141,7 +2212,7 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def delete(self):
     &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})</code></pre>
+    self.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.RemoteViews.setBackgroundColor"><code class="name flex">
@@ -2183,7 +2254,9 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def setPadding(self, id, left, top, right, bottom):
     &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
-    self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34; : right, &#34;bottom&#34;: bottom}})</code></pre>
+    self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
+                     &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
+                                &#34;bottom&#34;: bottom}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.RemoteViews.setProgress"><code class="name flex">
@@ -2197,7 +2270,8 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def setProgress(self, id, progress, max):
     &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
-    self.c.send_msg({&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})</code></pre>
+    self.c.send_msg(
+        {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.RemoteViews.setText"><code class="name flex">
@@ -2232,13 +2306,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">setTextSize</span></span>(<span>self, id, size, px)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.</p></div>
+<div class="desc"><p>Sets the text size of a TextView in this remote Layout.
+If px is true, the size will be in pixels. If not, it will be in dip.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setTextSize(self, id, size, px):
-    &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
+    &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
+    If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})</code></pre>
 </details>
 </dd>
@@ -2247,15 +2323,17 @@ You can also directly access the memory object as b.mem.</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the visibility of a View in this remote Layout.</p>
-<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.</p></div>
+<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+Gone views do not take up layout space.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setVisibility(self, id, vis):
     &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
-    
-    0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+
+    0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+    Gone views do not take up layout space.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})</code></pre>
 </details>
 </dd>
@@ -2287,10 +2365,10 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Space(View):
     &#34;&#34;&#34;This represents a Space. You can use this to create empty space in your layout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpace&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
@@ -2332,14 +2410,13 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Spinner(View):
     &#34;&#34;&#34;This represents a Spinner.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpinner&#34;, &#34;params&#34;: args}))
-    
-    
+
     def setlist(self, list):
         &#34;&#34;&#34;Sets the list of items displayed in the spinner. list has to be a list containing strings.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
@@ -2399,18 +2476,20 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class SwipeRefreshLayout(ViewGroup):
     &#34;&#34;&#34;This represents a SwipeRefreshLayout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
-    
+        ViewGroup.__init__(self, activity,
+                           activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
+
     def setrefreshing(self, refreshing):
         &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
-        
+
         You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -2431,9 +2510,10 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def setrefreshing(self, refreshing):
     &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
-    
+
     You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
+    self.a.c.send_msg(
+        {&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
 </details>
 </dd>
 </dl>
@@ -2472,13 +2552,13 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Switch(CompoundButton):
     &#34;&#34;&#34;This represents a Switch.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;checked&#34;: checked}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwitch&#34;, &#34;params&#34;: args}))</code></pre>
+        CompoundButton.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwitch&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -2528,15 +2608,13 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class TabLayout(HorizontalScrollView):
     &#34;&#34;&#34;This represents a TabLayout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTabLayout&#34;, &#34;params&#34;: args}))
-    
-    
-    
+
     def setlist(self, list):
         &#34;&#34;&#34;Sets the list tabs. list has to be a list containing strings.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
@@ -2602,17 +2680,18 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class Task:
     &#34;&#34;&#34;This represents an Android Task. It is automatically created with the Activity.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, tid):
         self.c = connection
         self.tid = tid
-    
+
     def finish(self):
         &#34;&#34;&#34;Finishes this Task.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;finishTask&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
-    
+
     def bringtofront(self):
-        &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
+        &#34;&#34;&#34;Bring this Task to the front and make it visible to the user.
+        Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 <h3>Methods</h3>
@@ -2621,13 +2700,15 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">bringtofront</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Bring this Task to the front and make it visible to the user. Might require "overlay over other apps" permission.</p></div>
+<div class="desc"><p>Bring this Task to the front and make it visible to the user.
+Might require "overlay over other apps" permission.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def bringtofront(self):
-    &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
+    &#34;&#34;&#34;Bring this Task to the front and make it visible to the user.
+    Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 </dd>
@@ -2659,32 +2740,29 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class TextView(View):
     &#34;&#34;&#34;This represents a TextView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
-    
+
     def settextsize(self, size):
         &#34;&#34;&#34;Sets the text size for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})
-    
-    
+
     def gettext(self):
         &#34;&#34;&#34;Gets the text of this TextView.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
+
     def settext(self, text):
         &#34;&#34;&#34;Sets the text of this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})
-    
-    
+
     def settextcolor(self, color):
         &#34;&#34;&#34;Sets the text color of this TextView. The color format is the same as for Activity.settheme().&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
-    
-    
+
     def sendtextevent(self, send):
         &#34;&#34;&#34;Sets whether ot not text events are send for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendTextEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
@@ -2805,13 +2883,13 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class ToggleButton(CompoundButton):
     &#34;&#34;&#34;This represents a ToggleButton.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;checked&#34;: checked}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))</code></pre>
+        CompoundButton.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -2861,19 +2939,19 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class View:
     &#34;&#34;&#34;This represents a generic View.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, id):
         self.a = activity
         self.id = id
         if self.id == -1:
             raise RuntimeError(&#34;Could not create View&#34;)
-    
+
     def __eq__(self, other):
         if type(other) is int:
             return self.id == other
         if isinstance(other, View):
             return self.id == other.id
-    
+
     def delete(self):
         &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
@@ -2881,71 +2959,77 @@ You can also directly access the memory object as b.mem.</p>
     def setmargin(self, margin, dir=None):
         &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
         args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
-        if dir != None:
+        if dir is not None:
             args[&#34;dir&#34;] = dir
         self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})
 
     def setwidth(self, width, px=False):
-        &#34;&#34;&#34;Sets the width of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;. If px is true, the values are in pixels instead.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width, &#34;px&#34;: px}})
+        &#34;&#34;&#34;Sets the width of this View.
+        Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
+        If px is true, the values are in pixels instead.&#34;&#34;&#34;
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width, &#34;px&#34;: px}})
 
     def setheight(self, height, px=False):
-        &#34;&#34;&#34;Sets the height of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;. If px is true, the values are in pixels instead.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height, &#34;px&#34;: px}})
+        &#34;&#34;&#34;Sets the height of this View.
+        Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
+        If px is true, the values are in pixels instead.&#34;&#34;&#34;
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height, &#34;px&#34;: px}})
 
     def setdimensions(self, width, height, px=False):
-        &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight. If px is true, the values are in pixels instead.&#34;&#34;&#34;
+        &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
+        If px is true, the values are in pixels instead.&#34;&#34;&#34;
         self.setwidth(width, px)
         self.setheight(height, px)
 
     def setlinearlayoutparams(self, weight, position=None):
         &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})
-    
-    
+        self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;,
+                           &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})
+
     def sendtouchevent(self, send):
-        &#34;&#34;&#34;Sets whether ot not touch events are send for this View.&#34;&#34;&#34;
+        &#34;&#34;&#34;Sets whether ot not touch events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
+
     def sendclickevent(self, send):
-        &#34;&#34;&#34;Sets whether ot not click events are send for this View.&#34;&#34;&#34;
+        &#34;&#34;&#34;Sets whether ot not click events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
+
     def sendlongclickevent(self, send):
-        &#34;&#34;&#34;Sets whether ot not long click events are send for this View.&#34;&#34;&#34;
+        &#34;&#34;&#34;Sets whether ot not long click events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendLongClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
+
     def sendfocuschangeevent(self, send):
-        &#34;&#34;&#34;Sets whether ot not focus change events are send for this View.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;sendFocusChangeEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
-    
+        &#34;&#34;&#34;Sets whether ot not focus change events are sent for this View.&#34;&#34;&#34;
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;sendFocusChangeEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
+
     def getdimensions(self):
         &#34;&#34;&#34;Gets the width and height of a View in the layout as a list. The values are in pixels.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getDimensions&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
-    
+
     def setbackgroundcolor(self, color):
         &#34;&#34;&#34;Sets the background color for this view.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
-    
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
+
     def setvisibility(self, vis):
         &#34;&#34;&#34;Sets the visibility for this view.
-        
-        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+
+        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+        Gone views do not take up layout space.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
-    
-    
+
     def focus(self, forcesoft=False):
         &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})
-    
-    
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})
+
+    &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
     def handleevent(self, e):
-        if hasattr(self, eventlistener):
-            eventlistener(self, e)
-        &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
-        pass</code></pre>
+        if hasattr(self, &#34;eventlistener&#34;):
+            self.eventlistener(self, e)</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -2983,7 +3067,8 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def focus(self, forcesoft=False):
     &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})</code></pre>
+    self.a.c.send_msg(
+        {&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.getdimensions"><code class="name flex">
@@ -3010,23 +3095,21 @@ You can also directly access the memory object as b.mem.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def handleevent(self, e):
-    if hasattr(self, eventlistener):
-        eventlistener(self, e)
-    &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
-    pass</code></pre>
+    if hasattr(self, &#34;eventlistener&#34;):
+        self.eventlistener(self, e)</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.sendclickevent"><code class="name flex">
 <span>def <span class="ident">sendclickevent</span></span>(<span>self, send)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets whether ot not click events are send for this View.</p></div>
+<div class="desc"><p>Sets whether ot not click events are sent for this View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sendclickevent(self, send):
-    &#34;&#34;&#34;Sets whether ot not click events are send for this View.&#34;&#34;&#34;
+    &#34;&#34;&#34;Sets whether ot not click events are sent for this View.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
@@ -3034,27 +3117,28 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">sendfocuschangeevent</span></span>(<span>self, send)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets whether ot not focus change events are send for this View.</p></div>
+<div class="desc"><p>Sets whether ot not focus change events are sent for this View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sendfocuschangeevent(self, send):
-    &#34;&#34;&#34;Sets whether ot not focus change events are send for this View.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;sendFocusChangeEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
+    &#34;&#34;&#34;Sets whether ot not focus change events are sent for this View.&#34;&#34;&#34;
+    self.a.c.send_msg(
+        {&#34;method&#34;: &#34;sendFocusChangeEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.sendlongclickevent"><code class="name flex">
 <span>def <span class="ident">sendlongclickevent</span></span>(<span>self, send)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets whether ot not long click events are send for this View.</p></div>
+<div class="desc"><p>Sets whether ot not long click events are sent for this View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sendlongclickevent(self, send):
-    &#34;&#34;&#34;Sets whether ot not long click events are send for this View.&#34;&#34;&#34;
+    &#34;&#34;&#34;Sets whether ot not long click events are sent for this View.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;sendLongClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
@@ -3062,13 +3146,13 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">sendtouchevent</span></span>(<span>self, send)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets whether ot not touch events are send for this View.</p></div>
+<div class="desc"><p>Sets whether ot not touch events are sent for this View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def sendtouchevent(self, send):
-    &#34;&#34;&#34;Sets whether ot not touch events are send for this View.&#34;&#34;&#34;
+    &#34;&#34;&#34;Sets whether ot not touch events are sent for this View.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;sendTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
@@ -3083,20 +3167,23 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def setbackgroundcolor(self, color):
     &#34;&#34;&#34;Sets the background color for this view.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})</code></pre>
+    self.a.c.send_msg(
+        {&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.setdimensions"><code class="name flex">
 <span>def <span class="ident">setdimensions</span></span>(<span>self, width, height, px=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the dimensions of this view. width and height are the same as for setwidth and setheight. If px is true, the values are in pixels instead.</p></div>
+<div class="desc"><p>Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
+If px is true, the values are in pixels instead.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setdimensions(self, width, height, px=False):
-    &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight. If px is true, the values are in pixels instead.&#34;&#34;&#34;
+    &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
+    If px is true, the values are in pixels instead.&#34;&#34;&#34;
     self.setwidth(width, px)
     self.setheight(height, px)</code></pre>
 </details>
@@ -3105,14 +3192,19 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">setheight</span></span>(<span>self, height, px=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the height of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT". If px is true, the values are in pixels instead.</p></div>
+<div class="desc"><p>Sets the height of this View.
+Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT".
+If px is true, the values are in pixels instead.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setheight(self, height, px=False):
-    &#34;&#34;&#34;Sets the height of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;. If px is true, the values are in pixels instead.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height, &#34;px&#34;: px}})</code></pre>
+    &#34;&#34;&#34;Sets the height of this View.
+    Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
+    If px is true, the values are in pixels instead.&#34;&#34;&#34;
+    self.a.c.send_msg(
+        {&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height, &#34;px&#34;: px}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.setlinearlayoutparams"><code class="name flex">
@@ -3126,7 +3218,8 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">def setlinearlayoutparams(self, weight, position=None):
     &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})</code></pre>
+    self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;,
+                       &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.View.setmargin"><code class="name flex">
@@ -3141,7 +3234,7 @@ You can also directly access the memory object as b.mem.</p>
 <pre><code class="python">def setmargin(self, margin, dir=None):
     &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
     args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
-    if dir != None:
+    if dir is not None:
         args[&#34;dir&#34;] = dir
     self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -3151,15 +3244,17 @@ You can also directly access the memory object as b.mem.</p>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the visibility for this view.</p>
-<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.</p></div>
+<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+Gone views do not take up layout space.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setvisibility(self, vis):
     &#34;&#34;&#34;Sets the visibility for this view.
-    
-    0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+
+    0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+    Gone views do not take up layout space.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})</code></pre>
 </details>
 </dd>
@@ -3167,14 +3262,19 @@ You can also directly access the memory object as b.mem.</p>
 <span>def <span class="ident">setwidth</span></span>(<span>self, width, px=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the width of this View. Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT". If px is true, the values are in pixels instead.</p></div>
+<div class="desc"><p>Sets the width of this View.
+Can be either an integer describing the value in dp, "MATCH_PARENT" or "WRAP_CONTENT".
+If px is true, the values are in pixels instead.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setwidth(self, width, px=False):
-    &#34;&#34;&#34;Sets the width of this View. Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;. If px is true, the values are in pixels instead.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width, &#34;px&#34;: px}})</code></pre>
+    &#34;&#34;&#34;Sets the width of this View.
+    Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
+    If px is true, the values are in pixels instead.&#34;&#34;&#34;
+    self.a.c.send_msg(
+        {&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width, &#34;px&#34;: px}})</code></pre>
 </details>
 </dd>
 </dl>
@@ -3191,11 +3291,10 @@ You can also directly access the memory object as b.mem.</p>
 </summary>
 <pre><code class="python">class ViewGroup(View):
     &#34;&#34;&#34;This represents a generic ViewGroup.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, id):
         View.__init__(self, activity, id)
-    
-    
+
     def clearchildren(self):
         &#34;&#34;&#34;Removes all child Views of this ViewGroup.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;deleteChildren&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>

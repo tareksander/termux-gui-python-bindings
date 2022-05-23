@@ -26,25 +26,21 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
-
-
-class Task:
+<pre><code class="python">class Task:
     &#34;&#34;&#34;This represents an Android Task. It is automatically created with the Activity.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, tid):
         self.c = connection
         self.tid = tid
-    
+
     def finish(self):
         &#34;&#34;&#34;Finishes this Task.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;finishTask&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
-    
+
     def bringtofront(self):
-        &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
-    
- </code></pre>
+        &#34;&#34;&#34;Bring this Task to the front and make it visible to the user.
+        Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 </section>
 <section>
@@ -68,17 +64,18 @@ class Task:
 </summary>
 <pre><code class="python">class Task:
     &#34;&#34;&#34;This represents an Android Task. It is automatically created with the Activity.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, tid):
         self.c = connection
         self.tid = tid
-    
+
     def finish(self):
         &#34;&#34;&#34;Finishes this Task.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;finishTask&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})
-    
+
     def bringtofront(self):
-        &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
+        &#34;&#34;&#34;Bring this Task to the front and make it visible to the user.
+        Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 <h3>Methods</h3>
@@ -87,13 +84,15 @@ class Task:
 <span>def <span class="ident">bringtofront</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Bring this Task to the front and make it visible to the user. Might require "overlay over other apps" permission.</p></div>
+<div class="desc"><p>Bring this Task to the front and make it visible to the user.
+Might require "overlay over other apps" permission.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def bringtofront(self):
-    &#34;&#34;&#34;Bring this Task to the front and make it visible to the user. Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
+    &#34;&#34;&#34;Bring this Task to the front and make it visible to the user.
+    Might require &#34;overlay over other apps&#34; permission.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;bringTaskToFront&#34;, &#34;params&#34;: {&#34;tid&#34;: self.tid}})</code></pre>
 </details>
 </dd>

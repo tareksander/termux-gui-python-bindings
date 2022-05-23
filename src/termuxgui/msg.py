@@ -2,6 +2,7 @@ from json import loads
 import array
 import socket
 
+
 def read_msg(s):
     b = b''
     togo = 4
@@ -17,15 +18,16 @@ def read_msg(s):
         togo = togo - len(read)
     return loads(b.decode("utf-8"))
 
+
 def send_msg(c, msg):
     m = bytes(msg, "utf-8")
-    c.sendall((len(m)).to_bytes(4,"big"))
+    c.sendall((len(m)).to_bytes(4, "big"))
     c.sendall(m)
+
 
 def send_read_msg(s, msg):
     send_msg(s, msg)
     return read_msg(s)
-
 
 
 def read_msg_fd(s):
@@ -49,5 +51,3 @@ def read_msg_fd(s):
         return (loads(b.decode("utf-8")), fds[0])
     else:
         return (loads(b.decode("utf-8")),)
-
-

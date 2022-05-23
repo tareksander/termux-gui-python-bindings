@@ -26,32 +26,23 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
-
-from termuxgui.textview import TextView
+<pre><code class="python">from termuxgui.textview import TextView
 from termuxgui.view import View
+
 
 class EditText(TextView):
     &#34;&#34;&#34;This represents an EditText.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=&#34;text&#34;):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput, &#34;type&#34;: inputtype}
-        if parent != None:
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput,
+                &#34;type&#34;: inputtype}
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
-    
-    
-    
+
     def showcursor(self, show):
         &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})
-    
-    
-    
-    
-    
-    
-    </code></pre>
+        self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
 </details>
 </section>
 <section>
@@ -75,15 +66,14 @@ class EditText(TextView):
 </summary>
 <pre><code class="python">class EditText(TextView):
     &#34;&#34;&#34;This represents an EditText.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=&#34;text&#34;):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput, &#34;type&#34;: inputtype}
-        if parent != None:
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput,
+                &#34;type&#34;: inputtype}
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
-    
-    
-    
+
     def showcursor(self, show):
         &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>

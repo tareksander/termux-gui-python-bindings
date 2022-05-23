@@ -26,19 +26,17 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
+<pre><code class="python">from termuxgui.view import View
 
-from termuxgui.view import View
 
 class Space(View):
     &#34;&#34;&#34;This represents a Space. You can use this to create empty space in your layout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpace&#34;, &#34;params&#34;: args}))
-    </code></pre>
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpace&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 </section>
 <section>
@@ -62,10 +60,10 @@ class Space(View):
 </summary>
 <pre><code class="python">class Space(View):
     &#34;&#34;&#34;This represents a Space. You can use this to create empty space in your layout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpace&#34;, &#34;params&#34;: args}))</code></pre>
 </details>

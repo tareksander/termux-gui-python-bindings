@@ -26,32 +26,30 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
-
-from termuxgui.button import Button
-from termuxgui.view import View
+<pre><code class="python">from termuxgui.button import Button
 from termuxgui.event import Event
+from termuxgui.view import View
+
 
 class CompoundButton(Button):
     &#34;&#34;&#34;This represents a CompoundButton.
-    
+
     This class doesn&#39;t correspond to a particular View, it is used to provide common methods for all CompoundButtons.&#34;&#34;&#34;
+
+    def __init__(self, activity, id):
+        View.__init__(self, activity, id)
+        self.checked = False
 
     def handleevent(self, e):
         &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
         if e.type == Event.click and e.aid == self.a.aid and e.id == self.id:
             self.checked = e.value[&#34;set&#34;]
         View.handleevent(self, e)
-    
-    
-    
-    
-    
+
     def setchecked(self, checked):
         &#34;&#34;&#34;Explicitly set the checked status of this CompoundButton.&#34;&#34;&#34;
         self.checked = checked
-        self.a.c.send_msg({&#34;method&#34;: &#34;setChecked&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;checked&#34;: checked}})
-    </code></pre>
+        self.a.c.send_msg({&#34;method&#34;: &#34;setChecked&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;checked&#34;: checked}})</code></pre>
 </details>
 </section>
 <section>
@@ -65,7 +63,7 @@ class CompoundButton(Button):
 <dl>
 <dt id="termuxgui.compoundbutton.CompoundButton"><code class="flex name class">
 <span>class <span class="ident">CompoundButton</span></span>
-<span>(</span><span>activity, text, parent=None)</span>
+<span>(</span><span>activity, id)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a CompoundButton.</p>
@@ -76,19 +74,19 @@ class CompoundButton(Button):
 </summary>
 <pre><code class="python">class CompoundButton(Button):
     &#34;&#34;&#34;This represents a CompoundButton.
-    
+
     This class doesn&#39;t correspond to a particular View, it is used to provide common methods for all CompoundButtons.&#34;&#34;&#34;
+
+    def __init__(self, activity, id):
+        View.__init__(self, activity, id)
+        self.checked = False
 
     def handleevent(self, e):
         &#34;&#34;&#34;Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.&#34;&#34;&#34;
         if e.type == Event.click and e.aid == self.a.aid and e.id == self.id:
             self.checked = e.value[&#34;set&#34;]
         View.handleevent(self, e)
-    
-    
-    
-    
-    
+
     def setchecked(self, checked):
         &#34;&#34;&#34;Explicitly set the checked status of this CompoundButton.&#34;&#34;&#34;
         self.checked = checked

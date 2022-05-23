@@ -30,6 +30,7 @@
 import array
 import socket
 
+
 def read_msg(s):
     b = b&#39;&#39;
     togo = 4
@@ -45,15 +46,16 @@ def read_msg(s):
         togo = togo - len(read)
     return loads(b.decode(&#34;utf-8&#34;))
 
+
 def send_msg(c, msg):
     m = bytes(msg, &#34;utf-8&#34;)
-    c.sendall((len(m)).to_bytes(4,&#34;big&#34;))
+    c.sendall((len(m)).to_bytes(4, &#34;big&#34;))
     c.sendall(m)
+
 
 def send_read_msg(s, msg):
     send_msg(s, msg)
     return read_msg(s)
-
 
 
 def read_msg_fd(s):
@@ -154,7 +156,7 @@ def read_msg_fd(s):
 </summary>
 <pre><code class="python">def send_msg(c, msg):
     m = bytes(msg, &#34;utf-8&#34;)
-    c.sendall((len(m)).to_bytes(4,&#34;big&#34;))
+    c.sendall((len(m)).to_bytes(4, &#34;big&#34;))
     c.sendall(m)</code></pre>
 </details>
 </dd>

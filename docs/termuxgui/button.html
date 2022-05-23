@@ -31,20 +31,15 @@
 from termuxgui.textview import TextView
 from termuxgui.view import View
 
+
 class Button(TextView):
     &#34;&#34;&#34;This represents a Button.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text}
         if parent != None:
             args[&#34;parent&#34;] = parent.id
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createButton&#34;, &#34;params&#34;: args}))
-     
-     
-     
-     
-     
-     </code></pre>
+        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createButton&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 </section>
 <section>
@@ -68,7 +63,7 @@ class Button(TextView):
 </summary>
 <pre><code class="python">class Button(TextView):
     &#34;&#34;&#34;This represents a Button.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text}
         if parent != None:

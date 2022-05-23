@@ -27,33 +27,32 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import base64
-from json import dumps
 
 from termuxgui.view import View
 
+
 class ImageView(View):
     &#34;&#34;&#34;This represents an ImageView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createImageView&#34;, &#34;params&#34;: args}))
-    
-    
-    
+
     def setimage(self, img):
-        &#34;&#34;&#34;Sets the image of the ImageView. The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})
-    
+        &#34;&#34;&#34;Sets the image of the ImageView.
+        The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id,
+                                                            &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})
+
     def setbuffer(self, b):
         &#34;&#34;&#34;Makes the ImageView use a shared buffer as the image source.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setBuffer&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;bid&#34;: b.bid}})
-    
+
     def refresh(self):
         &#34;&#34;&#34;Redraws the ImageView. You have to use this after blitting the Buffer when using a buffer.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;refreshImageView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    </code></pre>
+        self.a.c.send_msg({&#34;method&#34;: &#34;refreshImageView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
 </details>
 </section>
 <section>
@@ -77,23 +76,23 @@ class ImageView(View):
 </summary>
 <pre><code class="python">class ImageView(View):
     &#34;&#34;&#34;This represents an ImageView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createImageView&#34;, &#34;params&#34;: args}))
-    
-    
-    
+
     def setimage(self, img):
-        &#34;&#34;&#34;Sets the image of the ImageView. The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})
-    
+        &#34;&#34;&#34;Sets the image of the ImageView.
+        The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id,
+                                                            &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})
+
     def setbuffer(self, b):
         &#34;&#34;&#34;Makes the ImageView use a shared buffer as the image source.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setBuffer&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;bid&#34;: b.bid}})
-    
+
     def refresh(self):
         &#34;&#34;&#34;Redraws the ImageView. You have to use this after blitting the Buffer when using a buffer.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;refreshImageView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
@@ -136,14 +135,17 @@ class ImageView(View):
 <span>def <span class="ident">setimage</span></span>(<span>self, img)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the image of the ImageView. The image has to be a bytes object containing the image in png or jpeg format.</p></div>
+<div class="desc"><p>Sets the image of the ImageView.
+The image has to be a bytes object containing the image in png or jpeg format.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setimage(self, img):
-    &#34;&#34;&#34;Sets the image of the ImageView. The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})</code></pre>
+    &#34;&#34;&#34;Sets the image of the ImageView.
+    The image has to be a bytes object containing the image in png or jpeg format.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setImage&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id,
+                                                        &#34;img&#34;: base64.standard_b64encode(img).decode(&#34;ascii&#34;)}})</code></pre>
 </details>
 </dd>
 </dl>

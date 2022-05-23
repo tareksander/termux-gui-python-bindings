@@ -26,23 +26,18 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
-
-from termuxgui.compoundbutton import CompoundButton
-from termuxgui.view import View
+<pre><code class="python">from termuxgui.compoundbutton import CompoundButton
 
 
 class ToggleButton(CompoundButton):
     &#34;&#34;&#34;This represents a ToggleButton.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;checked&#34;: checked}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))
-    
-    </code></pre>
+        CompoundButton.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 </section>
 <section>
@@ -66,13 +61,13 @@ class ToggleButton(CompoundButton):
 </summary>
 <pre><code class="python">class ToggleButton(CompoundButton):
     &#34;&#34;&#34;This represents a ToggleButton.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, checked=False):
         args = {&#34;aid&#34;: activity.aid, &#34;checked&#34;: checked}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         self.checked = checked
-        View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))</code></pre>
+        CompoundButton.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createToggleButton&#34;, &#34;params&#34;: args}))</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">

@@ -26,43 +26,37 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
+<pre><code class="python">from termuxgui.view import View
 
-from termuxgui.view import View
 
 class TextView(View):
     &#34;&#34;&#34;This represents a TextView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
-    
+
     def settextsize(self, size):
         &#34;&#34;&#34;Sets the text size for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})
-    
-    
+
     def gettext(self):
         &#34;&#34;&#34;Gets the text of this TextView.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
+
     def settext(self, text):
         &#34;&#34;&#34;Sets the text of this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})
-    
-    
+
     def settextcolor(self, color):
         &#34;&#34;&#34;Sets the text color of this TextView. The color format is the same as for Activity.settheme().&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
-    
-    
+
     def sendtextevent(self, send):
         &#34;&#34;&#34;Sets whether ot not text events are send for this TextView.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;sendTextEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
-    
-    </code></pre>
+        self.a.c.send_msg({&#34;method&#34;: &#34;sendTextEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </section>
 <section>
@@ -86,32 +80,29 @@ class TextView(View):
 </summary>
 <pre><code class="python">class TextView(View):
     &#34;&#34;&#34;This represents a TextView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
-    
+
     def settextsize(self, size):
         &#34;&#34;&#34;Sets the text size for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})
-    
-    
+
     def gettext(self):
         &#34;&#34;&#34;Gets the text of this TextView.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
+
     def settext(self, text):
         &#34;&#34;&#34;Sets the text of this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})
-    
-    
+
     def settextcolor(self, color):
         &#34;&#34;&#34;Sets the text color of this TextView. The color format is the same as for Activity.settheme().&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
-    
-    
+
     def sendtextevent(self, send):
         &#34;&#34;&#34;Sets whether ot not text events are send for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendTextEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>

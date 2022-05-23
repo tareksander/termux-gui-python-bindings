@@ -26,30 +26,26 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
-
-from termuxgui.framelayout import FrameLayout
+<pre><code class="python">from termuxgui.framelayout import FrameLayout
 from termuxgui.viewgroup import ViewGroup
+
 
 class HorizontalScrollView(FrameLayout):
     &#34;&#34;&#34;This represents a HorizontalScrollView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
         args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createHorizontalScrollView&#34;, &#34;params&#34;: args}))
-    
+
     def getscrollposition(self):
         &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
+
     def setscrollposition(self, x, y, smooth=True):
         &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})
-    
-    
-    </code></pre>
+        self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
 </details>
 </section>
 <section>
@@ -73,17 +69,17 @@ class HorizontalScrollView(FrameLayout):
 </summary>
 <pre><code class="python">class HorizontalScrollView(FrameLayout):
     &#34;&#34;&#34;This represents a HorizontalScrollView.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
         args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createHorizontalScrollView&#34;, &#34;params&#34;: args}))
-    
+
     def getscrollposition(self):
         &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
-    
+
     def setscrollposition(self, x, y, smooth=True):
         &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>

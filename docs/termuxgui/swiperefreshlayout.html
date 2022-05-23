@@ -26,27 +26,25 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
+<pre><code class="python">from termuxgui.viewgroup import ViewGroup
 
-from termuxgui.viewgroup import ViewGroup
 
 class SwipeRefreshLayout(ViewGroup):
     &#34;&#34;&#34;This represents a SwipeRefreshLayout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
-    
+        ViewGroup.__init__(self, activity,
+                           activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
+
     def setrefreshing(self, refreshing):
         &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
-        
+
         You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})
-    
-    
-    </code></pre>
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
 </details>
 </section>
 <section>
@@ -70,18 +68,20 @@ class SwipeRefreshLayout(ViewGroup):
 </summary>
 <pre><code class="python">class SwipeRefreshLayout(ViewGroup):
     &#34;&#34;&#34;This represents a SwipeRefreshLayout.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
-        ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
-    
+        ViewGroup.__init__(self, activity,
+                           activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
+
     def setrefreshing(self, refreshing):
         &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
-        
+
         You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
+        self.a.c.send_msg(
+            {&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -102,9 +102,10 @@ class SwipeRefreshLayout(ViewGroup):
 </summary>
 <pre><code class="python">def setrefreshing(self, refreshing):
     &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
-    
+
     You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
+    self.a.c.send_msg(
+        {&#34;method&#34;: &#34;setRefreshing&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;refresh&#34;: refreshing}})</code></pre>
 </details>
 </dd>
 </dl>

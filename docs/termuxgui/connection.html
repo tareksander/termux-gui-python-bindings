@@ -35,31 +35,34 @@ from struct import unpack
 from json import dumps
 from select import select
 
-
 from termuxgui.event import Event
 from termuxgui import msg as tgmsg
 
+
 def _check_user(s):
-    uid = unpack(&#34;III&#34;,s.getsockopt(SOL_SOCKET, SO_PEERCRED, 12))[1]
-    return uid == getuid() 
+    uid = unpack(&#34;III&#34;, s.getsockopt(SOL_SOCKET, SO_PEERCRED, 12))[1]
+    return uid == getuid()
 
 
 class Connection:
-    &#34;&#34;&#34;This represents a connection to the Termux:GUI plugin and contains all functions that don&#39;t act on any particular View, Activity or Task.&#34;&#34;&#34;
+    &#34;&#34;&#34;This represents a connection to the Termux:GUI plugin and contains all functions that don&#39;t act on any
+    particular View, Activity or Task. &#34;&#34;&#34;
+
     def __init__(self):
         &#34;&#34;&#34;When a connection can&#39;t be established, a RuntimeError is raised.&#34;&#34;&#34;
-        adrMain = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
-        adrEvent = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
+        adrMain = &#39;&#39;.join(choice(ascii_letters + digits) for i in range(50))
+        adrEvent = &#39;&#39;.join(choice(ascii_letters + digits) for i in range(50))
         mainss = socket(AF_UNIX, SOCK_STREAM)
         eventss = socket(AF_UNIX, SOCK_STREAM)
         with mainss, eventss:
-            mainss.bind(&#39;\0&#39;+adrMain)
-            eventss.bind(&#39;\0&#39;+adrEvent)
+            mainss.bind(&#39;\0&#39; + adrMain)
+            eventss.bind(&#39;\0&#39; + adrEvent)
             mainss.listen(1)
             eventss.listen(1)
             mainss.settimeout(5)
             eventss.settimeout(5)
-            run([&#34;am&#34;,&#34;broadcast&#34;,&#34;-n&#34;,&#34;com.termux.gui/.GUIReceiver&#34;,&#34;--es&#34;, &#34;mainSocket&#34;,adrMain,&#34;--es&#34;, &#34;eventSocket&#34;,adrEvent],stdout=DEVNULL,stderr=DEVNULL)
+            run([&#34;am&#34;, &#34;broadcast&#34;, &#34;-n&#34;, &#34;com.termux.gui/.GUIReceiver&#34;, &#34;--es&#34;, &#34;mainSocket&#34;, adrMain, &#34;--es&#34;,
+                 &#34;eventSocket&#34;, adrEvent], stdout=DEVNULL, stderr=DEVNULL)
             try:
                 main = mainss.accept()[0]
                 try:
@@ -88,66 +91,68 @@ class Connection:
                     raise e
             except timeout:
                 raise RuntimeError(&#34;Could not connect to Termux:GUI. Is the plugin installed?&#34;)
-    
+
     def events(self):
         &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
         while True:
             yield Event(tgmsg.read_msg(self._event))
-    
+
     def checkevent(self):
-        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        &#34;&#34;&#34;If there is at least one event to be read, returns it.
+        If there is no event, returns None.
+        You can use this to e.g. check for events between drawing a frame instead of
+        having to use a separate thread and blocking it.&#34;&#34;&#34;
         r, _, _ = select([self._event], [], [], 0)
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
-        
-    
+
     def toast(self, text, long=False):
         &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
-        self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) 
-    
+        self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})
+
     def totermux(self):
-        &#39;&#39;&#39;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#39;&#39;&#39;
-        run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)
-    
+        &#34;&#34;&#34;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#34;&#34;&#34;
+        run([&#34;am&#34;, &#34;start&#34;, &#34;-n&#34;, &#34;com.termux/.app.TermuxActivity&#34;], stdout=DEVNULL, stderr=DEVNULL)
+
     def close(self):
         &#34;&#34;&#34;Closes the connection.
-        
+
         The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
         self._main.close()
         self._event.close()
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, type, value, traceback):
         self.close()
         return False
-    
-    
+
     def send_msg(self, msg):
-        &#34;&#34;&#34;Send a message to the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Send a message to the main socket.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         if type(msg) is dict:
             msg = dumps(msg)
         tgmsg.send_msg(self._main, msg)
-    
+
     def read_msg(self):
-        &#34;&#34;&#34;Read a message from the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Read a message from the main socket.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         return tgmsg.read_msg(self._main)
-    
+
     def send_read_msg(self, msg):
-        &#34;&#34;&#34;Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         self.send_msg(msg)
         return self.read_msg()
-    
+
     def turnscreenon(self):
-        &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+        &#34;&#34;&#34;Turns the screen on.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
-    
-    
+
     def islocked(self):
         &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
-        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})
-    </code></pre>
+        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 </section>
 <section>
@@ -163,28 +168,32 @@ class Connection:
 <span>class <span class="ident">Connection</span></span>
 </code></dt>
 <dd>
-<div class="desc"><p>This represents a connection to the Termux:GUI plugin and contains all functions that don't act on any particular View, Activity or Task.</p>
+<div class="desc"><p>This represents a connection to the Termux:GUI plugin and contains all functions that don't act on any
+particular View, Activity or Task. </p>
 <p>When a connection can't be established, a RuntimeError is raised.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Connection:
-    &#34;&#34;&#34;This represents a connection to the Termux:GUI plugin and contains all functions that don&#39;t act on any particular View, Activity or Task.&#34;&#34;&#34;
+    &#34;&#34;&#34;This represents a connection to the Termux:GUI plugin and contains all functions that don&#39;t act on any
+    particular View, Activity or Task. &#34;&#34;&#34;
+
     def __init__(self):
         &#34;&#34;&#34;When a connection can&#39;t be established, a RuntimeError is raised.&#34;&#34;&#34;
-        adrMain = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
-        adrEvent = &#39;&#39;.join(choice(ascii_letters+digits) for i in range(50))
+        adrMain = &#39;&#39;.join(choice(ascii_letters + digits) for i in range(50))
+        adrEvent = &#39;&#39;.join(choice(ascii_letters + digits) for i in range(50))
         mainss = socket(AF_UNIX, SOCK_STREAM)
         eventss = socket(AF_UNIX, SOCK_STREAM)
         with mainss, eventss:
-            mainss.bind(&#39;\0&#39;+adrMain)
-            eventss.bind(&#39;\0&#39;+adrEvent)
+            mainss.bind(&#39;\0&#39; + adrMain)
+            eventss.bind(&#39;\0&#39; + adrEvent)
             mainss.listen(1)
             eventss.listen(1)
             mainss.settimeout(5)
             eventss.settimeout(5)
-            run([&#34;am&#34;,&#34;broadcast&#34;,&#34;-n&#34;,&#34;com.termux.gui/.GUIReceiver&#34;,&#34;--es&#34;, &#34;mainSocket&#34;,adrMain,&#34;--es&#34;, &#34;eventSocket&#34;,adrEvent],stdout=DEVNULL,stderr=DEVNULL)
+            run([&#34;am&#34;, &#34;broadcast&#34;, &#34;-n&#34;, &#34;com.termux.gui/.GUIReceiver&#34;, &#34;--es&#34;, &#34;mainSocket&#34;, adrMain, &#34;--es&#34;,
+                 &#34;eventSocket&#34;, adrEvent], stdout=DEVNULL, stderr=DEVNULL)
             try:
                 main = mainss.accept()[0]
                 try:
@@ -213,62 +222,65 @@ class Connection:
                     raise e
             except timeout:
                 raise RuntimeError(&#34;Could not connect to Termux:GUI. Is the plugin installed?&#34;)
-    
+
     def events(self):
         &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
         while True:
             yield Event(tgmsg.read_msg(self._event))
-    
+
     def checkevent(self):
-        &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+        &#34;&#34;&#34;If there is at least one event to be read, returns it.
+        If there is no event, returns None.
+        You can use this to e.g. check for events between drawing a frame instead of
+        having to use a separate thread and blocking it.&#34;&#34;&#34;
         r, _, _ = select([self._event], [], [], 0)
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
-        
-    
+
     def toast(self, text, long=False):
         &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
-        self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) 
-    
+        self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})
+
     def totermux(self):
-        &#39;&#39;&#39;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#39;&#39;&#39;
-        run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)
-    
+        &#34;&#34;&#34;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#34;&#34;&#34;
+        run([&#34;am&#34;, &#34;start&#34;, &#34;-n&#34;, &#34;com.termux/.app.TermuxActivity&#34;], stdout=DEVNULL, stderr=DEVNULL)
+
     def close(self):
         &#34;&#34;&#34;Closes the connection.
-        
+
         The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
         self._main.close()
         self._event.close()
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, type, value, traceback):
         self.close()
         return False
-    
-    
+
     def send_msg(self, msg):
-        &#34;&#34;&#34;Send a message to the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Send a message to the main socket.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         if type(msg) is dict:
             msg = dumps(msg)
         tgmsg.send_msg(self._main, msg)
-    
+
     def read_msg(self):
-        &#34;&#34;&#34;Read a message from the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Read a message from the main socket.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         return tgmsg.read_msg(self._main)
-    
+
     def send_read_msg(self, msg):
-        &#34;&#34;&#34;Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+        &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
+        You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         self.send_msg(msg)
         return self.read_msg()
-    
+
     def turnscreenon(self):
-        &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+        &#34;&#34;&#34;Turns the screen on.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
-    
-    
+
     def islocked(self):
         &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
         return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
@@ -279,13 +291,19 @@ class Connection:
 <span>def <span class="ident">checkevent</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.</p></div>
+<div class="desc"><p>If there is at least one event to be read, returns it.
+If there is no event, returns None.
+You can use this to e.g. check for events between drawing a frame instead of
+having to use a separate thread and blocking it.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def checkevent(self):
-    &#34;&#34;&#34;If there is at least one event to be read, returns it. If there is no event, returns None. You can use this to e.g. check for events between drawing a frame instead of having to use a separate thread and blocking it.&#34;&#34;&#34;
+    &#34;&#34;&#34;If there is at least one event to be read, returns it.
+    If there is no event, returns None.
+    You can use this to e.g. check for events between drawing a frame instead of
+    having to use a separate thread and blocking it.&#34;&#34;&#34;
     r, _, _ = select([self._event], [], [], 0)
     if len(r) != 0:
         return Event(tgmsg.read_msg(self._event))</code></pre>
@@ -303,7 +321,7 @@ class Connection:
 </summary>
 <pre><code class="python">def close(self):
     &#34;&#34;&#34;Closes the connection.
-    
+
     The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
     self._main.close()
     self._event.close()</code></pre>
@@ -342,13 +360,15 @@ class Connection:
 <span>def <span class="ident">read_msg</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Read a message from the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
+<div class="desc"><p>Read a message from the main socket.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def read_msg(self):
-    &#34;&#34;&#34;Read a message from the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+    &#34;&#34;&#34;Read a message from the main socket.
+    You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     return tgmsg.read_msg(self._main)</code></pre>
 </details>
 </dd>
@@ -356,13 +376,15 @@ class Connection:
 <span>def <span class="ident">send_msg</span></span>(<span>self, msg)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Send a message to the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
+<div class="desc"><p>Send a message to the main socket.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def send_msg(self, msg):
-    &#34;&#34;&#34;Send a message to the main socket. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+    &#34;&#34;&#34;Send a message to the main socket.
+    You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     if type(msg) is dict:
         msg = dumps(msg)
     tgmsg.send_msg(self._main, msg)</code></pre>
@@ -372,13 +394,15 @@ class Connection:
 <span>def <span class="ident">send_read_msg</span></span>(<span>self, msg)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
+<div class="desc"><p>Send a message to the main socket and read a message afterwards.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def send_read_msg(self, msg):
-    &#34;&#34;&#34;Send a message to the main socket and read a message afterwards. You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
+    &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
+    You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     self.send_msg(msg)
     return self.read_msg()</code></pre>
 </details>
@@ -394,7 +418,7 @@ class Connection:
 </summary>
 <pre><code class="python">def toast(self, text, long=False):
     &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
-    self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}}) </code></pre>
+    self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.totermux"><code class="name flex">
@@ -407,21 +431,21 @@ class Connection:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def totermux(self):
-    &#39;&#39;&#39;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#39;&#39;&#39;
-    run([&#34;am&#34;,&#34;start&#34;,&#34;-n&#34;,&#34;com.termux/.app.TermuxActivity&#34;],stdout=DEVNULL,stderr=DEVNULL)</code></pre>
+    &#34;&#34;&#34;Returns to the termux task. This is a shorthand for running &#34;am start&#34; to start the termux activity.&#34;&#34;&#34;
+    run([&#34;am&#34;, &#34;start&#34;, &#34;-n&#34;, &#34;com.termux/.app.TermuxActivity&#34;], stdout=DEVNULL, stderr=DEVNULL)</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.turnscreenon"><code class="name flex">
 <span>def <span class="ident">turnscreenon</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Truns the screen on.</p></div>
+<div class="desc"><p>Turns the screen on.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def turnscreenon(self):
-    &#34;&#34;&#34;Truns the screen on.&#34;&#34;&#34;
+    &#34;&#34;&#34;Turns the screen on.&#34;&#34;&#34;
     self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 </dd>

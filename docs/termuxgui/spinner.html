@@ -28,23 +28,19 @@
 </summary>
 <pre><code class="python">from termuxgui.view import View
 
+
 class Spinner(View):
     &#34;&#34;&#34;This represents a Spinner.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpinner&#34;, &#34;params&#34;: args}))
-    
-    
+
     def setlist(self, list):
         &#34;&#34;&#34;Sets the list of items displayed in the spinner. list has to be a list containing strings.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})
-    
-    
-    
-    </code></pre>
+        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
 </details>
 </section>
 <section>
@@ -68,14 +64,13 @@ class Spinner(View):
 </summary>
 <pre><code class="python">class Spinner(View):
     &#34;&#34;&#34;This represents a Spinner.&#34;&#34;&#34;
-    
+
     def __init__(self, activity, parent=None):
         args = {&#34;aid&#34;: activity.aid}
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createSpinner&#34;, &#34;params&#34;: args}))
-    
-    
+
     def setlist(self, list):
         &#34;&#34;&#34;Sets the list of items displayed in the spinner. list has to be a list containing strings.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>

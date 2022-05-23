@@ -26,105 +26,112 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
-
-
-
-class RemoteViews:
+<pre><code class="python">class RemoteViews:
     &#34;&#34;&#34;This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.&#34;&#34;&#34;
-    
+
     def __init__(self, connection):
         self.c = connection
         self.rid = self.c.send_read_msg({&#34;method&#34;: &#34;createRemoteLayout&#34;})
-    
+
     def __eq__(self, other):
         if type(other) is int:
             return self.rid == other
         if isinstance(other, RemoteViews):
             return self.rid == other.rid
-    
+
     def delete(self):
         &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
-    
+        self.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
+
     def addFrameLayout(self, parent=None):
-        &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})
-    
+
     def addLinearLayout(self, parent=None, vertical=None):
-        &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if vertical != None:
+        &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if vertical is not None:
             args[&#34;vertical&#34;] = vertical
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})
-    
+
     def addTextView(self, parent=None):
-        &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})
-    
+
     def addButton(self, parent=None):
-        &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})
-    
+
     def addImageView(self, parent=None):
-        &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})
-    
+
     def addProgressBar(self, parent=None):
-        &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})
-    
+
     def setBackgroundColor(self, id, color):
         &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
-    
+
     def setProgress(self, id, progress, max):
         &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
-    
+        self.c.send_msg(
+            {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
+
     def setText(self, id, text):
         &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})
-    
+
     def setTextSize(self, id, size, px):
-        &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
+        &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
+        If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})
-    
+
     def setTextColor(self, id, color):
         &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
-    
+
     def setVisibility(self, id, vis):
         &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
-        
-        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+
+        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+        Gone views do not take up layout space.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})
-    
+
     def setPadding(self, id, left, top, right, bottom):
         &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34; : right, &#34;bottom&#34;: bottom}})
-    
+        self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
+                         &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
+                                    &#34;bottom&#34;: bottom}})
+
     def setImage(self, id, img):
         &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})
-    
+
     def updateWidget(self, wid):
         &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
@@ -151,99 +158,110 @@ class RemoteViews:
 </summary>
 <pre><code class="python">class RemoteViews:
     &#34;&#34;&#34;This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.&#34;&#34;&#34;
-    
+
     def __init__(self, connection):
         self.c = connection
         self.rid = self.c.send_read_msg({&#34;method&#34;: &#34;createRemoteLayout&#34;})
-    
+
     def __eq__(self, other):
         if type(other) is int:
             return self.rid == other
         if isinstance(other, RemoteViews):
             return self.rid == other.rid
-    
+
     def delete(self):
         &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
-    
+        self.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
+
     def addFrameLayout(self, parent=None):
-        &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})
-    
+
     def addLinearLayout(self, parent=None, vertical=None):
-        &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if vertical != None:
+        &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if vertical is not None:
             args[&#34;vertical&#34;] = vertical
-        if parent != None:
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})
-    
+
     def addTextView(self, parent=None):
-        &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})
-    
+
     def addButton(self, parent=None):
-        &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})
-    
+
     def addImageView(self, parent=None):
-        &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})
-    
+
     def addProgressBar(self, parent=None):
-        &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-        args =  {&#34;rid&#34;: self.rid}
-        if parent != None:
+        &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+        The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+        args = {&#34;rid&#34;: self.rid}
+        if parent is not None:
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})
-    
+
     def setBackgroundColor(self, id, color):
         &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
-    
+
     def setProgress(self, id, progress, max):
         &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
-    
+        self.c.send_msg(
+            {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
+
     def setText(self, id, text):
         &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})
-    
+
     def setTextSize(self, id, size, px):
-        &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
+        &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
+        If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})
-    
+
     def setTextColor(self, id, color):
         &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
-    
+
     def setVisibility(self, id, vis):
         &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
-        
-        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+
+        0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+        Gone views do not take up layout space.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})
-    
+
     def setPadding(self, id, left, top, right, bottom):
         &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34; : right, &#34;bottom&#34;: bottom}})
-    
+        self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
+                         &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
+                                    &#34;bottom&#34;: bottom}})
+
     def setImage(self, id, img):
         &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})
-    
+
     def updateWidget(self, wid):
         &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
@@ -254,15 +272,17 @@ class RemoteViews:
 <span>def <span class="ident">addButton</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addButton(self, parent=None):
-    &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -271,15 +291,17 @@ class RemoteViews:
 <span>def <span class="ident">addFrameLayout</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addFrameLayout(self, parent=None):
-    &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -288,15 +310,17 @@ class RemoteViews:
 <span>def <span class="ident">addImageView</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addImageView(self, parent=None):
-    &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -305,17 +329,19 @@ class RemoteViews:
 <span>def <span class="ident">addLinearLayout</span></span>(<span>self, parent=None, vertical=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addLinearLayout(self, parent=None, vertical=None):
-    &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if vertical != None:
+    &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if vertical is not None:
         args[&#34;vertical&#34;] = vertical
-    if parent != None:
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -324,15 +350,17 @@ class RemoteViews:
 <span>def <span class="ident">addProgressBar</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addProgressBar(self, parent=None):
-    &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -341,15 +369,17 @@ class RemoteViews:
 <span>def <span class="ident">addTextView</span></span>(<span>self, parent=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.</p></div>
+<div class="desc"><p>Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def addTextView(self, parent=None):
-    &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created. The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
-    args =  {&#34;rid&#34;: self.rid}
-    if parent != None:
+    &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+    The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
+    args = {&#34;rid&#34;: self.rid}
+    if parent is not None:
         args[&#34;parent&#34;] = parent
     return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})</code></pre>
 </details>
@@ -365,7 +395,7 @@ class RemoteViews:
 </summary>
 <pre><code class="python">def delete(self):
     &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
-    self.a.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})</code></pre>
+    self.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setBackgroundColor"><code class="name flex">
@@ -407,7 +437,9 @@ class RemoteViews:
 </summary>
 <pre><code class="python">def setPadding(self, id, left, top, right, bottom):
     &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
-    self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34; : right, &#34;bottom&#34;: bottom}})</code></pre>
+    self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
+                     &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
+                                &#34;bottom&#34;: bottom}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setProgress"><code class="name flex">
@@ -421,7 +453,8 @@ class RemoteViews:
 </summary>
 <pre><code class="python">def setProgress(self, id, progress, max):
     &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
-    self.c.send_msg({&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})</code></pre>
+    self.c.send_msg(
+        {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setText"><code class="name flex">
@@ -456,13 +489,15 @@ class RemoteViews:
 <span>def <span class="ident">setTextSize</span></span>(<span>self, id, size, px)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.</p></div>
+<div class="desc"><p>Sets the text size of a TextView in this remote Layout.
+If px is true, the size will be in pixels. If not, it will be in dip.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setTextSize(self, id, size, px):
-    &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout. If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
+    &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
+    If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})</code></pre>
 </details>
 </dd>
@@ -471,15 +506,17 @@ class RemoteViews:
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the visibility of a View in this remote Layout.</p>
-<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.</p></div>
+<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+Gone views do not take up layout space.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setVisibility(self, id, vis):
     &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
-    
-    0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout. Gone views do not take up layout space.&#34;&#34;&#34;
+
+    0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+    Gone views do not take up layout space.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})</code></pre>
 </details>
 </dd>

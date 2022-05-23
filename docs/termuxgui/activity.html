@@ -26,113 +26,103 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from json import dumps
-
-
-from termuxgui.task import Task
+<pre><code class="python">from termuxgui.task import Task
 
 
 class Activity:
     &#34;&#34;&#34;This represents an Android Activity.
-    
+
     Use a.c to access the Connection object of an Activity and a.t to access the Task object.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, tid=None, dialog=None, pip=False, overlay=None, lockscreen=None, canceloutside=True):
         &#34;&#34;&#34;When an Activity could not be created, a RuntimeError is raised.&#34;&#34;&#34;
         self.c = connection
         params = {&#34;canceloutside&#34;: canceloutside}
-        if dialog != None:
+        if dialog is not None:
             params[&#34;dialog&#34;] = dialog
-        if tid != None:
+        if tid is not None:
             params[&#34;tid&#34;] = tid
-        if pip != None:
+        if pip is not None:
             params[&#34;pip&#34;] = pip
-        if overlay != None:
+        if overlay is not None:
             params[&#34;overlay&#34;] = overlay
-        if lockscreen != None:
+        if lockscreen is not None:
             params[&#34;lockscreen&#34;] = lockscreen
-        if tid == None:
+        if tid is None:
             self.aid, tid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
         else:
             self.aid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
         self.t = Task(connection, tid)
         if self.aid == -1:
             raise RuntimeError(&#34;Could not create Activity&#34;)
-    
-    
+
     def finish(self):
-        &#39;&#39;&#39;Finishes an Activity.&#39;&#39;&#39;
+        &#34;&#34;&#34;Finishes an Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
-    
-    def setinputmode(mode):
-        &#39;&#39;&#39;Sets the input mode for an Activity.&#39;&#39;&#39;
+
+    def setinputmode(self, mode):
+        &#34;&#34;&#34;Sets the input mode for an Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setInputMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;mode&#34;: mode}})
-    
-    def keepscreenon(on):
+
+    def keepscreenon(self, on):
         &#34;&#34;&#34;Sets whether the Activity should keep the screen on while it is showing.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})
-    
+
     def setpipmode(self, pip):
         &#34;&#34;&#34;Goes into / out of picture-in-picture mode.
-        
+
         When you exit pip, you Activity is put in the recent tasks list and not shown to the user.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
-    
+
     def setpipmodeauto(self, pip):
-        &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity.&#34;&#34;&#34;
+        &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode
+        when the user leaves the Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPModeAuto&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
-    
+
     def setpipparams(self, num, den):
-        &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
+        &#34;&#34;&#34;Sets the PiP parameters for the Activity, currently only the aspect ration.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})
-    
+
     def settaskdescription(self, label, img):
-        &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
+        &#34;&#34;&#34;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})
-    
+
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
-        &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
-        self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary, &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor, &#34;colorAccent&#34;: coloraccent}})
-    
-    def setorientation(orientation):
+        &#34;&#34;&#34;Sets the Theme for the Activity.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;,
+                         &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary,
+                                    &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor,
+                                    &#34;colorAccent&#34;: coloraccent}})
+
+    def setorientation(self, orientation):
         &#34;&#34;&#34;Sets the preferred orientation of the Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setOrientation&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;orientation&#34;: orientation}})
-    
-    
-    
 
-    def setposition(x, y):
+    def setposition(self, x, y):
         &#34;&#34;&#34;Sets the screen position of the Activity if it is an overlay.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;x&#34;: x, &#34;y&#34;: y}})
 
-
-
-    def sendoverlayevents(send):
+    def sendoverlayevents(self, send):
         &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})
-    
-    
+
     def movetoback(self):
         &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
-    
+
     def requestunlock(self):
-        &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+        &#34;&#34;&#34;Requests the lockscreen to unlock.
+        If the lockscreen is just protected by a swipe, it is unlocked immediately.
+        If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
+
     def getconfiguration(self):
         &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
         return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
+
     def hidesoftkeyboard(self):
         &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
-        self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
-    
-    
-    </code></pre>
+        self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </section>
 <section>
@@ -158,98 +148,95 @@ class Activity:
 </summary>
 <pre><code class="python">class Activity:
     &#34;&#34;&#34;This represents an Android Activity.
-    
+
     Use a.c to access the Connection object of an Activity and a.t to access the Task object.&#34;&#34;&#34;
-    
+
     def __init__(self, connection, tid=None, dialog=None, pip=False, overlay=None, lockscreen=None, canceloutside=True):
         &#34;&#34;&#34;When an Activity could not be created, a RuntimeError is raised.&#34;&#34;&#34;
         self.c = connection
         params = {&#34;canceloutside&#34;: canceloutside}
-        if dialog != None:
+        if dialog is not None:
             params[&#34;dialog&#34;] = dialog
-        if tid != None:
+        if tid is not None:
             params[&#34;tid&#34;] = tid
-        if pip != None:
+        if pip is not None:
             params[&#34;pip&#34;] = pip
-        if overlay != None:
+        if overlay is not None:
             params[&#34;overlay&#34;] = overlay
-        if lockscreen != None:
+        if lockscreen is not None:
             params[&#34;lockscreen&#34;] = lockscreen
-        if tid == None:
+        if tid is None:
             self.aid, tid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
         else:
             self.aid = self.c.send_read_msg({&#34;method&#34;: &#34;newActivity&#34;, &#34;params&#34;: params})
         self.t = Task(connection, tid)
         if self.aid == -1:
             raise RuntimeError(&#34;Could not create Activity&#34;)
-    
-    
+
     def finish(self):
-        &#39;&#39;&#39;Finishes an Activity.&#39;&#39;&#39;
+        &#34;&#34;&#34;Finishes an Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
-    
-    def setinputmode(mode):
-        &#39;&#39;&#39;Sets the input mode for an Activity.&#39;&#39;&#39;
+
+    def setinputmode(self, mode):
+        &#34;&#34;&#34;Sets the input mode for an Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setInputMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;mode&#34;: mode}})
-    
-    def keepscreenon(on):
+
+    def keepscreenon(self, on):
         &#34;&#34;&#34;Sets whether the Activity should keep the screen on while it is showing.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})
-    
+
     def setpipmode(self, pip):
         &#34;&#34;&#34;Goes into / out of picture-in-picture mode.
-        
+
         When you exit pip, you Activity is put in the recent tasks list and not shown to the user.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
-    
+
     def setpipmodeauto(self, pip):
-        &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity.&#34;&#34;&#34;
+        &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode
+        when the user leaves the Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPModeAuto&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})
-    
+
     def setpipparams(self, num, den):
-        &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
+        &#34;&#34;&#34;Sets the PiP parameters for the Activity, currently only the aspect ration.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})
-    
+
     def settaskdescription(self, label, img):
-        &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
+        &#34;&#34;&#34;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})
-    
+
     def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
-        &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
-        self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary, &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor, &#34;colorAccent&#34;: coloraccent}})
-    
-    def setorientation(orientation):
+        &#34;&#34;&#34;Sets the Theme for the Activity.&#34;&#34;&#34;
+        self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;,
+                         &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary,
+                                    &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor,
+                                    &#34;colorAccent&#34;: coloraccent}})
+
+    def setorientation(self, orientation):
         &#34;&#34;&#34;Sets the preferred orientation of the Activity.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setOrientation&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;orientation&#34;: orientation}})
-    
-    
-    
 
-    def setposition(x, y):
+    def setposition(self, x, y):
         &#34;&#34;&#34;Sets the screen position of the Activity if it is an overlay.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;x&#34;: x, &#34;y&#34;: y}})
 
-
-
-    def sendoverlayevents(send):
+    def sendoverlayevents(self, send):
         &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})
-    
-    
+
     def movetoback(self):
         &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;moveTaskToBack&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
-    
+
     def requestunlock(self):
-        &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+        &#34;&#34;&#34;Requests the lockscreen to unlock.
+        If the lockscreen is just protected by a swipe, it is unlocked immediately.
+        If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
+
     def getconfiguration(self):
         &#34;&#34;&#34;Moves this Activity&#39;s Task to the recents screen and hides it.&#34;&#34;&#34;
         return self.c.send_read_msg({&#34;method&#34;: &#34;getConfiguration&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})
-    
+
     def hidesoftkeyboard(self):
         &#34;&#34;&#34;Hides the soft keyboard if this Activity has the soft keyboard focus.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;hideSoftKeyboard&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
@@ -266,7 +253,7 @@ class Activity:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def finish(self):
-    &#39;&#39;&#39;Finishes an Activity.&#39;&#39;&#39;
+    &#34;&#34;&#34;Finishes an Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;finishActivity&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
@@ -299,7 +286,7 @@ class Activity:
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.keepscreenon"><code class="name flex">
-<span>def <span class="ident">keepscreenon</span></span>(<span>on)</span>
+<span>def <span class="ident">keepscreenon</span></span>(<span>self, on)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether the Activity should keep the screen on while it is showing.</p></div>
@@ -307,7 +294,7 @@ class Activity:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def keepscreenon(on):
+<pre><code class="python">def keepscreenon(self, on):
     &#34;&#34;&#34;Sets whether the Activity should keep the screen on while it is showing.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;keepScreenOn&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;on&#34;: on}})</code></pre>
 </details>
@@ -330,18 +317,22 @@ class Activity:
 <span>def <span class="ident">requestunlock</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.</p></div>
+<div class="desc"><p>Requests the lockscreen to unlock.
+If the lockscreen is just protected by a swipe, it is unlocked immediately.
+If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def requestunlock(self):
-    &#34;&#34;&#34;Requests the lockscreen to unlock. If the lockscreen is just protected by a swipe, it is unlocked immediately. If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
+    &#34;&#34;&#34;Requests the lockscreen to unlock.
+    If the lockscreen is just protected by a swipe, it is unlocked immediately.
+    If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;requestUnlock&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.sendoverlayevents"><code class="name flex">
-<span>def <span class="ident">sendoverlayevents</span></span>(<span>send)</span>
+<span>def <span class="ident">sendoverlayevents</span></span>(<span>self, send)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether or not you want to receive overlay events if the Activity is an overlay.</p></div>
@@ -349,13 +340,13 @@ class Activity:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sendoverlayevents(send):
+<pre><code class="python">def sendoverlayevents(self, send):
     &#34;&#34;&#34;Sets whether or not you want to receive overlay events if the Activity is an overlay.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;sendOverlayTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.setinputmode"><code class="name flex">
-<span>def <span class="ident">setinputmode</span></span>(<span>mode)</span>
+<span>def <span class="ident">setinputmode</span></span>(<span>self, mode)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the input mode for an Activity.</p></div>
@@ -363,13 +354,13 @@ class Activity:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setinputmode(mode):
-    &#39;&#39;&#39;Sets the input mode for an Activity.&#39;&#39;&#39;
+<pre><code class="python">def setinputmode(self, mode):
+    &#34;&#34;&#34;Sets the input mode for an Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setInputMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;mode&#34;: mode}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.setorientation"><code class="name flex">
-<span>def <span class="ident">setorientation</span></span>(<span>orientation)</span>
+<span>def <span class="ident">setorientation</span></span>(<span>self, orientation)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the preferred orientation of the Activity.</p></div>
@@ -377,7 +368,7 @@ class Activity:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setorientation(orientation):
+<pre><code class="python">def setorientation(self, orientation):
     &#34;&#34;&#34;Sets the preferred orientation of the Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setOrientation&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;orientation&#34;: orientation}})</code></pre>
 </details>
@@ -394,7 +385,7 @@ class Activity:
 </summary>
 <pre><code class="python">def setpipmode(self, pip):
     &#34;&#34;&#34;Goes into / out of picture-in-picture mode.
-    
+
     When you exit pip, you Activity is put in the recent tasks list and not shown to the user.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPiPMode&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})</code></pre>
 </details>
@@ -403,13 +394,15 @@ class Activity:
 <span>def <span class="ident">setpipmodeauto</span></span>(<span>self, pip)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity.</p></div>
+<div class="desc"><p>Set whether the Activity should automatically enter picture-in-picture mode
+when the user leaves the Activity.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setpipmodeauto(self, pip):
-    &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode when the user leaves the Activity.&#34;&#34;&#34;
+    &#34;&#34;&#34;Set whether the Activity should automatically enter picture-in-picture mode
+    when the user leaves the Activity.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPiPModeAuto&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;pip&#34;: pip}})</code></pre>
 </details>
 </dd>
@@ -423,12 +416,12 @@ class Activity:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def setpipparams(self, num, den):
-    &#39;&#39;&#39;Sets the PiP parameters for the Activity, currently only the aspect ration.&#39;&#39;&#39;
+    &#34;&#34;&#34;Sets the PiP parameters for the Activity, currently only the aspect ration.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPiPParams&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;num&#34;: num, &#34;den&#34;: den}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.activity.Activity.setposition"><code class="name flex">
-<span>def <span class="ident">setposition</span></span>(<span>x, y)</span>
+<span>def <span class="ident">setposition</span></span>(<span>self, x, y)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the screen position of the Activity if it is an overlay.</p></div>
@@ -436,7 +429,7 @@ class Activity:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setposition(x, y):
+<pre><code class="python">def setposition(self, x, y):
     &#34;&#34;&#34;Sets the screen position of the Activity if it is an overlay.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;x&#34;: x, &#34;y&#34;: y}})</code></pre>
 </details>
@@ -451,7 +444,7 @@ class Activity:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def settaskdescription(self, label, img):
-    &#39;&#39;&#39;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#39;&#39;&#39;
+    &#34;&#34;&#34;Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setTaskDescription&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;img&#34;: img, &#34;label&#34;: label}})</code></pre>
 </details>
 </dd>
@@ -465,8 +458,11 @@ class Activity:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def settheme(self, statusbarcolor, colorprimary, windowbackground, textcolor, coloraccent):
-    &#39;&#39;&#39;Sets the Theme for the Activity.&#39;&#39;&#39;
-    self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;, &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary, &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor, &#34;colorAccent&#34;: coloraccent}})</code></pre>
+    &#34;&#34;&#34;Sets the Theme for the Activity.&#34;&#34;&#34;
+    self.c.send_msg({&#34;method&#34;: &#34;setTheme&#34;,
+                     &#34;params&#34;: {&#34;aid&#34;: self.aid, &#34;statusBarColor&#34;: statusbarcolor, &#34;colorPrimary&#34;: colorprimary,
+                                &#34;windowBackground&#34;: windowbackground, &#34;textColor&#34;: textcolor,
+                                &#34;colorAccent&#34;: coloraccent}})</code></pre>
 </details>
 </dd>
 </dl>

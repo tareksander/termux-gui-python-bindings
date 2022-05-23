@@ -1,14 +1,12 @@
-
 class Event:
     """This represents an Event in the GUI.
-    
+
     The class variables are the available event types.
-    
+
     Use ev.type == Event.eventtype to check for event types.
-    
+
     ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any."""
-    
-    
+
     # Event types
     # View events
     click = "click"
@@ -17,12 +15,10 @@ class Event:
     key = "key"
     touch = "touch"
     refresh = "refresh"
-    selected = "selected" # used for RadioGroups
+    selected = "selected"  # used for RadioGroups
     itemselected = "itemselected"
     text = "text"
-    
-    
-    
+
     # activity events
     create = "create"
     start = "start"
@@ -33,19 +29,18 @@ class Event:
     userleavehint = "UserLeaveHint"
     pipchanged = "pipchanged"
     config = "config"
-    
+
     # general events
     screenon = "screen_on"
     screen_off = "screen_off"
     timezone = "timezone"
     locale = "locale"
     airplane = "airplane"
-    
-    
+
     # special overlay events
     overlaytouch = "overlayTouch"
     overlayScale = "overlayScale"
-    
+
     # touch event action
     touch_up = "up"
     touch_down = "down"
@@ -53,9 +48,7 @@ class Event:
     touch_pointer_down = "pointer_down"
     touch_cancel = "cancel"
     touch_move = "move"
-    
-    
-    
+
     def __init__(self, ev):
         self.type = ev["type"]
         self.value = {}
@@ -66,5 +59,3 @@ class Event:
                 self.id = self.value["id"]
         except KeyError:
             pass
-        
-    

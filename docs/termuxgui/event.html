@@ -28,14 +28,13 @@
 </summary>
 <pre><code class="python">class Event:
     &#34;&#34;&#34;This represents an Event in the GUI.
-    
+
     The class variables are the available event types.
-    
+
     Use ev.type == Event.eventtype to check for event types.
-    
+
     ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any.&#34;&#34;&#34;
-    
-    
+
     # Event types
     # View events
     click = &#34;click&#34;
@@ -44,12 +43,10 @@
     key = &#34;key&#34;
     touch = &#34;touch&#34;
     refresh = &#34;refresh&#34;
-    selected = &#34;selected&#34; # used for RadioGroups
+    selected = &#34;selected&#34;  # used for RadioGroups
     itemselected = &#34;itemselected&#34;
     text = &#34;text&#34;
-    
-    
-    
+
     # activity events
     create = &#34;create&#34;
     start = &#34;start&#34;
@@ -60,19 +57,18 @@
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
     config = &#34;config&#34;
-    
+
     # general events
     screenon = &#34;screen_on&#34;
     screen_off = &#34;screen_off&#34;
     timezone = &#34;timezone&#34;
     locale = &#34;locale&#34;
     airplane = &#34;airplane&#34;
-    
-    
+
     # special overlay events
     overlaytouch = &#34;overlayTouch&#34;
     overlayScale = &#34;overlayScale&#34;
-    
+
     # touch event action
     touch_up = &#34;up&#34;
     touch_down = &#34;down&#34;
@@ -80,9 +76,7 @@
     touch_pointer_down = &#34;pointer_down&#34;
     touch_cancel = &#34;cancel&#34;
     touch_move = &#34;move&#34;
-    
-    
-    
+
     def __init__(self, ev):
         self.type = ev[&#34;type&#34;]
         self.value = {}
@@ -92,9 +86,7 @@
                 self.aid = self.value[&#34;aid&#34;]
                 self.id = self.value[&#34;id&#34;]
         except KeyError:
-            pass
-        
-    </code></pre>
+            pass</code></pre>
 </details>
 </section>
 <section>
@@ -121,14 +113,13 @@
 </summary>
 <pre><code class="python">class Event:
     &#34;&#34;&#34;This represents an Event in the GUI.
-    
+
     The class variables are the available event types.
-    
+
     Use ev.type == Event.eventtype to check for event types.
-    
+
     ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any.&#34;&#34;&#34;
-    
-    
+
     # Event types
     # View events
     click = &#34;click&#34;
@@ -137,12 +128,10 @@
     key = &#34;key&#34;
     touch = &#34;touch&#34;
     refresh = &#34;refresh&#34;
-    selected = &#34;selected&#34; # used for RadioGroups
+    selected = &#34;selected&#34;  # used for RadioGroups
     itemselected = &#34;itemselected&#34;
     text = &#34;text&#34;
-    
-    
-    
+
     # activity events
     create = &#34;create&#34;
     start = &#34;start&#34;
@@ -153,19 +142,18 @@
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
     config = &#34;config&#34;
-    
+
     # general events
     screenon = &#34;screen_on&#34;
     screen_off = &#34;screen_off&#34;
     timezone = &#34;timezone&#34;
     locale = &#34;locale&#34;
     airplane = &#34;airplane&#34;
-    
-    
+
     # special overlay events
     overlaytouch = &#34;overlayTouch&#34;
     overlayScale = &#34;overlayScale&#34;
-    
+
     # touch event action
     touch_up = &#34;up&#34;
     touch_down = &#34;down&#34;
@@ -173,9 +161,7 @@
     touch_pointer_down = &#34;pointer_down&#34;
     touch_cancel = &#34;cancel&#34;
     touch_move = &#34;move&#34;
-    
-    
-    
+
     def __init__(self, ev):
         self.type = ev[&#34;type&#34;]
         self.value = {}
