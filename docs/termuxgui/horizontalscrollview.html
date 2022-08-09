@@ -26,24 +26,31 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from termuxgui.framelayout import FrameLayout
+<pre><code class="python">from typing import Optional, List, Literal
+
+from termuxgui.view import View
+from termuxgui.activity import Activity
+from termuxgui.framelayout import FrameLayout
 from termuxgui.viewgroup import ViewGroup
 
 
 class HorizontalScrollView(FrameLayout):
     &#34;&#34;&#34;This represents a HorizontalScrollView.&#34;&#34;&#34;
 
-    def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
-        args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
+    def __init__(self, activity: Activity, parent: Optional[View] = None, fillviewport: bool = False,
+                 snapping: bool = False, nobar: bool = False,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar,
+                &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createHorizontalScrollView&#34;, &#34;params&#34;: args}))
 
-    def getscrollposition(self):
+    def getscrollposition(self) -&gt; List[int]:
         &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def setscrollposition(self, x, y, smooth=True):
+    def setscrollposition(self, x: int, y: int, smooth: bool = True):
         &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
 </details>
@@ -59,7 +66,7 @@ class HorizontalScrollView(FrameLayout):
 <dl>
 <dt id="termuxgui.horizontalscrollview.HorizontalScrollView"><code class="flex name class">
 <span>class <span class="ident">HorizontalScrollView</span></span>
-<span>(</span><span>activity, parent=None, fillviewport=False, snapping=False, nobar=False)</span>
+<span>(</span><span>activity: <a title="termuxgui.activity.Activity" href="activity.html#termuxgui.activity.Activity">Activity</a>, parent: Optional[<a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a>] = None, fillviewport: bool = False, snapping: bool = False, nobar: bool = False, visibility: Optional[Literal[0, 1, 2]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a HorizontalScrollView.</p></div>
@@ -70,17 +77,20 @@ class HorizontalScrollView(FrameLayout):
 <pre><code class="python">class HorizontalScrollView(FrameLayout):
     &#34;&#34;&#34;This represents a HorizontalScrollView.&#34;&#34;&#34;
 
-    def __init__(self, activity, parent=None, fillviewport=False, snapping=False, nobar=False):
-        args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar}
+    def __init__(self, activity: Activity, parent: Optional[View] = None, fillviewport: bool = False,
+                 snapping: bool = False, nobar: bool = False,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;fillviewport&#34;: fillviewport, &#34;snapping&#34;: snapping, &#34;nobar&#34;: nobar,
+                &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createHorizontalScrollView&#34;, &#34;params&#34;: args}))
 
-    def getscrollposition(self):
+    def getscrollposition(self) -&gt; List[int]:
         &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def setscrollposition(self, x, y, smooth=True):
+    def setscrollposition(self, x: int, y: int, smooth: bool = True):
         &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
 </details>
@@ -94,10 +104,17 @@ class HorizontalScrollView(FrameLayout):
 <ul class="hlist">
 <li><a title="termuxgui.tablayout.TabLayout" href="tablayout.html#termuxgui.tablayout.TabLayout">TabLayout</a></li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.horizontalscrollview.HorizontalScrollView.MATCH_PARENT"><code class="name">var <span class="ident">MATCH_PARENT</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition"><code class="name flex">
-<span>def <span class="ident">getscrollposition</span></span>(<span>self)</span>
+<span>def <span class="ident">getscrollposition</span></span>(<span>self) ‑> List[int]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Gets the x and x scroll positions.</p></div>
@@ -105,13 +122,13 @@ class HorizontalScrollView(FrameLayout):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def getscrollposition(self):
+<pre><code class="python">def getscrollposition(self) -&gt; List[int]:
     &#34;&#34;&#34;Gets the x and x scroll positions.&#34;&#34;&#34;
     return self.a.c.send_read_msg({&#34;method&#34;: &#34;getScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.horizontalscrollview.HorizontalScrollView.setscrollposition"><code class="name flex">
-<span>def <span class="ident">setscrollposition</span></span>(<span>self, x, y, smooth=True)</span>
+<span>def <span class="ident">setscrollposition</span></span>(<span>self, x: int, y: int, smooth: bool = True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the x and x scroll positions. smooth specifies whether is's a smooth scoll or not.</p></div>
@@ -119,7 +136,7 @@ class HorizontalScrollView(FrameLayout):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setscrollposition(self, x, y, smooth=True):
+<pre><code class="python">def setscrollposition(self, x: int, y: int, smooth: bool = True):
     &#34;&#34;&#34;Sets the x and x scroll positions. smooth specifies whether is&#39;s a smooth scoll or not.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setScrollPosition&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;x&#34;: x, &#34;y&#34;: y, &#34;soft&#34;: smooth}})</code></pre>
 </details>
@@ -129,21 +146,32 @@ class HorizontalScrollView(FrameLayout):
 <ul class="hlist">
 <li><code><b><a title="termuxgui.framelayout.FrameLayout" href="framelayout.html#termuxgui.framelayout.FrameLayout">FrameLayout</a></b></code>:
 <ul class="hlist">
+<li><code><a title="termuxgui.framelayout.FrameLayout.GONE" href="view.html#termuxgui.view.View.GONE">GONE</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.HIDDEN" href="view.html#termuxgui.view.View.HIDDEN">HIDDEN</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.VISIBLE" href="view.html#termuxgui.view.View.VISIBLE">VISIBLE</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setclickable" href="view.html#termuxgui.view.View.setclickable">setclickable</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.framelayout.FrameLayout.setgridlayoutparams" href="view.html#termuxgui.view.View.setgridlayoutparams">setgridlayoutparams</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
 <li><code><a title="termuxgui.framelayout.FrameLayout.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.view.View.WRAP_CONTENT" href="view.html#termuxgui.view.View.WRAP_CONTENT">WRAP_CONTENT</a></code></li>
 </ul>
 </li>
 </ul>
@@ -167,6 +195,7 @@ class HorizontalScrollView(FrameLayout):
 <li>
 <h4><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView" href="#termuxgui.horizontalscrollview.HorizontalScrollView">HorizontalScrollView</a></code></h4>
 <ul class="">
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.MATCH_PARENT" href="#termuxgui.horizontalscrollview.HorizontalScrollView.MATCH_PARENT">MATCH_PARENT</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition" href="#termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition">getscrollposition</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setscrollposition" href="#termuxgui.horizontalscrollview.HorizontalScrollView.setscrollposition">setscrollposition</a></code></li>
 </ul>

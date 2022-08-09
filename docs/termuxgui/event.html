@@ -46,6 +46,13 @@
     selected = &#34;selected&#34;  # used for RadioGroups
     itemselected = &#34;itemselected&#34;
     text = &#34;text&#34;
+    webviewnavigation = &#34;webviewNavigation&#34;
+    webviewhttperror = &#34;webviewHTTPError&#34;
+    webviewerror = &#34;webviewError&#34;
+    webviewdestroyed = &#34;webviewDestroyed&#34;
+    webviewprogress = &#34;webviewProgress&#34;
+    webviewconsolemessage = &#34;webviewConsoleMessage&#34;
+    remoteclick = &#34;remoteclick&#34;
 
     # activity events
     create = &#34;create&#34;
@@ -57,6 +64,7 @@
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
     config = &#34;config&#34;
+    back = &#34;back&#34;
 
     # general events
     screenon = &#34;screen_on&#34;
@@ -77,7 +85,7 @@
     touch_cancel = &#34;cancel&#34;
     touch_move = &#34;move&#34;
 
-    def __init__(self, ev):
+    def __init__(self, ev: dict):
         self.type = ev[&#34;type&#34;]
         self.value = {}
         try:
@@ -100,7 +108,7 @@
 <dl>
 <dt id="termuxgui.event.Event"><code class="flex name class">
 <span>class <span class="ident">Event</span></span>
-<span>(</span><span>ev)</span>
+<span>(</span><span>ev: dict)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents an Event in the GUI.</p>
@@ -131,6 +139,13 @@
     selected = &#34;selected&#34;  # used for RadioGroups
     itemselected = &#34;itemselected&#34;
     text = &#34;text&#34;
+    webviewnavigation = &#34;webviewNavigation&#34;
+    webviewhttperror = &#34;webviewHTTPError&#34;
+    webviewerror = &#34;webviewError&#34;
+    webviewdestroyed = &#34;webviewDestroyed&#34;
+    webviewprogress = &#34;webviewProgress&#34;
+    webviewconsolemessage = &#34;webviewConsoleMessage&#34;
+    remoteclick = &#34;remoteclick&#34;
 
     # activity events
     create = &#34;create&#34;
@@ -142,6 +157,7 @@
     userleavehint = &#34;UserLeaveHint&#34;
     pipchanged = &#34;pipchanged&#34;
     config = &#34;config&#34;
+    back = &#34;back&#34;
 
     # general events
     screenon = &#34;screen_on&#34;
@@ -162,7 +178,7 @@
     touch_cancel = &#34;cancel&#34;
     touch_move = &#34;move&#34;
 
-    def __init__(self, ev):
+    def __init__(self, ev: dict):
         self.type = ev[&#34;type&#34;]
         self.value = {}
         try:
@@ -176,6 +192,10 @@
 <h3>Class variables</h3>
 <dl>
 <dt id="termuxgui.event.Event.airplane"><code class="name">var <span class="ident">airplane</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.back"><code class="name">var <span class="ident">back</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -232,6 +252,10 @@
 <div class="desc"></div>
 </dd>
 <dt id="termuxgui.event.Event.refresh"><code class="name">var <span class="ident">refresh</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.remoteclick"><code class="name">var <span class="ident">remoteclick</span></code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -299,6 +323,30 @@
 <dd>
 <div class="desc"></div>
 </dd>
+<dt id="termuxgui.event.Event.webviewconsolemessage"><code class="name">var <span class="ident">webviewconsolemessage</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.webviewdestroyed"><code class="name">var <span class="ident">webviewdestroyed</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.webviewerror"><code class="name">var <span class="ident">webviewerror</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.webviewhttperror"><code class="name">var <span class="ident">webviewhttperror</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.webviewnavigation"><code class="name">var <span class="ident">webviewnavigation</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.event.Event.webviewprogress"><code class="name">var <span class="ident">webviewprogress</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -319,8 +367,9 @@
 <ul>
 <li>
 <h4><code><a title="termuxgui.event.Event" href="#termuxgui.event.Event">Event</a></code></h4>
-<ul class="two-column">
+<ul class="">
 <li><code><a title="termuxgui.event.Event.airplane" href="#termuxgui.event.Event.airplane">airplane</a></code></li>
+<li><code><a title="termuxgui.event.Event.back" href="#termuxgui.event.Event.back">back</a></code></li>
 <li><code><a title="termuxgui.event.Event.click" href="#termuxgui.event.Event.click">click</a></code></li>
 <li><code><a title="termuxgui.event.Event.config" href="#termuxgui.event.Event.config">config</a></code></li>
 <li><code><a title="termuxgui.event.Event.create" href="#termuxgui.event.Event.create">create</a></code></li>
@@ -335,6 +384,7 @@
 <li><code><a title="termuxgui.event.Event.pause" href="#termuxgui.event.Event.pause">pause</a></code></li>
 <li><code><a title="termuxgui.event.Event.pipchanged" href="#termuxgui.event.Event.pipchanged">pipchanged</a></code></li>
 <li><code><a title="termuxgui.event.Event.refresh" href="#termuxgui.event.Event.refresh">refresh</a></code></li>
+<li><code><a title="termuxgui.event.Event.remoteclick" href="#termuxgui.event.Event.remoteclick">remoteclick</a></code></li>
 <li><code><a title="termuxgui.event.Event.resume" href="#termuxgui.event.Event.resume">resume</a></code></li>
 <li><code><a title="termuxgui.event.Event.screen_off" href="#termuxgui.event.Event.screen_off">screen_off</a></code></li>
 <li><code><a title="termuxgui.event.Event.screenon" href="#termuxgui.event.Event.screenon">screenon</a></code></li>
@@ -351,6 +401,12 @@
 <li><code><a title="termuxgui.event.Event.touch_pointer_up" href="#termuxgui.event.Event.touch_pointer_up">touch_pointer_up</a></code></li>
 <li><code><a title="termuxgui.event.Event.touch_up" href="#termuxgui.event.Event.touch_up">touch_up</a></code></li>
 <li><code><a title="termuxgui.event.Event.userleavehint" href="#termuxgui.event.Event.userleavehint">userleavehint</a></code></li>
+<li><code><a title="termuxgui.event.Event.webviewconsolemessage" href="#termuxgui.event.Event.webviewconsolemessage">webviewconsolemessage</a></code></li>
+<li><code><a title="termuxgui.event.Event.webviewdestroyed" href="#termuxgui.event.Event.webviewdestroyed">webviewdestroyed</a></code></li>
+<li><code><a title="termuxgui.event.Event.webviewerror" href="#termuxgui.event.Event.webviewerror">webviewerror</a></code></li>
+<li><code><a title="termuxgui.event.Event.webviewhttperror" href="#termuxgui.event.Event.webviewhttperror">webviewhttperror</a></code></li>
+<li><code><a title="termuxgui.event.Event.webviewnavigation" href="#termuxgui.event.Event.webviewnavigation">webviewnavigation</a></code></li>
+<li><code><a title="termuxgui.event.Event.webviewprogress" href="#termuxgui.event.Event.webviewprogress">webviewprogress</a></code></li>
 </ul>
 </li>
 </ul>

@@ -28,6 +28,7 @@
 </summary>
 <pre><code class="python">from mmap import mmap
 import os
+from typing import Literal
 
 import termuxgui.msg as msg
 
@@ -43,7 +44,7 @@ class Buffer:
 
     A RuntimeError is raised when a Buffer can&#39;t be created.&#34;&#34;&#34;
 
-    def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
+    def __init__(self, connection, w: int, h: int, format: Literal[&#34;ARGB888&#34;] = &#34;ARGB888&#34;):
         self.c = connection
         self.c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
         ret = msg.read_msg_fd(self.c._main)
@@ -83,7 +84,7 @@ class Buffer:
 <dl>
 <dt id="termuxgui.buffer.Buffer"><code class="flex name class">
 <span>class <span class="ident">Buffer</span></span>
-<span>(</span><span>connection, w, h, format='ARGB888')</span>
+<span>(</span><span>connection, w: int, h: int, format: Literal['ARGB888'] = 'ARGB888')</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a raw ARGB888 image buffer.</p>
@@ -108,7 +109,7 @@ You can also directly access the memory object as b.mem.</p>
 
     A RuntimeError is raised when a Buffer can&#39;t be created.&#34;&#34;&#34;
 
-    def __init__(self, connection, w, h, format=&#34;ARGB888&#34;):
+    def __init__(self, connection, w: int, h: int, format: Literal[&#34;ARGB888&#34;] = &#34;ARGB888&#34;):
         self.c = connection
         self.c.send_msg({&#34;method&#34;: &#34;addBuffer&#34;, &#34;params&#34;: {&#34;w&#34;: w, &#34;h&#34;: h, &#34;format&#34;: format}})
         ret = msg.read_msg_fd(self.c._main)

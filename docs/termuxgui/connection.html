@@ -34,15 +34,31 @@ from os import getuid
 from struct import unpack
 from json import dumps
 from select import select
+from typing import TypedDict, Literal, Optional, Any, Union, Iterator
 
 from termuxgui.event import Event
-from termuxgui import msg as tgmsg
+import termuxgui.msg as tgmsg
 
 
 def _check_user(s):
     uid = unpack(&#34;III&#34;, s.getsockopt(SOL_SOCKET, SO_PEERCRED, 12))[1]
     return uid == getuid()
 
+
+class ConfigDarkMode(TypedDict, total=False):
+    dark_mode: bool
+
+
+class Configuration(ConfigDarkMode, TypedDict):
+    country: str
+    language: str
+    orientation: Literal[&#34;landscape&#34;, &#34;portrait&#34;]
+    keyboardHidden: bool
+    screenwidth: int
+    screenheight: int
+    fontscale: float
+    density: float
+    
 
 class Connection:
     &#34;&#34;&#34;This represents a connection to the Termux:GUI plugin and contains all functions that don&#39;t act on any
@@ -92,12 +108,12 @@ class Connection:
             except timeout:
                 raise RuntimeError(&#34;Could not connect to Termux:GUI. Is the plugin installed?&#34;)
 
-    def events(self):
+    def events(self) -&gt; Iterator[Event]:
         &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
         while True:
             yield Event(tgmsg.read_msg(self._event))
 
-    def checkevent(self):
+    def checkevent(self) -&gt; Optional[Event]:
         &#34;&#34;&#34;If there is at least one event to be read, returns it.
         If there is no event, returns None.
         You can use this to e.g. check for events between drawing a frame instead of
@@ -106,7 +122,7 @@ class Connection:
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
 
-    def toast(self, text, long=False):
+    def toast(self, text: str, long: bool = False):
         &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})
 
@@ -117,7 +133,8 @@ class Connection:
     def close(self):
         &#34;&#34;&#34;Closes the connection.
 
-        The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
+        The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection
+        yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
         self._main.close()
         self._event.close()
 
@@ -128,19 +145,19 @@ class Connection:
         self.close()
         return False
 
-    def send_msg(self, msg):
+    def send_msg(self, msg: Union[str, dict]):
         &#34;&#34;&#34;Send a message to the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         if type(msg) is dict:
             msg = dumps(msg)
         tgmsg.send_msg(self._main, msg)
 
-    def read_msg(self):
+    def read_msg(self) -&gt; Any:
         &#34;&#34;&#34;Read a message from the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         return tgmsg.read_msg(self._main)
 
-    def send_read_msg(self, msg):
+    def send_read_msg(self, msg: Union[str, dict]):
         &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
         You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         self.send_msg(msg)
@@ -150,9 +167,14 @@ class Connection:
         &#34;&#34;&#34;Turns the screen on.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
 
-    def islocked(self):
+    def islocked(self) -&gt; bool:
         &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
-        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
+        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})
+
+    def getversion(self) -&gt; bool:
+        &#34;&#34;&#34;Returns the version code of the plugin app.
+        Can be used to disable features only present in a newer version or prompting the user to update.&#34;&#34;&#34;
+        return self.send_read_msg({&#34;method&#34;: &#34;getVersion&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 </section>
 <section>
@@ -164,6 +186,115 @@ class Connection:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
+<dt id="termuxgui.connection.ConfigDarkMode"><code class="flex name class">
+<span>class <span class="ident">ConfigDarkMode</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object's
+(key, value) pairs
+dict(iterable) -&gt; new dictionary initialized as if via:
+d = {}
+for k, v in iterable:
+d[k] = v
+dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
+in the keyword argument list.
+For example:
+dict(one=1, two=2)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ConfigDarkMode(TypedDict, total=False):
+    dark_mode: bool</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.dict</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.connection.ConfigDarkMode.dark_mode"><code class="name">var <span class="ident">dark_mode</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="termuxgui.connection.Configuration"><code class="flex name class">
+<span>class <span class="ident">Configuration</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>dict() -&gt; new empty dictionary
+dict(mapping) -&gt; new dictionary initialized from a mapping object's
+(key, value) pairs
+dict(iterable) -&gt; new dictionary initialized as if via:
+d = {}
+for k, v in iterable:
+d[k] = v
+dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs
+in the keyword argument list.
+For example:
+dict(one=1, two=2)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Configuration(ConfigDarkMode, TypedDict):
+    country: str
+    language: str
+    orientation: Literal[&#34;landscape&#34;, &#34;portrait&#34;]
+    keyboardHidden: bool
+    screenwidth: int
+    screenheight: int
+    fontscale: float
+    density: float</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.dict</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.connection.Configuration.country"><code class="name">var <span class="ident">country</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.dark_mode"><code class="name">var <span class="ident">dark_mode</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.density"><code class="name">var <span class="ident">density</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.fontscale"><code class="name">var <span class="ident">fontscale</span> : float</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.keyboardHidden"><code class="name">var <span class="ident">keyboardHidden</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.language"><code class="name">var <span class="ident">language</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.orientation"><code class="name">var <span class="ident">orientation</span> : Literal['landscape', 'portrait']</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.screenheight"><code class="name">var <span class="ident">screenheight</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.connection.Configuration.screenwidth"><code class="name">var <span class="ident">screenwidth</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
 <dt id="termuxgui.connection.Connection"><code class="flex name class">
 <span>class <span class="ident">Connection</span></span>
 </code></dt>
@@ -223,12 +354,12 @@ particular View, Activity or Task. </p>
             except timeout:
                 raise RuntimeError(&#34;Could not connect to Termux:GUI. Is the plugin installed?&#34;)
 
-    def events(self):
+    def events(self) -&gt; Iterator[Event]:
         &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
         while True:
             yield Event(tgmsg.read_msg(self._event))
 
-    def checkevent(self):
+    def checkevent(self) -&gt; Optional[Event]:
         &#34;&#34;&#34;If there is at least one event to be read, returns it.
         If there is no event, returns None.
         You can use this to e.g. check for events between drawing a frame instead of
@@ -237,7 +368,7 @@ particular View, Activity or Task. </p>
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
 
-    def toast(self, text, long=False):
+    def toast(self, text: str, long: bool = False):
         &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})
 
@@ -248,7 +379,8 @@ particular View, Activity or Task. </p>
     def close(self):
         &#34;&#34;&#34;Closes the connection.
 
-        The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
+        The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection
+        yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
         self._main.close()
         self._event.close()
 
@@ -259,19 +391,19 @@ particular View, Activity or Task. </p>
         self.close()
         return False
 
-    def send_msg(self, msg):
+    def send_msg(self, msg: Union[str, dict]):
         &#34;&#34;&#34;Send a message to the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         if type(msg) is dict:
             msg = dumps(msg)
         tgmsg.send_msg(self._main, msg)
 
-    def read_msg(self):
+    def read_msg(self) -&gt; Any:
         &#34;&#34;&#34;Read a message from the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         return tgmsg.read_msg(self._main)
 
-    def send_read_msg(self, msg):
+    def send_read_msg(self, msg: Union[str, dict]):
         &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
         You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
         self.send_msg(msg)
@@ -281,14 +413,19 @@ particular View, Activity or Task. </p>
         &#34;&#34;&#34;Turns the screen on.&#34;&#34;&#34;
         self.send_msg({&#34;method&#34;: &#34;turnScreenOn&#34;, &#34;params&#34;: {}})
 
-    def islocked(self):
+    def islocked(self) -&gt; bool:
         &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
-        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
+        return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})
+
+    def getversion(self) -&gt; bool:
+        &#34;&#34;&#34;Returns the version code of the plugin app.
+        Can be used to disable features only present in a newer version or prompting the user to update.&#34;&#34;&#34;
+        return self.send_read_msg({&#34;method&#34;: &#34;getVersion&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="termuxgui.connection.Connection.checkevent"><code class="name flex">
-<span>def <span class="ident">checkevent</span></span>(<span>self)</span>
+<span>def <span class="ident">checkevent</span></span>(<span>self) ‑> Optional[<a title="termuxgui.event.Event" href="event.html#termuxgui.event.Event">Event</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>If there is at least one event to be read, returns it.
@@ -299,7 +436,7 @@ having to use a separate thread and blocking it.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def checkevent(self):
+<pre><code class="python">def checkevent(self) -&gt; Optional[Event]:
     &#34;&#34;&#34;If there is at least one event to be read, returns it.
     If there is no event, returns None.
     You can use this to e.g. check for events between drawing a frame instead of
@@ -314,7 +451,8 @@ having to use a separate thread and blocking it.</p></div>
 </code></dt>
 <dd>
 <div class="desc"><p>Closes the connection.</p>
-<p>The connection is automatically closed when the program exits, but it's good practice to close the connection yourself when you don't need it anymore or use a "with" statement.</p></div>
+<p>The connection is automatically closed when the program exits, but it's good practice to close the connection
+yourself when you don't need it anymore or use a "with" statement.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -322,13 +460,14 @@ having to use a separate thread and blocking it.</p></div>
 <pre><code class="python">def close(self):
     &#34;&#34;&#34;Closes the connection.
 
-    The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
+    The connection is automatically closed when the program exits, but it&#39;s good practice to close the connection
+    yourself when you don&#39;t need it anymore or use a &#34;with&#34; statement.&#34;&#34;&#34;
     self._main.close()
     self._event.close()</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.events"><code class="name flex">
-<span>def <span class="ident">events</span></span>(<span>self)</span>
+<span>def <span class="ident">events</span></span>(<span>self) ‑> Iterator[<a title="termuxgui.event.Event" href="event.html#termuxgui.event.Event">Event</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Waits for events. Use this with "for in" to iterate over incoming events and block while waiting.</p></div>
@@ -336,14 +475,30 @@ having to use a separate thread and blocking it.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def events(self):
+<pre><code class="python">def events(self) -&gt; Iterator[Event]:
     &#34;&#34;&#34;Waits for events. Use this with &#34;for in&#34; to iterate over incoming events and block while waiting.&#34;&#34;&#34;
     while True:
         yield Event(tgmsg.read_msg(self._event))</code></pre>
 </details>
 </dd>
+<dt id="termuxgui.connection.Connection.getversion"><code class="name flex">
+<span>def <span class="ident">getversion</span></span>(<span>self) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the version code of the plugin app.
+Can be used to disable features only present in a newer version or prompting the user to update.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getversion(self) -&gt; bool:
+    &#34;&#34;&#34;Returns the version code of the plugin app.
+    Can be used to disable features only present in a newer version or prompting the user to update.&#34;&#34;&#34;
+    return self.send_read_msg({&#34;method&#34;: &#34;getVersion&#34;, &#34;params&#34;: {}})</code></pre>
+</details>
+</dd>
 <dt id="termuxgui.connection.Connection.islocked"><code class="name flex">
-<span>def <span class="ident">islocked</span></span>(<span>self)</span>
+<span>def <span class="ident">islocked</span></span>(<span>self) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns whether the device is locked.</p></div>
@@ -351,13 +506,13 @@ having to use a separate thread and blocking it.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def islocked(self):
+<pre><code class="python">def islocked(self) -&gt; bool:
     &#34;&#34;&#34;Returns whether the device is locked.&#34;&#34;&#34;
     return self.send_read_msg({&#34;method&#34;: &#34;isLocked&#34;, &#34;params&#34;: {}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.read_msg"><code class="name flex">
-<span>def <span class="ident">read_msg</span></span>(<span>self)</span>
+<span>def <span class="ident">read_msg</span></span>(<span>self) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Read a message from the main socket.
@@ -366,14 +521,14 @@ You should only need to call this yourself if you want to use methods not yet im
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def read_msg(self):
+<pre><code class="python">def read_msg(self) -&gt; Any:
     &#34;&#34;&#34;Read a message from the main socket.
     You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     return tgmsg.read_msg(self._main)</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.send_msg"><code class="name flex">
-<span>def <span class="ident">send_msg</span></span>(<span>self, msg)</span>
+<span>def <span class="ident">send_msg</span></span>(<span>self, msg: Union[str, dict])</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Send a message to the main socket.
@@ -382,7 +537,7 @@ You should only need to call this yourself if you want to use methods not yet im
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def send_msg(self, msg):
+<pre><code class="python">def send_msg(self, msg: Union[str, dict]):
     &#34;&#34;&#34;Send a message to the main socket.
     You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     if type(msg) is dict:
@@ -391,7 +546,7 @@ You should only need to call this yourself if you want to use methods not yet im
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.send_read_msg"><code class="name flex">
-<span>def <span class="ident">send_read_msg</span></span>(<span>self, msg)</span>
+<span>def <span class="ident">send_read_msg</span></span>(<span>self, msg: Union[str, dict])</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Send a message to the main socket and read a message afterwards.
@@ -400,7 +555,7 @@ You should only need to call this yourself if you want to use methods not yet im
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def send_read_msg(self, msg):
+<pre><code class="python">def send_read_msg(self, msg: Union[str, dict]):
     &#34;&#34;&#34;Send a message to the main socket and read a message afterwards.
     You should only need to call this yourself if you want to use methods not yet implemented in the library.&#34;&#34;&#34;
     self.send_msg(msg)
@@ -408,7 +563,7 @@ You should only need to call this yourself if you want to use methods not yet im
 </details>
 </dd>
 <dt id="termuxgui.connection.Connection.toast"><code class="name flex">
-<span>def <span class="ident">toast</span></span>(<span>self, text, long=False)</span>
+<span>def <span class="ident">toast</span></span>(<span>self, text: str, long: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sends a Toast. Set long to True if you want to display the text for longer.</p></div>
@@ -416,7 +571,7 @@ You should only need to call this yourself if you want to use methods not yet im
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def toast(self, text, long=False):
+<pre><code class="python">def toast(self, text: str, long: bool = False):
     &#34;&#34;&#34;Sends a Toast. Set long to True if you want to display the text for longer.&#34;&#34;&#34;
     self.send_msg({&#34;method&#34;: &#34;toast&#34;, &#34;params&#34;: {&#34;text&#34;: text, &#34;long&#34;: long}})</code></pre>
 </details>
@@ -468,11 +623,32 @@ You should only need to call this yourself if you want to use methods not yet im
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
+<h4><code><a title="termuxgui.connection.ConfigDarkMode" href="#termuxgui.connection.ConfigDarkMode">ConfigDarkMode</a></code></h4>
+<ul class="">
+<li><code><a title="termuxgui.connection.ConfigDarkMode.dark_mode" href="#termuxgui.connection.ConfigDarkMode.dark_mode">dark_mode</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="termuxgui.connection.Configuration" href="#termuxgui.connection.Configuration">Configuration</a></code></h4>
+<ul class="two-column">
+<li><code><a title="termuxgui.connection.Configuration.country" href="#termuxgui.connection.Configuration.country">country</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.dark_mode" href="#termuxgui.connection.Configuration.dark_mode">dark_mode</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.density" href="#termuxgui.connection.Configuration.density">density</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.fontscale" href="#termuxgui.connection.Configuration.fontscale">fontscale</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.keyboardHidden" href="#termuxgui.connection.Configuration.keyboardHidden">keyboardHidden</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.language" href="#termuxgui.connection.Configuration.language">language</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.orientation" href="#termuxgui.connection.Configuration.orientation">orientation</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.screenheight" href="#termuxgui.connection.Configuration.screenheight">screenheight</a></code></li>
+<li><code><a title="termuxgui.connection.Configuration.screenwidth" href="#termuxgui.connection.Configuration.screenwidth">screenwidth</a></code></li>
+</ul>
+</li>
+<li>
 <h4><code><a title="termuxgui.connection.Connection" href="#termuxgui.connection.Connection">Connection</a></code></h4>
 <ul class="two-column">
 <li><code><a title="termuxgui.connection.Connection.checkevent" href="#termuxgui.connection.Connection.checkevent">checkevent</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.close" href="#termuxgui.connection.Connection.close">close</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.events" href="#termuxgui.connection.Connection.events">events</a></code></li>
+<li><code><a title="termuxgui.connection.Connection.getversion" href="#termuxgui.connection.Connection.getversion">getversion</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.islocked" href="#termuxgui.connection.Connection.islocked">islocked</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.read_msg" href="#termuxgui.connection.Connection.read_msg">read_msg</a></code></li>
 <li><code><a title="termuxgui.connection.Connection.send_msg" href="#termuxgui.connection.Connection.send_msg">send_msg</a></code></li>

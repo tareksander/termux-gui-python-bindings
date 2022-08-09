@@ -26,21 +26,29 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from termuxgui.textview import TextView
+<pre><code class="python">from typing import Optional, Literal
+
+from termuxgui.activity import Activity
+from termuxgui.textview import TextView
 from termuxgui.view import View
 
 
 class EditText(TextView):
     &#34;&#34;&#34;This represents an EditText.&#34;&#34;&#34;
 
-    def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=&#34;text&#34;):
+    def __init__(self, activity: Activity, text: str, parent: Optional[View] = None, singleline: bool = False,
+                 line: bool = True, blockinput: bool = False,
+                 inputtype: Literal[&#34;text&#34;, &#34;textMultiLine&#34;, &#34;phone&#34;, &#34;date&#34;, &#34;time&#34;, &#34;datetime&#34;, &#34;number&#34;,
+                                    &#34;numberDecimal&#34;, &#34;numberPassword&#34;, &#34;numberSigned&#34;, &#34;numberDecimalSigned&#34;,
+                                    &#34;textEmailAddress&#34;, &#34;textPassword&#34;] = &#34;text&#34;,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput,
-                &#34;type&#34;: inputtype}
+                &#34;type&#34;: inputtype, &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
 
-    def showcursor(self, show):
+    def showcursor(self, show: bool):
         &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
 </details>
@@ -56,7 +64,7 @@ class EditText(TextView):
 <dl>
 <dt id="termuxgui.edittext.EditText"><code class="flex name class">
 <span>class <span class="ident">EditText</span></span>
-<span>(</span><span>activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype='text')</span>
+<span>(</span><span>activity: <a title="termuxgui.activity.Activity" href="activity.html#termuxgui.activity.Activity">Activity</a>, text: str, parent: Optional[<a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a>] = None, singleline: bool = False, line: bool = True, blockinput: bool = False, inputtype: Literal['text', 'textMultiLine', 'phone', 'date', 'time', 'datetime', 'number', 'numberDecimal', 'numberPassword', 'numberSigned', 'numberDecimalSigned', 'textEmailAddress', 'textPassword'] = 'text', visibility: Optional[Literal[0, 1, 2]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents an EditText.</p></div>
@@ -67,14 +75,19 @@ class EditText(TextView):
 <pre><code class="python">class EditText(TextView):
     &#34;&#34;&#34;This represents an EditText.&#34;&#34;&#34;
 
-    def __init__(self, activity, text, parent=None, singleline=False, line=True, blockinput=False, inputtype=&#34;text&#34;):
+    def __init__(self, activity: Activity, text: str, parent: Optional[View] = None, singleline: bool = False,
+                 line: bool = True, blockinput: bool = False,
+                 inputtype: Literal[&#34;text&#34;, &#34;textMultiLine&#34;, &#34;phone&#34;, &#34;date&#34;, &#34;time&#34;, &#34;datetime&#34;, &#34;number&#34;,
+                                    &#34;numberDecimal&#34;, &#34;numberPassword&#34;, &#34;numberSigned&#34;, &#34;numberDecimalSigned&#34;,
+                                    &#34;textEmailAddress&#34;, &#34;textPassword&#34;] = &#34;text&#34;,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
         args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;singleline&#34;: singleline, &#34;line&#34;: line, &#34;blockinput&#34;: blockinput,
-                &#34;type&#34;: inputtype}
+                &#34;type&#34;: inputtype, &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createEditText&#34;, &#34;params&#34;: args}))
 
-    def showcursor(self, show):
+    def showcursor(self, show: bool):
         &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
 </details>
@@ -83,10 +96,17 @@ class EditText(TextView):
 <li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.edittext.EditText.MATCH_PARENT"><code class="name">var <span class="ident">MATCH_PARENT</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="termuxgui.edittext.EditText.showcursor"><code class="name flex">
-<span>def <span class="ident">showcursor</span></span>(<span>self, show)</span>
+<span>def <span class="ident">showcursor</span></span>(<span>self, show: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether the cursor position should be shown.</p></div>
@@ -94,7 +114,7 @@ class EditText(TextView):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def showcursor(self, show):
+<pre><code class="python">def showcursor(self, show: bool):
     &#34;&#34;&#34;Sets whether the cursor position should be shown.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;showCursor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;show&#34;: show}})</code></pre>
 </details>
@@ -104,17 +124,23 @@ class EditText(TextView):
 <ul class="hlist">
 <li><code><b><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></b></code>:
 <ul class="hlist">
+<li><code><a title="termuxgui.textview.TextView.GONE" href="view.html#termuxgui.view.View.GONE">GONE</a></code></li>
+<li><code><a title="termuxgui.textview.TextView.HIDDEN" href="view.html#termuxgui.view.View.HIDDEN">HIDDEN</a></code></li>
+<li><code><a title="termuxgui.textview.TextView.VISIBLE" href="view.html#termuxgui.view.View.VISIBLE">VISIBLE</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.gettext" href="textview.html#termuxgui.textview.TextView.gettext">gettext</a></code></li>
+<li><code><a title="termuxgui.textview.TextView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendtextevent" href="textview.html#termuxgui.textview.TextView.sendtextevent">sendtextevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.textview.TextView.setclickable" href="view.html#termuxgui.view.View.setclickable">setclickable</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.textview.TextView.setgridlayoutparams" href="view.html#termuxgui.view.View.setgridlayoutparams">setgridlayoutparams</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
@@ -123,6 +149,11 @@ class EditText(TextView):
 <li><code><a title="termuxgui.textview.TextView.settextsize" href="textview.html#termuxgui.textview.TextView.settextsize">settextsize</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.view.View.WRAP_CONTENT" href="view.html#termuxgui.view.View.WRAP_CONTENT">WRAP_CONTENT</a></code></li>
 </ul>
 </li>
 </ul>
@@ -146,6 +177,7 @@ class EditText(TextView):
 <li>
 <h4><code><a title="termuxgui.edittext.EditText" href="#termuxgui.edittext.EditText">EditText</a></code></h4>
 <ul class="">
+<li><code><a title="termuxgui.edittext.EditText.MATCH_PARENT" href="#termuxgui.edittext.EditText.MATCH_PARENT">MATCH_PARENT</a></code></li>
 <li><code><a title="termuxgui.edittext.EditText.showcursor" href="#termuxgui.edittext.EditText.showcursor">showcursor</a></code></li>
 </ul>
 </li>

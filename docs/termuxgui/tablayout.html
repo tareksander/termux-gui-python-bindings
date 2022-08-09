@@ -26,22 +26,32 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from termuxgui.horizontalscrollview import HorizontalScrollView
+<pre><code class="python">from typing import Optional, List, Literal
+
+from termuxgui.view import View
+from termuxgui.activity import Activity
+from termuxgui.horizontalscrollview import HorizontalScrollView
 from termuxgui.viewgroup import ViewGroup
 
 
 class TabLayout(HorizontalScrollView):
     &#34;&#34;&#34;This represents a TabLayout.&#34;&#34;&#34;
 
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
+    def __init__(self, activity: Activity, parent: Optional[View] = None,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTabLayout&#34;, &#34;params&#34;: args}))
 
-    def setlist(self, list):
-        &#34;&#34;&#34;Sets the list tabs. list has to be a list containing strings.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
+    def setlist(self, list: List[str]):
+        &#34;&#34;&#34;Sets the list tabs.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})
+    
+    def selecttab(self, tab: int):
+        &#34;&#34;&#34;Selects a tab in the TabLayout. tab is the index of the tab to select, starting at 0.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;selectTab&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;tab&#34;: tab}})
+    </code></pre>
 </details>
 </section>
 <section>
@@ -55,7 +65,7 @@ class TabLayout(HorizontalScrollView):
 <dl>
 <dt id="termuxgui.tablayout.TabLayout"><code class="flex name class">
 <span>class <span class="ident">TabLayout</span></span>
-<span>(</span><span>activity, parent=None)</span>
+<span>(</span><span>activity: <a title="termuxgui.activity.Activity" href="activity.html#termuxgui.activity.Activity">Activity</a>, parent: Optional[<a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a>] = None, visibility: Optional[Literal[0, 1, 2]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a TabLayout.</p></div>
@@ -66,15 +76,20 @@ class TabLayout(HorizontalScrollView):
 <pre><code class="python">class TabLayout(HorizontalScrollView):
     &#34;&#34;&#34;This represents a TabLayout.&#34;&#34;&#34;
 
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
+    def __init__(self, activity: Activity, parent: Optional[View] = None,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTabLayout&#34;, &#34;params&#34;: args}))
 
-    def setlist(self, list):
-        &#34;&#34;&#34;Sets the list tabs. list has to be a list containing strings.&#34;&#34;&#34;
-        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
+    def setlist(self, list: List[str]):
+        &#34;&#34;&#34;Sets the list tabs.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})
+    
+    def selecttab(self, tab: int):
+        &#34;&#34;&#34;Selects a tab in the TabLayout. tab is the index of the tab to select, starting at 0.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;selectTab&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;tab&#34;: tab}})</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -83,19 +98,40 @@ class TabLayout(HorizontalScrollView):
 <li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.tablayout.TabLayout.MATCH_PARENT"><code class="name">var <span class="ident">MATCH_PARENT</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
-<dt id="termuxgui.tablayout.TabLayout.setlist"><code class="name flex">
-<span>def <span class="ident">setlist</span></span>(<span>self, list)</span>
+<dt id="termuxgui.tablayout.TabLayout.selecttab"><code class="name flex">
+<span>def <span class="ident">selecttab</span></span>(<span>self, tab: int)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the list tabs. list has to be a list containing strings.</p></div>
+<div class="desc"><p>Selects a tab in the TabLayout. tab is the index of the tab to select, starting at 0.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setlist(self, list):
-    &#34;&#34;&#34;Sets the list tabs. list has to be a list containing strings.&#34;&#34;&#34;
+<pre><code class="python">def selecttab(self, tab: int):
+    &#34;&#34;&#34;Selects a tab in the TabLayout. tab is the index of the tab to select, starting at 0.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;selectTab&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;tab&#34;: tab}})</code></pre>
+</details>
+</dd>
+<dt id="termuxgui.tablayout.TabLayout.setlist"><code class="name flex">
+<span>def <span class="ident">setlist</span></span>(<span>self, list: List[str])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the list tabs.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setlist(self, list: List[str]):
+    &#34;&#34;&#34;Sets the list tabs.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setList&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;list&#34;: list}})</code></pre>
 </details>
 </dd>
@@ -104,23 +140,34 @@ class TabLayout(HorizontalScrollView):
 <ul class="hlist">
 <li><code><b><a title="termuxgui.horizontalscrollview.HorizontalScrollView" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView">HorizontalScrollView</a></b></code>:
 <ul class="hlist">
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.GONE" href="view.html#termuxgui.view.View.GONE">GONE</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.HIDDEN" href="view.html#termuxgui.view.View.HIDDEN">HIDDEN</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.VISIBLE" href="view.html#termuxgui.view.View.VISIBLE">VISIBLE</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView.getscrollposition">getscrollposition</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setclickable" href="view.html#termuxgui.view.View.setclickable">setclickable</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setgridlayoutparams" href="view.html#termuxgui.view.View.setgridlayoutparams">setgridlayoutparams</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setscrollposition" href="horizontalscrollview.html#termuxgui.horizontalscrollview.HorizontalScrollView.setscrollposition">setscrollposition</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
 <li><code><a title="termuxgui.horizontalscrollview.HorizontalScrollView.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.view.View.WRAP_CONTENT" href="view.html#termuxgui.view.View.WRAP_CONTENT">WRAP_CONTENT</a></code></li>
 </ul>
 </li>
 </ul>
@@ -144,6 +191,8 @@ class TabLayout(HorizontalScrollView):
 <li>
 <h4><code><a title="termuxgui.tablayout.TabLayout" href="#termuxgui.tablayout.TabLayout">TabLayout</a></code></h4>
 <ul class="">
+<li><code><a title="termuxgui.tablayout.TabLayout.MATCH_PARENT" href="#termuxgui.tablayout.TabLayout.MATCH_PARENT">MATCH_PARENT</a></code></li>
+<li><code><a title="termuxgui.tablayout.TabLayout.selecttab" href="#termuxgui.tablayout.TabLayout.selecttab">selecttab</a></code></li>
 <li><code><a title="termuxgui.tablayout.TabLayout.setlist" href="#termuxgui.tablayout.TabLayout.setlist">setlist</a></code></li>
 </ul>
 </li>

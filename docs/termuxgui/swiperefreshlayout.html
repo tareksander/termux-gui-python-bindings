@@ -26,20 +26,25 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from termuxgui.viewgroup import ViewGroup
+<pre><code class="python">from typing import Optional, Literal
+
+from termuxgui.view import View
+from termuxgui.activity import Activity
+from termuxgui.viewgroup import ViewGroup
 
 
 class SwipeRefreshLayout(ViewGroup):
     &#34;&#34;&#34;This represents a SwipeRefreshLayout.&#34;&#34;&#34;
 
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
+    def __init__(self, activity: Activity, parent: Optional[View] = None,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity,
                            activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
 
-    def setrefreshing(self, refreshing):
+    def setrefreshing(self, refreshing: bool):
         &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
 
         You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
@@ -58,7 +63,7 @@ class SwipeRefreshLayout(ViewGroup):
 <dl>
 <dt id="termuxgui.swiperefreshlayout.SwipeRefreshLayout"><code class="flex name class">
 <span>class <span class="ident">SwipeRefreshLayout</span></span>
-<span>(</span><span>activity, parent=None)</span>
+<span>(</span><span>activity: <a title="termuxgui.activity.Activity" href="activity.html#termuxgui.activity.Activity">Activity</a>, parent: Optional[<a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a>] = None, visibility: Optional[Literal[0, 1, 2]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a SwipeRefreshLayout.</p></div>
@@ -69,14 +74,15 @@ class SwipeRefreshLayout(ViewGroup):
 <pre><code class="python">class SwipeRefreshLayout(ViewGroup):
     &#34;&#34;&#34;This represents a SwipeRefreshLayout.&#34;&#34;&#34;
 
-    def __init__(self, activity, parent=None):
-        args = {&#34;aid&#34;: activity.aid}
+    def __init__(self, activity: Activity, parent: Optional[View] = None,
+                 visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         ViewGroup.__init__(self, activity,
                            activity.c.send_read_msg({&#34;method&#34;: &#34;createSwipeRefreshLayout&#34;, &#34;params&#34;: args}))
 
-    def setrefreshing(self, refreshing):
+    def setrefreshing(self, refreshing: bool):
         &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
 
         You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
@@ -88,10 +94,17 @@ class SwipeRefreshLayout(ViewGroup):
 <li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
 <li><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.swiperefreshlayout.SwipeRefreshLayout.MATCH_PARENT"><code class="name">var <span class="ident">MATCH_PARENT</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="termuxgui.swiperefreshlayout.SwipeRefreshLayout.setrefreshing"><code class="name flex">
-<span>def <span class="ident">setrefreshing</span></span>(<span>self, refreshing)</span>
+<span>def <span class="ident">setrefreshing</span></span>(<span>self, refreshing: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether the SwipeRefreshLayout displays the refresh animation.</p>
@@ -100,7 +113,7 @@ class SwipeRefreshLayout(ViewGroup):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setrefreshing(self, refreshing):
+<pre><code class="python">def setrefreshing(self, refreshing: bool):
     &#34;&#34;&#34;Sets whether the SwipeRefreshLayout displays the refresh animation.
 
     You have to call this with False when you refreshed the contents.&#34;&#34;&#34;
@@ -113,21 +126,32 @@ class SwipeRefreshLayout(ViewGroup):
 <ul class="hlist">
 <li><code><b><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></b></code>:
 <ul class="hlist">
+<li><code><a title="termuxgui.viewgroup.ViewGroup.GONE" href="view.html#termuxgui.view.View.GONE">GONE</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.HIDDEN" href="view.html#termuxgui.view.View.HIDDEN">HIDDEN</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.VISIBLE" href="view.html#termuxgui.view.View.VISIBLE">VISIBLE</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.clearchildren" href="viewgroup.html#termuxgui.viewgroup.ViewGroup.clearchildren">clearchildren</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setclickable" href="view.html#termuxgui.view.View.setclickable">setclickable</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.viewgroup.ViewGroup.setgridlayoutparams" href="view.html#termuxgui.view.View.setgridlayoutparams">setgridlayoutparams</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setvisibility" href="view.html#termuxgui.view.View.setvisibility">setvisibility</a></code></li>
 <li><code><a title="termuxgui.viewgroup.ViewGroup.setwidth" href="view.html#termuxgui.view.View.setwidth">setwidth</a></code></li>
+</ul>
+</li>
+<li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
+<ul class="hlist">
+<li><code><a title="termuxgui.view.View.WRAP_CONTENT" href="view.html#termuxgui.view.View.WRAP_CONTENT">WRAP_CONTENT</a></code></li>
 </ul>
 </li>
 </ul>
@@ -151,6 +175,7 @@ class SwipeRefreshLayout(ViewGroup):
 <li>
 <h4><code><a title="termuxgui.swiperefreshlayout.SwipeRefreshLayout" href="#termuxgui.swiperefreshlayout.SwipeRefreshLayout">SwipeRefreshLayout</a></code></h4>
 <ul class="">
+<li><code><a title="termuxgui.swiperefreshlayout.SwipeRefreshLayout.MATCH_PARENT" href="#termuxgui.swiperefreshlayout.SwipeRefreshLayout.MATCH_PARENT">MATCH_PARENT</a></code></li>
 <li><code><a title="termuxgui.swiperefreshlayout.SwipeRefreshLayout.setrefreshing" href="#termuxgui.swiperefreshlayout.SwipeRefreshLayout.setrefreshing">setrefreshing</a></code></li>
 </ul>
 </li>

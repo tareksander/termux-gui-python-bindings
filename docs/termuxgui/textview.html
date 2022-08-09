@@ -26,35 +26,40 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from termuxgui.view import View
+<pre><code class="python">from typing import Optional, Literal
+
+from termuxgui.activity import Activity
+from termuxgui.view import View
 
 
 class TextView(View):
     &#34;&#34;&#34;This represents a TextView.&#34;&#34;&#34;
 
-    def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks}
+    def __init__(self, activity: Activity, text: str, parent: Optional[View] = None, selectabletext: bool = False,
+                 clickablelinks: bool = False, visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks,
+                &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
 
-    def settextsize(self, size):
+    def settextsize(self, size: int):
         &#34;&#34;&#34;Sets the text size for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})
 
-    def gettext(self):
+    def gettext(self) -&gt; str:
         &#34;&#34;&#34;Gets the text of this TextView.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def settext(self, text):
+    def settext(self, text: str):
         &#34;&#34;&#34;Sets the text of this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})
 
-    def settextcolor(self, color):
+    def settextcolor(self, color: int):
         &#34;&#34;&#34;Sets the text color of this TextView. The color format is the same as for Activity.settheme().&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
 
-    def sendtextevent(self, send):
+    def sendtextevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not text events are send for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendTextEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
@@ -70,7 +75,7 @@ class TextView(View):
 <dl>
 <dt id="termuxgui.textview.TextView"><code class="flex name class">
 <span>class <span class="ident">TextView</span></span>
-<span>(</span><span>activity, text, parent=None, selectabletext=False, clickablelinks=False)</span>
+<span>(</span><span>activity: <a title="termuxgui.activity.Activity" href="activity.html#termuxgui.activity.Activity">Activity</a>, text: str, parent: Optional[<a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a>] = None, selectabletext: bool = False, clickablelinks: bool = False, visibility: Optional[Literal[0, 1, 2]] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a TextView.</p></div>
@@ -81,29 +86,31 @@ class TextView(View):
 <pre><code class="python">class TextView(View):
     &#34;&#34;&#34;This represents a TextView.&#34;&#34;&#34;
 
-    def __init__(self, activity, text, parent=None, selectabletext=False, clickablelinks=False):
-        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks}
+    def __init__(self, activity: Activity, text: str, parent: Optional[View] = None, selectabletext: bool = False,
+                 clickablelinks: bool = False, visibility: Optional[Literal[0, 1, 2]] = None):
+        args = {&#34;aid&#34;: activity.aid, &#34;text&#34;: text, &#34;selectableText&#34;: selectabletext, &#34;clickableLinks&#34;: clickablelinks,
+                &#34;visibility&#34;: visibility}
         if parent is not None:
             args[&#34;parent&#34;] = parent.id
         View.__init__(self, activity, activity.c.send_read_msg({&#34;method&#34;: &#34;createTextView&#34;, &#34;params&#34;: args}))
 
-    def settextsize(self, size):
+    def settextsize(self, size: int):
         &#34;&#34;&#34;Sets the text size for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})
 
-    def gettext(self):
+    def gettext(self) -&gt; str:
         &#34;&#34;&#34;Gets the text of this TextView.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def settext(self, text):
+    def settext(self, text: str):
         &#34;&#34;&#34;Sets the text of this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})
 
-    def settextcolor(self, color):
+    def settextcolor(self, color: int):
         &#34;&#34;&#34;Sets the text color of this TextView. The color format is the same as for Activity.settheme().&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setTextColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
 
-    def sendtextevent(self, send):
+    def sendtextevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not text events are send for this TextView.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendTextEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
@@ -116,10 +123,17 @@ class TextView(View):
 <li><a title="termuxgui.button.Button" href="button.html#termuxgui.button.Button">Button</a></li>
 <li><a title="termuxgui.edittext.EditText" href="edittext.html#termuxgui.edittext.EditText">EditText</a></li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.textview.TextView.MATCH_PARENT"><code class="name">var <span class="ident">MATCH_PARENT</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="termuxgui.textview.TextView.gettext"><code class="name flex">
-<span>def <span class="ident">gettext</span></span>(<span>self)</span>
+<span>def <span class="ident">gettext</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Gets the text of this TextView.</p></div>
@@ -127,13 +141,13 @@ class TextView(View):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def gettext(self):
+<pre><code class="python">def gettext(self) -&gt; str:
     &#34;&#34;&#34;Gets the text of this TextView.&#34;&#34;&#34;
     return self.a.c.send_read_msg({&#34;method&#34;: &#34;getText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.textview.TextView.sendtextevent"><code class="name flex">
-<span>def <span class="ident">sendtextevent</span></span>(<span>self, send)</span>
+<span>def <span class="ident">sendtextevent</span></span>(<span>self, send: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether ot not text events are send for this TextView.</p></div>
@@ -141,13 +155,13 @@ class TextView(View):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sendtextevent(self, send):
+<pre><code class="python">def sendtextevent(self, send: bool):
     &#34;&#34;&#34;Sets whether ot not text events are send for this TextView.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;sendTextEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.textview.TextView.settext"><code class="name flex">
-<span>def <span class="ident">settext</span></span>(<span>self, text)</span>
+<span>def <span class="ident">settext</span></span>(<span>self, text: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the text of this TextView.</p></div>
@@ -155,13 +169,13 @@ class TextView(View):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def settext(self, text):
+<pre><code class="python">def settext(self, text: str):
     &#34;&#34;&#34;Sets the text of this TextView.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setText&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;text&#34;: text}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.textview.TextView.settextcolor"><code class="name flex">
-<span>def <span class="ident">settextcolor</span></span>(<span>self, color)</span>
+<span>def <span class="ident">settextcolor</span></span>(<span>self, color: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the text color of this TextView. The color format is the same as for Activity.settheme().</p></div>
@@ -169,13 +183,13 @@ class TextView(View):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def settextcolor(self, color):
+<pre><code class="python">def settextcolor(self, color: int):
     &#34;&#34;&#34;Sets the text color of this TextView. The color format is the same as for Activity.settheme().&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setTextColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.textview.TextView.settextsize"><code class="name flex">
-<span>def <span class="ident">settextsize</span></span>(<span>self, size)</span>
+<span>def <span class="ident">settextsize</span></span>(<span>self, size: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the text size for this TextView.</p></div>
@@ -183,7 +197,7 @@ class TextView(View):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def settextsize(self, size):
+<pre><code class="python">def settextsize(self, size: int):
     &#34;&#34;&#34;Sets the text size for this TextView.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setTextSize&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;size&#34;: size}})</code></pre>
 </details>
@@ -193,15 +207,22 @@ class TextView(View):
 <ul class="hlist">
 <li><code><b><a title="termuxgui.view.View" href="view.html#termuxgui.view.View">View</a></b></code>:
 <ul class="hlist">
+<li><code><a title="termuxgui.view.View.GONE" href="view.html#termuxgui.view.View.GONE">GONE</a></code></li>
+<li><code><a title="termuxgui.view.View.HIDDEN" href="view.html#termuxgui.view.View.HIDDEN">HIDDEN</a></code></li>
+<li><code><a title="termuxgui.view.View.VISIBLE" href="view.html#termuxgui.view.View.VISIBLE">VISIBLE</a></code></li>
+<li><code><a title="termuxgui.view.View.WRAP_CONTENT" href="view.html#termuxgui.view.View.WRAP_CONTENT">WRAP_CONTENT</a></code></li>
 <li><code><a title="termuxgui.view.View.delete" href="view.html#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="view.html#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="view.html#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
+<li><code><a title="termuxgui.view.View.handleevent" href="view.html#termuxgui.view.View.handleevent">handleevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendclickevent" href="view.html#termuxgui.view.View.sendclickevent">sendclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendfocuschangeevent" href="view.html#termuxgui.view.View.sendfocuschangeevent">sendfocuschangeevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="view.html#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendtouchevent" href="view.html#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
 <li><code><a title="termuxgui.view.View.setbackgroundcolor" href="view.html#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.view.View.setclickable" href="view.html#termuxgui.view.View.setclickable">setclickable</a></code></li>
 <li><code><a title="termuxgui.view.View.setdimensions" href="view.html#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.view.View.setgridlayoutparams" href="view.html#termuxgui.view.View.setgridlayoutparams">setgridlayoutparams</a></code></li>
 <li><code><a title="termuxgui.view.View.setheight" href="view.html#termuxgui.view.View.setheight">setheight</a></code></li>
 <li><code><a title="termuxgui.view.View.setlinearlayoutparams" href="view.html#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
 <li><code><a title="termuxgui.view.View.setmargin" href="view.html#termuxgui.view.View.setmargin">setmargin</a></code></li>
@@ -229,7 +250,8 @@ class TextView(View):
 <ul>
 <li>
 <h4><code><a title="termuxgui.textview.TextView" href="#termuxgui.textview.TextView">TextView</a></code></h4>
-<ul class="">
+<ul class="two-column">
+<li><code><a title="termuxgui.textview.TextView.MATCH_PARENT" href="#termuxgui.textview.TextView.MATCH_PARENT">MATCH_PARENT</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.gettext" href="#termuxgui.textview.TextView.gettext">gettext</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.sendtextevent" href="#termuxgui.textview.TextView.sendtextevent">sendtextevent</a></code></li>
 <li><code><a title="termuxgui.textview.TextView.settext" href="#termuxgui.textview.TextView.settext">settext</a></code></li>

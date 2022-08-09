@@ -26,10 +26,31 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class View:
-    &#34;&#34;&#34;This represents a generic View.&#34;&#34;&#34;
+<pre><code class="python">from typing import Optional, Literal, List, Union
 
-    def __init__(self, activity, id):
+from termuxgui.event import Event
+from termuxgui.activity import Activity
+
+
+class View:
+    &#34;&#34;&#34;This represents a generic View.&#34;&#34;&#34;
+    
+    &#34;&#34;&#34;Visibility constant for gone views&#34;&#34;&#34;
+    GONE = 0
+    
+    &#34;&#34;&#34;Visibility constant for hidden views&#34;&#34;&#34;
+    HIDDEN = 1
+    
+    &#34;&#34;&#34;Visibility constant for visible views&#34;&#34;&#34;
+    VISIBLE = 2
+    
+    &#34;&#34;&#34;Special size constant to only take up the space needed.&#34;&#34;&#34;
+    WRAP_CONTENT: str = &#34;WRAP_CONTENT&#34;
+
+    &#34;&#34;&#34;Special size constant to take up the space of the parent View.&#34;&#34;&#34;
+    MATCH_PARENT: str = &#34;MATCH_PARENT&#34;
+    
+    def __init__(self, activity: Activity, id: int):
         self.a = activity
         self.id = id
         if self.id == -1:
@@ -45,80 +66,98 @@
         &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def setmargin(self, margin, dir=None):
+    def setmargin(self, margin: int, dir: Optional[Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;]] = None):
         &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
         args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
         if dir is not None:
             args[&#34;dir&#34;] = dir
         self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})
 
-    def setwidth(self, width, px=False):
+    def setwidth(self, width: Union[int, str], px: bool = False):
         &#34;&#34;&#34;Sets the width of this View.
         Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
         If px is true, the values are in pixels instead.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width, &#34;px&#34;: px}})
 
-    def setheight(self, height, px=False):
+    def setheight(self, height: Union[int, str], px: bool = False):
         &#34;&#34;&#34;Sets the height of this View.
         Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
         If px is true, the values are in pixels instead.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height, &#34;px&#34;: px}})
 
-    def setdimensions(self, width, height, px=False):
+    def setdimensions(self, width: Union[int, str],
+                      height: Union[int, str], px: bool = False):
         &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
         If px is true, the values are in pixels instead.&#34;&#34;&#34;
         self.setwidth(width, px)
         self.setheight(height, px)
 
-    def setlinearlayoutparams(self, weight, position=None):
+    def setlinearlayoutparams(self, weight: int, position: Optional[int] = None):
         &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;,
                            &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})
-
-    def sendtouchevent(self, send):
+    
+    def setgridlayoutparams(self, row: int, col: int, rowsize: int = 1, colsize: int = 1,
+                            alignmentrow: Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;, &#34;center&#34;, &#34;baseline&#34;, &#34;fill&#34;] = &#34;center&#34;,
+                            alignmentcol: Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;, &#34;center&#34;, &#34;baseline&#34;, &#34;fill&#34;] = &#34;center&#34;):
+        &#34;&#34;&#34;Sets the GridLayout position for this View.
+        The rows and columns start at 0.
+        rowsize and colsize define how many row/column cells a View takes up.
+        alignmentrow and alignmentcol specify how the View is positioned in its cells,&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setGridLayoutParams&#34;,
+                           &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;row&#34;: row, &#34;col&#34;: col,
+                                      &#34;colsize&#34;: colsize, &#34;rowsize&#34;: rowsize,
+                                      &#34;alignmentrow&#34;: alignmentrow, &#34;alignmentcol&#34;: alignmentcol}})
+    
+    def sendtouchevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not touch events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def sendclickevent(self, send):
+    def sendclickevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not click events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def sendlongclickevent(self, send):
+    def sendlongclickevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not long click events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendLongClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def sendfocuschangeevent(self, send):
+    def sendfocuschangeevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not focus change events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;sendFocusChangeEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def getdimensions(self):
+    def getdimensions(self) -&gt; List[int]:
         &#34;&#34;&#34;Gets the width and height of a View in the layout as a list. The values are in pixels.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getDimensions&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def setbackgroundcolor(self, color):
+    def setbackgroundcolor(self, color: int):
         &#34;&#34;&#34;Sets the background color for this view.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
 
-    def setvisibility(self, vis):
+    def setvisibility(self, vis: Literal[0, 1, 2]):
         &#34;&#34;&#34;Sets the visibility for this view.
 
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
         Gone views do not take up layout space.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
 
-    def focus(self, forcesoft=False):
+    def focus(self, forcesoft: bool = False):
         &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})
 
-    &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
-    def handleevent(self, e):
+    def handleevent(self, e: Event):
+        &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         if hasattr(self, &#34;eventlistener&#34;):
-            self.eventlistener(self, e)</code></pre>
+            self.eventlistener(self, e)
+    
+    def setclickable(self, clickable: bool):
+        &#34;&#34;&#34;Sets whether the View is clickable by the user.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setClickable&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;clickable&#34;: clickable}})
+    </code></pre>
 </details>
 </section>
 <section>
@@ -132,7 +171,7 @@
 <dl>
 <dt id="termuxgui.view.View"><code class="flex name class">
 <span>class <span class="ident">View</span></span>
-<span>(</span><span>activity, id)</span>
+<span>(</span><span>activity: <a title="termuxgui.activity.Activity" href="activity.html#termuxgui.activity.Activity">Activity</a>, id: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a generic View.</p></div>
@@ -142,8 +181,23 @@
 </summary>
 <pre><code class="python">class View:
     &#34;&#34;&#34;This represents a generic View.&#34;&#34;&#34;
+    
+    &#34;&#34;&#34;Visibility constant for gone views&#34;&#34;&#34;
+    GONE = 0
+    
+    &#34;&#34;&#34;Visibility constant for hidden views&#34;&#34;&#34;
+    HIDDEN = 1
+    
+    &#34;&#34;&#34;Visibility constant for visible views&#34;&#34;&#34;
+    VISIBLE = 2
+    
+    &#34;&#34;&#34;Special size constant to only take up the space needed.&#34;&#34;&#34;
+    WRAP_CONTENT: str = &#34;WRAP_CONTENT&#34;
 
-    def __init__(self, activity, id):
+    &#34;&#34;&#34;Special size constant to take up the space of the parent View.&#34;&#34;&#34;
+    MATCH_PARENT: str = &#34;MATCH_PARENT&#34;
+    
+    def __init__(self, activity: Activity, id: int):
         self.a = activity
         self.id = id
         if self.id == -1:
@@ -159,80 +213,97 @@
         &#34;&#34;&#34;Deletes this View from the layout.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;deleteView&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def setmargin(self, margin, dir=None):
+    def setmargin(self, margin: int, dir: Optional[Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;]] = None):
         &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
         args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
         if dir is not None:
             args[&#34;dir&#34;] = dir
         self.a.c.send_msg({&#34;method&#34;: &#34;setMargin&#34;, &#34;params&#34;: args})
 
-    def setwidth(self, width, px=False):
+    def setwidth(self, width: Union[int, str], px: bool = False):
         &#34;&#34;&#34;Sets the width of this View.
         Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
         If px is true, the values are in pixels instead.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;setWidth&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;width&#34;: width, &#34;px&#34;: px}})
 
-    def setheight(self, height, px=False):
+    def setheight(self, height: Union[int, str], px: bool = False):
         &#34;&#34;&#34;Sets the height of this View.
         Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
         If px is true, the values are in pixels instead.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;setHeight&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;height&#34;: height, &#34;px&#34;: px}})
 
-    def setdimensions(self, width, height, px=False):
+    def setdimensions(self, width: Union[int, str],
+                      height: Union[int, str], px: bool = False):
         &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
         If px is true, the values are in pixels instead.&#34;&#34;&#34;
         self.setwidth(width, px)
         self.setheight(height, px)
 
-    def setlinearlayoutparams(self, weight, position=None):
+    def setlinearlayoutparams(self, weight: int, position: Optional[int] = None):
         &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;,
                            &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})
-
-    def sendtouchevent(self, send):
+    
+    def setgridlayoutparams(self, row: int, col: int, rowsize: int = 1, colsize: int = 1,
+                            alignmentrow: Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;, &#34;center&#34;, &#34;baseline&#34;, &#34;fill&#34;] = &#34;center&#34;,
+                            alignmentcol: Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;, &#34;center&#34;, &#34;baseline&#34;, &#34;fill&#34;] = &#34;center&#34;):
+        &#34;&#34;&#34;Sets the GridLayout position for this View.
+        The rows and columns start at 0.
+        rowsize and colsize define how many row/column cells a View takes up.
+        alignmentrow and alignmentcol specify how the View is positioned in its cells,&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setGridLayoutParams&#34;,
+                           &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;row&#34;: row, &#34;col&#34;: col,
+                                      &#34;colsize&#34;: colsize, &#34;rowsize&#34;: rowsize,
+                                      &#34;alignmentrow&#34;: alignmentrow, &#34;alignmentcol&#34;: alignmentcol}})
+    
+    def sendtouchevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not touch events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def sendclickevent(self, send):
+    def sendclickevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not click events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def sendlongclickevent(self, send):
+    def sendlongclickevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not long click events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;sendLongClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def sendfocuschangeevent(self, send):
+    def sendfocuschangeevent(self, send: bool):
         &#34;&#34;&#34;Sets whether ot not focus change events are sent for this View.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;sendFocusChangeEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})
 
-    def getdimensions(self):
+    def getdimensions(self) -&gt; List[int]:
         &#34;&#34;&#34;Gets the width and height of a View in the layout as a list. The values are in pixels.&#34;&#34;&#34;
         return self.a.c.send_read_msg({&#34;method&#34;: &#34;getDimensions&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})
 
-    def setbackgroundcolor(self, color):
+    def setbackgroundcolor(self, color: int):
         &#34;&#34;&#34;Sets the background color for this view.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})
 
-    def setvisibility(self, vis):
+    def setvisibility(self, vis: Literal[0, 1, 2]):
         &#34;&#34;&#34;Sets the visibility for this view.
 
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
         Gone views do not take up layout space.&#34;&#34;&#34;
         self.a.c.send_msg({&#34;method&#34;: &#34;setVisibility&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;vis&#34;: vis}})
 
-    def focus(self, forcesoft=False):
+    def focus(self, forcesoft: bool = False):
         &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
         self.a.c.send_msg(
             {&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})
 
-    &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
-    def handleevent(self, e):
+    def handleevent(self, e: Event):
+        &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
         if hasattr(self, &#34;eventlistener&#34;):
-            self.eventlistener(self, e)</code></pre>
+            self.eventlistener(self, e)
+    
+    def setclickable(self, clickable: bool):
+        &#34;&#34;&#34;Sets whether the View is clickable by the user.&#34;&#34;&#34;
+        self.a.c.send_msg({&#34;method&#34;: &#34;setClickable&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;clickable&#34;: clickable}})</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -242,7 +313,31 @@
 <li><a title="termuxgui.spinner.Spinner" href="spinner.html#termuxgui.spinner.Spinner">Spinner</a></li>
 <li><a title="termuxgui.textview.TextView" href="textview.html#termuxgui.textview.TextView">TextView</a></li>
 <li><a title="termuxgui.viewgroup.ViewGroup" href="viewgroup.html#termuxgui.viewgroup.ViewGroup">ViewGroup</a></li>
+<li><a title="termuxgui.webview.WebView" href="webview.html#termuxgui.webview.WebView">WebView</a></li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="termuxgui.view.View.GONE"><code class="name">var <span class="ident">GONE</span></code></dt>
+<dd>
+<div class="desc"><p>Visibility constant for hidden views</p></div>
+</dd>
+<dt id="termuxgui.view.View.HIDDEN"><code class="name">var <span class="ident">HIDDEN</span></code></dt>
+<dd>
+<div class="desc"><p>Visibility constant for visible views</p></div>
+</dd>
+<dt id="termuxgui.view.View.MATCH_PARENT"><code class="name">var <span class="ident">MATCH_PARENT</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="termuxgui.view.View.VISIBLE"><code class="name">var <span class="ident">VISIBLE</span></code></dt>
+<dd>
+<div class="desc"><p>Special size constant to only take up the space needed.</p></div>
+</dd>
+<dt id="termuxgui.view.View.WRAP_CONTENT"><code class="name">var <span class="ident">WRAP_CONTENT</span> : str</code></dt>
+<dd>
+<div class="desc"><p>Special size constant to take up the space of the parent View.</p></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="termuxgui.view.View.delete"><code class="name flex">
@@ -260,7 +355,7 @@
 </details>
 </dd>
 <dt id="termuxgui.view.View.focus"><code class="name flex">
-<span>def <span class="ident">focus</span></span>(<span>self, forcesoft=False)</span>
+<span>def <span class="ident">focus</span></span>(<span>self, forcesoft: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.</p></div>
@@ -268,14 +363,14 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def focus(self, forcesoft=False):
+<pre><code class="python">def focus(self, forcesoft: bool = False):
     &#34;&#34;&#34;Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.&#34;&#34;&#34;
     self.a.c.send_msg(
         {&#34;method&#34;: &#34;requestFocus&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;forcesoft&#34;: forcesoft}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.getdimensions"><code class="name flex">
-<span>def <span class="ident">getdimensions</span></span>(<span>self)</span>
+<span>def <span class="ident">getdimensions</span></span>(<span>self) ‑> List[int]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Gets the width and height of a View in the layout as a list. The values are in pixels.</p></div>
@@ -283,27 +378,28 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def getdimensions(self):
+<pre><code class="python">def getdimensions(self) -&gt; List[int]:
     &#34;&#34;&#34;Gets the width and height of a View in the layout as a list. The values are in pixels.&#34;&#34;&#34;
     return self.a.c.send_read_msg({&#34;method&#34;: &#34;getDimensions&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.handleevent"><code class="name flex">
-<span>def <span class="ident">handleevent</span></span>(<span>self, e)</span>
+<span>def <span class="ident">handleevent</span></span>(<span>self, e: <a title="termuxgui.event.Event" href="event.html#termuxgui.event.Event">Event</a>)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Handles an Event for this View. Subclasses can override this to provide event handling.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def handleevent(self, e):
+<pre><code class="python">def handleevent(self, e: Event):
+    &#34;&#34;&#34;Handles an Event for this View. Subclasses can override this to provide event handling.&#34;&#34;&#34;
     if hasattr(self, &#34;eventlistener&#34;):
         self.eventlistener(self, e)</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.sendclickevent"><code class="name flex">
-<span>def <span class="ident">sendclickevent</span></span>(<span>self, send)</span>
+<span>def <span class="ident">sendclickevent</span></span>(<span>self, send: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether ot not click events are sent for this View.</p></div>
@@ -311,13 +407,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sendclickevent(self, send):
+<pre><code class="python">def sendclickevent(self, send: bool):
     &#34;&#34;&#34;Sets whether ot not click events are sent for this View.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;sendClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.sendfocuschangeevent"><code class="name flex">
-<span>def <span class="ident">sendfocuschangeevent</span></span>(<span>self, send)</span>
+<span>def <span class="ident">sendfocuschangeevent</span></span>(<span>self, send: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether ot not focus change events are sent for this View.</p></div>
@@ -325,14 +421,14 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sendfocuschangeevent(self, send):
+<pre><code class="python">def sendfocuschangeevent(self, send: bool):
     &#34;&#34;&#34;Sets whether ot not focus change events are sent for this View.&#34;&#34;&#34;
     self.a.c.send_msg(
         {&#34;method&#34;: &#34;sendFocusChangeEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.sendlongclickevent"><code class="name flex">
-<span>def <span class="ident">sendlongclickevent</span></span>(<span>self, send)</span>
+<span>def <span class="ident">sendlongclickevent</span></span>(<span>self, send: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether ot not long click events are sent for this View.</p></div>
@@ -340,13 +436,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sendlongclickevent(self, send):
+<pre><code class="python">def sendlongclickevent(self, send: bool):
     &#34;&#34;&#34;Sets whether ot not long click events are sent for this View.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;sendLongClickEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.sendtouchevent"><code class="name flex">
-<span>def <span class="ident">sendtouchevent</span></span>(<span>self, send)</span>
+<span>def <span class="ident">sendtouchevent</span></span>(<span>self, send: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets whether ot not touch events are sent for this View.</p></div>
@@ -354,13 +450,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sendtouchevent(self, send):
+<pre><code class="python">def sendtouchevent(self, send: bool):
     &#34;&#34;&#34;Sets whether ot not touch events are sent for this View.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;sendTouchEvent&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;send&#34;: send}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.setbackgroundcolor"><code class="name flex">
-<span>def <span class="ident">setbackgroundcolor</span></span>(<span>self, color)</span>
+<span>def <span class="ident">setbackgroundcolor</span></span>(<span>self, color: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the background color for this view.</p></div>
@@ -368,14 +464,28 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setbackgroundcolor(self, color):
+<pre><code class="python">def setbackgroundcolor(self, color: int):
     &#34;&#34;&#34;Sets the background color for this view.&#34;&#34;&#34;
     self.a.c.send_msg(
         {&#34;method&#34;: &#34;setBackgroundColor&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;color&#34;: color}})</code></pre>
 </details>
 </dd>
+<dt id="termuxgui.view.View.setclickable"><code class="name flex">
+<span>def <span class="ident">setclickable</span></span>(<span>self, clickable: bool)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets whether the View is clickable by the user.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setclickable(self, clickable: bool):
+    &#34;&#34;&#34;Sets whether the View is clickable by the user.&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setClickable&#34;, &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;clickable&#34;: clickable}})</code></pre>
+</details>
+</dd>
 <dt id="termuxgui.view.View.setdimensions"><code class="name flex">
-<span>def <span class="ident">setdimensions</span></span>(<span>self, width, height, px=False)</span>
+<span>def <span class="ident">setdimensions</span></span>(<span>self, width: Union[int, str], height: Union[int, str], px: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
@@ -384,15 +494,41 @@ If px is true, the values are in pixels instead.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setdimensions(self, width, height, px=False):
+<pre><code class="python">def setdimensions(self, width: Union[int, str],
+                  height: Union[int, str], px: bool = False):
     &#34;&#34;&#34;Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
     If px is true, the values are in pixels instead.&#34;&#34;&#34;
     self.setwidth(width, px)
     self.setheight(height, px)</code></pre>
 </details>
 </dd>
+<dt id="termuxgui.view.View.setgridlayoutparams"><code class="name flex">
+<span>def <span class="ident">setgridlayoutparams</span></span>(<span>self, row: int, col: int, rowsize: int = 1, colsize: int = 1, alignmentrow: Literal['top', 'bottom', 'left', 'right', 'center', 'baseline', 'fill'] = 'center', alignmentcol: Literal['top', 'bottom', 'left', 'right', 'center', 'baseline', 'fill'] = 'center')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the GridLayout position for this View.
+The rows and columns start at 0.
+rowsize and colsize define how many row/column cells a View takes up.
+alignmentrow and alignmentcol specify how the View is positioned in its cells,</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setgridlayoutparams(self, row: int, col: int, rowsize: int = 1, colsize: int = 1,
+                        alignmentrow: Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;, &#34;center&#34;, &#34;baseline&#34;, &#34;fill&#34;] = &#34;center&#34;,
+                        alignmentcol: Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;, &#34;center&#34;, &#34;baseline&#34;, &#34;fill&#34;] = &#34;center&#34;):
+    &#34;&#34;&#34;Sets the GridLayout position for this View.
+    The rows and columns start at 0.
+    rowsize and colsize define how many row/column cells a View takes up.
+    alignmentrow and alignmentcol specify how the View is positioned in its cells,&#34;&#34;&#34;
+    self.a.c.send_msg({&#34;method&#34;: &#34;setGridLayoutParams&#34;,
+                       &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;row&#34;: row, &#34;col&#34;: col,
+                                  &#34;colsize&#34;: colsize, &#34;rowsize&#34;: rowsize,
+                                  &#34;alignmentrow&#34;: alignmentrow, &#34;alignmentcol&#34;: alignmentcol}})</code></pre>
+</details>
+</dd>
 <dt id="termuxgui.view.View.setheight"><code class="name flex">
-<span>def <span class="ident">setheight</span></span>(<span>self, height, px=False)</span>
+<span>def <span class="ident">setheight</span></span>(<span>self, height: Union[int, str], px: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the height of this View.
@@ -402,7 +538,7 @@ If px is true, the values are in pixels instead.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setheight(self, height, px=False):
+<pre><code class="python">def setheight(self, height: Union[int, str], px: bool = False):
     &#34;&#34;&#34;Sets the height of this View.
     Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
     If px is true, the values are in pixels instead.&#34;&#34;&#34;
@@ -411,7 +547,7 @@ If px is true, the values are in pixels instead.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.view.View.setlinearlayoutparams"><code class="name flex">
-<span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight, position=None)</span>
+<span>def <span class="ident">setlinearlayoutparams</span></span>(<span>self, weight: int, position: Optional[int] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the LinearLayout weight and/or position for this view.</p></div>
@@ -419,14 +555,14 @@ If px is true, the values are in pixels instead.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setlinearlayoutparams(self, weight, position=None):
+<pre><code class="python">def setlinearlayoutparams(self, weight: int, position: Optional[int] = None):
     &#34;&#34;&#34;Sets the LinearLayout weight and/or position for this view.&#34;&#34;&#34;
     self.a.c.send_msg({&#34;method&#34;: &#34;setLinearLayoutParams&#34;,
                        &#34;params&#34;: {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;weight&#34;: weight, &#34;position&#34;: position}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.view.View.setmargin"><code class="name flex">
-<span>def <span class="ident">setmargin</span></span>(<span>self, margin, dir=None)</span>
+<span>def <span class="ident">setmargin</span></span>(<span>self, margin: int, dir: Optional[Literal['top', 'bottom', 'left', 'right']] = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the margins of this View for one or all directions.</p></div>
@@ -434,7 +570,7 @@ If px is true, the values are in pixels instead.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setmargin(self, margin, dir=None):
+<pre><code class="python">def setmargin(self, margin: int, dir: Optional[Literal[&#34;top&#34;, &#34;bottom&#34;, &#34;left&#34;, &#34;right&#34;]] = None):
     &#34;&#34;&#34;Sets the margins of this View for one or all directions.&#34;&#34;&#34;
     args = {&#34;aid&#34;: self.a.aid, &#34;id&#34;: self.id, &#34;margin&#34;: margin}
     if dir is not None:
@@ -443,7 +579,7 @@ If px is true, the values are in pixels instead.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.view.View.setvisibility"><code class="name flex">
-<span>def <span class="ident">setvisibility</span></span>(<span>self, vis)</span>
+<span>def <span class="ident">setvisibility</span></span>(<span>self, vis: Literal[0, 1, 2])</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the visibility for this view.</p>
@@ -453,7 +589,7 @@ Gone views do not take up layout space.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setvisibility(self, vis):
+<pre><code class="python">def setvisibility(self, vis: Literal[0, 1, 2]):
     &#34;&#34;&#34;Sets the visibility for this view.
 
     0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
@@ -462,7 +598,7 @@ Gone views do not take up layout space.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.view.View.setwidth"><code class="name flex">
-<span>def <span class="ident">setwidth</span></span>(<span>self, width, px=False)</span>
+<span>def <span class="ident">setwidth</span></span>(<span>self, width: Union[int, str], px: bool = False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the width of this View.
@@ -472,7 +608,7 @@ If px is true, the values are in pixels instead.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setwidth(self, width, px=False):
+<pre><code class="python">def setwidth(self, width: Union[int, str], px: bool = False):
     &#34;&#34;&#34;Sets the width of this View.
     Can be either an integer describing the value in dp, &#34;MATCH_PARENT&#34; or &#34;WRAP_CONTENT&#34;.
     If px is true, the values are in pixels instead.&#34;&#34;&#34;
@@ -501,6 +637,11 @@ If px is true, the values are in pixels instead.</p></div>
 <li>
 <h4><code><a title="termuxgui.view.View" href="#termuxgui.view.View">View</a></code></h4>
 <ul class="">
+<li><code><a title="termuxgui.view.View.GONE" href="#termuxgui.view.View.GONE">GONE</a></code></li>
+<li><code><a title="termuxgui.view.View.HIDDEN" href="#termuxgui.view.View.HIDDEN">HIDDEN</a></code></li>
+<li><code><a title="termuxgui.view.View.MATCH_PARENT" href="#termuxgui.view.View.MATCH_PARENT">MATCH_PARENT</a></code></li>
+<li><code><a title="termuxgui.view.View.VISIBLE" href="#termuxgui.view.View.VISIBLE">VISIBLE</a></code></li>
+<li><code><a title="termuxgui.view.View.WRAP_CONTENT" href="#termuxgui.view.View.WRAP_CONTENT">WRAP_CONTENT</a></code></li>
 <li><code><a title="termuxgui.view.View.delete" href="#termuxgui.view.View.delete">delete</a></code></li>
 <li><code><a title="termuxgui.view.View.focus" href="#termuxgui.view.View.focus">focus</a></code></li>
 <li><code><a title="termuxgui.view.View.getdimensions" href="#termuxgui.view.View.getdimensions">getdimensions</a></code></li>
@@ -510,7 +651,9 @@ If px is true, the values are in pixels instead.</p></div>
 <li><code><a title="termuxgui.view.View.sendlongclickevent" href="#termuxgui.view.View.sendlongclickevent">sendlongclickevent</a></code></li>
 <li><code><a title="termuxgui.view.View.sendtouchevent" href="#termuxgui.view.View.sendtouchevent">sendtouchevent</a></code></li>
 <li><code><a title="termuxgui.view.View.setbackgroundcolor" href="#termuxgui.view.View.setbackgroundcolor">setbackgroundcolor</a></code></li>
+<li><code><a title="termuxgui.view.View.setclickable" href="#termuxgui.view.View.setclickable">setclickable</a></code></li>
 <li><code><a title="termuxgui.view.View.setdimensions" href="#termuxgui.view.View.setdimensions">setdimensions</a></code></li>
+<li><code><a title="termuxgui.view.View.setgridlayoutparams" href="#termuxgui.view.View.setgridlayoutparams">setgridlayoutparams</a></code></li>
 <li><code><a title="termuxgui.view.View.setheight" href="#termuxgui.view.View.setheight">setheight</a></code></li>
 <li><code><a title="termuxgui.view.View.setlinearlayoutparams" href="#termuxgui.view.View.setlinearlayoutparams">setlinearlayoutparams</a></code></li>
 <li><code><a title="termuxgui.view.View.setmargin" href="#termuxgui.view.View.setmargin">setmargin</a></code></li>

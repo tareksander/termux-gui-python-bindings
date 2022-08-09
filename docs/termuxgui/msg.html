@@ -29,9 +29,10 @@
 <pre><code class="python">from json import loads
 import array
 import socket
+from typing import Any, Tuple, Optional
 
 
-def read_msg(s):
+def read_msg(s: socket.socket) -&gt; Any:
     b = b&#39;&#39;
     togo = 4
     while togo &gt; 0:
@@ -47,18 +48,18 @@ def read_msg(s):
     return loads(b.decode(&#34;utf-8&#34;))
 
 
-def send_msg(c, msg):
+def send_msg(c: socket.socket, msg: str):
     m = bytes(msg, &#34;utf-8&#34;)
     c.sendall((len(m)).to_bytes(4, &#34;big&#34;))
     c.sendall(m)
 
 
-def send_read_msg(s, msg):
+def send_read_msg(s: socket.socket, msg: str) -&gt; Any:
     send_msg(s, msg)
     return read_msg(s)
 
 
-def read_msg_fd(s):
+def read_msg_fd(s: socket.socket) -&gt; Tuple[Any, Optional[int]]:
     b = b&#39;&#39;
     togo = 4
     while togo &gt; 0:
@@ -76,9 +77,9 @@ def read_msg_fd(s):
         b = b + read
         togo = togo - len(read)
     if len(fds) != 0:
-        return (loads(b.decode(&#34;utf-8&#34;)), fds[0])
+        return loads(b.decode(&#34;utf-8&#34;)), fds[0]
     else:
-        return (loads(b.decode(&#34;utf-8&#34;)),)</code></pre>
+        return loads(b.decode(&#34;utf-8&#34;)), None</code></pre>
 </details>
 </section>
 <section>
@@ -89,7 +90,7 @@ def read_msg_fd(s):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="termuxgui.msg.read_msg"><code class="name flex">
-<span>def <span class="ident">read_msg</span></span>(<span>s)</span>
+<span>def <span class="ident">read_msg</span></span>(<span>s: socket.socket) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -97,7 +98,7 @@ def read_msg_fd(s):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def read_msg(s):
+<pre><code class="python">def read_msg(s: socket.socket) -&gt; Any:
     b = b&#39;&#39;
     togo = 4
     while togo &gt; 0:
@@ -114,7 +115,7 @@ def read_msg_fd(s):
 </details>
 </dd>
 <dt id="termuxgui.msg.read_msg_fd"><code class="name flex">
-<span>def <span class="ident">read_msg_fd</span></span>(<span>s)</span>
+<span>def <span class="ident">read_msg_fd</span></span>(<span>s: socket.socket) ‑> Tuple[Any, Optional[int]]</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -122,7 +123,7 @@ def read_msg_fd(s):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def read_msg_fd(s):
+<pre><code class="python">def read_msg_fd(s: socket.socket) -&gt; Tuple[Any, Optional[int]]:
     b = b&#39;&#39;
     togo = 4
     while togo &gt; 0:
@@ -140,13 +141,13 @@ def read_msg_fd(s):
         b = b + read
         togo = togo - len(read)
     if len(fds) != 0:
-        return (loads(b.decode(&#34;utf-8&#34;)), fds[0])
+        return loads(b.decode(&#34;utf-8&#34;)), fds[0]
     else:
-        return (loads(b.decode(&#34;utf-8&#34;)),)</code></pre>
+        return loads(b.decode(&#34;utf-8&#34;)), None</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.msg.send_msg"><code class="name flex">
-<span>def <span class="ident">send_msg</span></span>(<span>c, msg)</span>
+<span>def <span class="ident">send_msg</span></span>(<span>c: socket.socket, msg: str)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -154,14 +155,14 @@ def read_msg_fd(s):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def send_msg(c, msg):
+<pre><code class="python">def send_msg(c: socket.socket, msg: str):
     m = bytes(msg, &#34;utf-8&#34;)
     c.sendall((len(m)).to_bytes(4, &#34;big&#34;))
     c.sendall(m)</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.msg.send_read_msg"><code class="name flex">
-<span>def <span class="ident">send_read_msg</span></span>(<span>s, msg)</span>
+<span>def <span class="ident">send_read_msg</span></span>(<span>s: socket.socket, msg: str) ‑> Any</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -169,7 +170,7 @@ def read_msg_fd(s):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def send_read_msg(s, msg):
+<pre><code class="python">def send_read_msg(s: socket.socket, msg: str) -&gt; Any:
     send_msg(s, msg)
     return read_msg(s)</code></pre>
 </details>

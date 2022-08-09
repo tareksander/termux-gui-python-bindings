@@ -26,10 +26,13 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Task:
+<pre><code class="python">from termuxgui.connection import Connection
+
+
+class Task:
     &#34;&#34;&#34;This represents an Android Task. It is automatically created with the Activity.&#34;&#34;&#34;
 
-    def __init__(self, connection, tid):
+    def __init__(self, connection: Connection, tid: int):
         self.c = connection
         self.tid = tid
 
@@ -54,7 +57,7 @@
 <dl>
 <dt id="termuxgui.task.Task"><code class="flex name class">
 <span>class <span class="ident">Task</span></span>
-<span>(</span><span>connection, tid)</span>
+<span>(</span><span>connection: <a title="termuxgui.connection.Connection" href="connection.html#termuxgui.connection.Connection">Connection</a>, tid: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents an Android Task. It is automatically created with the Activity.</p></div>
@@ -65,7 +68,7 @@
 <pre><code class="python">class Task:
     &#34;&#34;&#34;This represents an Android Task. It is automatically created with the Activity.&#34;&#34;&#34;
 
-    def __init__(self, connection, tid):
+    def __init__(self, connection: Connection, tid: int):
         self.c = connection
         self.tid = tid
 

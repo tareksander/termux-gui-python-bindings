@@ -26,10 +26,16 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class RemoteViews:
+<pre><code class="python">import base64
+from typing import Optional, Literal, Union
+
+from termuxgui.connection import Connection
+
+
+class RemoteViews:
     &#34;&#34;&#34;This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.&#34;&#34;&#34;
 
-    def __init__(self, connection):
+    def __init__(self, connection: Connection):
         self.c = connection
         self.rid = self.c.send_read_msg({&#34;method&#34;: &#34;createRemoteLayout&#34;})
 
@@ -43,7 +49,7 @@
         &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
 
-    def addFrameLayout(self, parent=None):
+    def addFrameLayout(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -51,7 +57,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})
 
-    def addLinearLayout(self, parent=None, vertical=None):
+    def addLinearLayout(self, parent: Optional[int] = None, vertical: Optional[bool] = None) -&gt; int:
         &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -61,7 +67,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})
 
-    def addTextView(self, parent=None):
+    def addTextView(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -69,7 +75,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})
 
-    def addButton(self, parent=None):
+    def addButton(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -77,7 +83,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})
 
-    def addImageView(self, parent=None):
+    def addImageView(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -85,7 +91,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})
 
-    def addProgressBar(self, parent=None):
+    def addProgressBar(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -93,46 +99,50 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})
 
-    def setBackgroundColor(self, id, color):
+    def setBackgroundColor(self, id: int, color: int):
         &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
 
-    def setProgress(self, id, progress, max):
+    def setProgress(self, id: int, progress: int, max: int):
         &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg(
             {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
 
-    def setText(self, id, text):
+    def setText(self, id: int, text: str):
         &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})
 
-    def setTextSize(self, id, size, px):
+    def setTextSize(self, id: int, size: int, px: bool):
         &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
         If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})
 
-    def setTextColor(self, id, color):
+    def setTextColor(self, id: int, color: int):
         &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
 
-    def setVisibility(self, id, vis):
+    def setVisibility(self, id: int, vis: Literal[0, 1, 2]):
         &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
 
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
         Gone views do not take up layout space.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})
 
-    def setPadding(self, id, left, top, right, bottom):
+    def setPadding(self, id: int, left: int, top: int, right: int, bottom: int):
         &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
                          &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
                                     &#34;bottom&#34;: bottom}})
 
-    def setImage(self, id, img):
-        &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
+    def setImage(self, id: int, img: Union[str, bytes]):
+        &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.
+        The image has to be a bytes object containing the image in png or jpeg format,
+        or a string containing the base64 encoded version of it.&#34;&#34;&#34;
+        if isinstance(img, bytes):
+            img = base64.standard_b64encode(img).decode(&#34;ascii&#34;)
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})
 
-    def updateWidget(self, wid):
+    def updateWidget(self, wid: str):
         &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
 </details>
@@ -148,7 +158,7 @@
 <dl>
 <dt id="termuxgui.remoteviews.RemoteViews"><code class="flex name class">
 <span>class <span class="ident">RemoteViews</span></span>
-<span>(</span><span>connection)</span>
+<span>(</span><span>connection: <a title="termuxgui.connection.Connection" href="connection.html#termuxgui.connection.Connection">Connection</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.</p></div>
@@ -159,7 +169,7 @@
 <pre><code class="python">class RemoteViews:
     &#34;&#34;&#34;This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.&#34;&#34;&#34;
 
-    def __init__(self, connection):
+    def __init__(self, connection: Connection):
         self.c = connection
         self.rid = self.c.send_read_msg({&#34;method&#34;: &#34;createRemoteLayout&#34;})
 
@@ -173,7 +183,7 @@
         &#34;&#34;&#34;Deletes this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;deleteRemoteLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid}})
 
-    def addFrameLayout(self, parent=None):
+    def addFrameLayout(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -181,7 +191,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteFrameLayout&#34;, &#34;params&#34;: args})
 
-    def addLinearLayout(self, parent=None, vertical=None):
+    def addLinearLayout(self, parent: Optional[int] = None, vertical: Optional[bool] = None) -&gt; int:
         &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -191,7 +201,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteLinearLayout&#34;, &#34;params&#34;: args})
 
-    def addTextView(self, parent=None):
+    def addTextView(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -199,7 +209,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteTextView&#34;, &#34;params&#34;: args})
 
-    def addButton(self, parent=None):
+    def addButton(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -207,7 +217,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteButton&#34;, &#34;params&#34;: args})
 
-    def addImageView(self, parent=None):
+    def addImageView(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -215,7 +225,7 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteImageView&#34;, &#34;params&#34;: args})
 
-    def addProgressBar(self, parent=None):
+    def addProgressBar(self, parent: Optional[int] = None) -&gt; int:
         &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
         The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
         args = {&#34;rid&#34;: self.rid}
@@ -223,53 +233,57 @@
             args[&#34;parent&#34;] = parent
         return self.c.send_read_msg({&#34;method&#34;: &#34;addRemoteProgressBar&#34;, &#34;params&#34;: args})
 
-    def setBackgroundColor(self, id, color):
+    def setBackgroundColor(self, id: int, color: int):
         &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
 
-    def setProgress(self, id, progress, max):
+    def setProgress(self, id: int, progress: int, max: int):
         &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg(
             {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})
 
-    def setText(self, id, text):
+    def setText(self, id: int, text: str):
         &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})
 
-    def setTextSize(self, id, size, px):
+    def setTextSize(self, id: int, size: int, px: bool):
         &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
         If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})
 
-    def setTextColor(self, id, color):
+    def setTextColor(self, id: int, color: int):
         &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})
 
-    def setVisibility(self, id, vis):
+    def setVisibility(self, id: int, vis: Literal[0, 1, 2]):
         &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
 
         0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
         Gone views do not take up layout space.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteVisibility&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;vis&#34;: vis}})
 
-    def setPadding(self, id, left, top, right, bottom):
+    def setPadding(self, id: int, left: int, top: int, right: int, bottom: int):
         &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
                          &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
                                     &#34;bottom&#34;: bottom}})
 
-    def setImage(self, id, img):
-        &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
+    def setImage(self, id: int, img: Union[str, bytes]):
+        &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.
+        The image has to be a bytes object containing the image in png or jpeg format,
+        or a string containing the base64 encoded version of it.&#34;&#34;&#34;
+        if isinstance(img, bytes):
+            img = base64.standard_b64encode(img).decode(&#34;ascii&#34;)
         self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})
 
-    def updateWidget(self, wid):
+    def updateWidget(self, wid: str):
         &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
         self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="termuxgui.remoteviews.RemoteViews.addButton"><code class="name flex">
-<span>def <span class="ident">addButton</span></span>(<span>self, parent=None)</span>
+<span>def <span class="ident">addButton</span></span>(<span>self, parent: Optional[int] = None) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
@@ -278,7 +292,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def addButton(self, parent=None):
+<pre><code class="python">def addButton(self, parent: Optional[int] = None) -&gt; int:
     &#34;&#34;&#34;Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
     The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
     args = {&#34;rid&#34;: self.rid}
@@ -288,7 +302,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.addFrameLayout"><code class="name flex">
-<span>def <span class="ident">addFrameLayout</span></span>(<span>self, parent=None)</span>
+<span>def <span class="ident">addFrameLayout</span></span>(<span>self, parent: Optional[int] = None) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
@@ -297,7 +311,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def addFrameLayout(self, parent=None):
+<pre><code class="python">def addFrameLayout(self, parent: Optional[int] = None) -&gt; int:
     &#34;&#34;&#34;Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
     The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
     args = {&#34;rid&#34;: self.rid}
@@ -307,7 +321,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.addImageView"><code class="name flex">
-<span>def <span class="ident">addImageView</span></span>(<span>self, parent=None)</span>
+<span>def <span class="ident">addImageView</span></span>(<span>self, parent: Optional[int] = None) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
@@ -316,7 +330,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def addImageView(self, parent=None):
+<pre><code class="python">def addImageView(self, parent: Optional[int] = None) -&gt; int:
     &#34;&#34;&#34;Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
     The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
     args = {&#34;rid&#34;: self.rid}
@@ -326,7 +340,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.addLinearLayout"><code class="name flex">
-<span>def <span class="ident">addLinearLayout</span></span>(<span>self, parent=None, vertical=None)</span>
+<span>def <span class="ident">addLinearLayout</span></span>(<span>self, parent: Optional[int] = None, vertical: Optional[bool] = None) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
@@ -335,7 +349,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def addLinearLayout(self, parent=None, vertical=None):
+<pre><code class="python">def addLinearLayout(self, parent: Optional[int] = None, vertical: Optional[bool] = None) -&gt; int:
     &#34;&#34;&#34;Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
     The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
     args = {&#34;rid&#34;: self.rid}
@@ -347,7 +361,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.addProgressBar"><code class="name flex">
-<span>def <span class="ident">addProgressBar</span></span>(<span>self, parent=None)</span>
+<span>def <span class="ident">addProgressBar</span></span>(<span>self, parent: Optional[int] = None) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
@@ -356,7 +370,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def addProgressBar(self, parent=None):
+<pre><code class="python">def addProgressBar(self, parent: Optional[int] = None) -&gt; int:
     &#34;&#34;&#34;Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
     The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
     args = {&#34;rid&#34;: self.rid}
@@ -366,7 +380,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.addTextView"><code class="name flex">
-<span>def <span class="ident">addTextView</span></span>(<span>self, parent=None)</span>
+<span>def <span class="ident">addTextView</span></span>(<span>self, parent: Optional[int] = None) ‑> int</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
@@ -375,7 +389,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def addTextView(self, parent=None):
+<pre><code class="python">def addTextView(self, parent: Optional[int] = None) -&gt; int:
     &#34;&#34;&#34;Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
     The id can be used in further methods to manipulate the View.&#34;&#34;&#34;
     args = {&#34;rid&#34;: self.rid}
@@ -399,7 +413,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setBackgroundColor"><code class="name flex">
-<span>def <span class="ident">setBackgroundColor</span></span>(<span>self, id, color)</span>
+<span>def <span class="ident">setBackgroundColor</span></span>(<span>self, id: int, color: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the background color of a View in this remote Layout.</p></div>
@@ -407,27 +421,33 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setBackgroundColor(self, id, color):
+<pre><code class="python">def setBackgroundColor(self, id: int, color: int):
     &#34;&#34;&#34;Sets the background color of a View in this remote Layout.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteBackgroundColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setImage"><code class="name flex">
-<span>def <span class="ident">setImage</span></span>(<span>self, id, img)</span>
+<span>def <span class="ident">setImage</span></span>(<span>self, id: int, img: Union[str, bytes])</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Sets the image of an ImageView in this remote Layout.</p></div>
+<div class="desc"><p>Sets the image of an ImageView in this remote Layout.
+The image has to be a bytes object containing the image in png or jpeg format,
+or a string containing the base64 encoded version of it.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setImage(self, id, img):
-    &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.&#34;&#34;&#34;
+<pre><code class="python">def setImage(self, id: int, img: Union[str, bytes]):
+    &#34;&#34;&#34;Sets the image of an ImageView in this remote Layout.
+    The image has to be a bytes object containing the image in png or jpeg format,
+    or a string containing the base64 encoded version of it.&#34;&#34;&#34;
+    if isinstance(img, bytes):
+        img = base64.standard_b64encode(img).decode(&#34;ascii&#34;)
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteImage&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;img&#34;: img}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setPadding"><code class="name flex">
-<span>def <span class="ident">setPadding</span></span>(<span>self, id, left, top, right, bottom)</span>
+<span>def <span class="ident">setPadding</span></span>(<span>self, id: int, left: int, top: int, right: int, bottom: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the padding of a View in this remote Layout.</p></div>
@@ -435,7 +455,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setPadding(self, id, left, top, right, bottom):
+<pre><code class="python">def setPadding(self, id: int, left: int, top: int, right: int, bottom: int):
     &#34;&#34;&#34;Sets the padding of a View in this remote Layout.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemotePadding&#34;,
                      &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;left&#34;: left, &#34;top&#34;: top, &#34;right&#34;: right,
@@ -443,7 +463,7 @@ The id can be used in further methods to manipulate the View.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setProgress"><code class="name flex">
-<span>def <span class="ident">setProgress</span></span>(<span>self, id, progress, max)</span>
+<span>def <span class="ident">setProgress</span></span>(<span>self, id: int, progress: int, max: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the progress and maximum value of a ProgressBar in this remote Layout.</p></div>
@@ -451,14 +471,14 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setProgress(self, id, progress, max):
+<pre><code class="python">def setProgress(self, id: int, progress: int, max: int):
     &#34;&#34;&#34;Sets the progress and maximum value of a ProgressBar in this remote Layout.&#34;&#34;&#34;
     self.c.send_msg(
         {&#34;method&#34;: &#34;setRemoteProgressBar&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;max&#34;: max, &#34;progress&#34;: progress}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setText"><code class="name flex">
-<span>def <span class="ident">setText</span></span>(<span>self, id, text)</span>
+<span>def <span class="ident">setText</span></span>(<span>self, id: int, text: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the text of a TextView in this remote Layout.</p></div>
@@ -466,13 +486,13 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setText(self, id, text):
+<pre><code class="python">def setText(self, id: int, text: str):
     &#34;&#34;&#34;Sets the text of a TextView in this remote Layout.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteText&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;text&#34;: text}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setTextColor"><code class="name flex">
-<span>def <span class="ident">setTextColor</span></span>(<span>self, id, color)</span>
+<span>def <span class="ident">setTextColor</span></span>(<span>self, id: int, color: int)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the text color of a TextView in this remote Layout.</p></div>
@@ -480,13 +500,13 @@ The id can be used in further methods to manipulate the View.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setTextColor(self, id, color):
+<pre><code class="python">def setTextColor(self, id: int, color: int):
     &#34;&#34;&#34;Sets the text color of a TextView in this remote Layout.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextColor&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;color&#34;: color}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setTextSize"><code class="name flex">
-<span>def <span class="ident">setTextSize</span></span>(<span>self, id, size, px)</span>
+<span>def <span class="ident">setTextSize</span></span>(<span>self, id: int, size: int, px: bool)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the text size of a TextView in this remote Layout.
@@ -495,14 +515,14 @@ If px is true, the size will be in pixels. If not, it will be in dip.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setTextSize(self, id, size, px):
+<pre><code class="python">def setTextSize(self, id: int, size: int, px: bool):
     &#34;&#34;&#34;Sets the text size of a TextView in this remote Layout.
     If px is true, the size will be in pixels. If not, it will be in dip.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setRemoteTextSize&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;id&#34;: id, &#34;size&#34;: size, &#34;px&#34;: px}})</code></pre>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.setVisibility"><code class="name flex">
-<span>def <span class="ident">setVisibility</span></span>(<span>self, id, vis)</span>
+<span>def <span class="ident">setVisibility</span></span>(<span>self, id: int, vis: Literal[0, 1, 2])</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the visibility of a View in this remote Layout.</p>
@@ -512,7 +532,7 @@ Gone views do not take up layout space.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def setVisibility(self, id, vis):
+<pre><code class="python">def setVisibility(self, id: int, vis: Literal[0, 1, 2]):
     &#34;&#34;&#34;Sets the visibility of a View in this remote Layout.
 
     0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
@@ -521,7 +541,7 @@ Gone views do not take up layout space.</p></div>
 </details>
 </dd>
 <dt id="termuxgui.remoteviews.RemoteViews.updateWidget"><code class="name flex">
-<span>def <span class="ident">updateWidget</span></span>(<span>self, wid)</span>
+<span>def <span class="ident">updateWidget</span></span>(<span>self, wid: str)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Sets the content of the Widget with ID wid to this remote Layout.</p></div>
@@ -529,7 +549,7 @@ Gone views do not take up layout space.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def updateWidget(self, wid):
+<pre><code class="python">def updateWidget(self, wid: str):
     &#34;&#34;&#34;Sets the content of the Widget with ID wid to this remote Layout.&#34;&#34;&#34;
     self.c.send_msg({&#34;method&#34;: &#34;setWidgetLayout&#34;, &#34;params&#34;: {&#34;rid&#34;: self.rid, &#34;wid&#34;: wid}})</code></pre>
 </details>
