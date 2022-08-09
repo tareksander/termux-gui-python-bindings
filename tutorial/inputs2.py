@@ -45,7 +45,7 @@ with tg.Connection() as c:
         if ev.type == tg.Event.selected and ev.value["id"] == rg:
             # We can now use the index method of the list to find out which RadioButton is checked
             print("RadioButton checked: ", rbs.index(ev.value["selected"]))
-        # Spinners evit an itemselected event
+        # Spinners emit an itemselected event
         if ev.type == tg.Event.itemselected and ev.value["id"] == spinner:
             # for itemselected events, selected is the selected value as a string
             print("Spinner selected: ", ev.value["selected"])

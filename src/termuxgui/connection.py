@@ -6,15 +6,31 @@ from os import getuid
 from struct import unpack
 from json import dumps
 from select import select
+from typing import TypedDict, Literal, Optional, Any, Union, Iterator
 
 from termuxgui.event import Event
-from termuxgui import msg as tgmsg
+import termuxgui.msg as tgmsg
 
 
 def _check_user(s):
     uid = unpack("III", s.getsockopt(SOL_SOCKET, SO_PEERCRED, 12))[1]
     return uid == getuid()
 
+
+class ConfigDarkMode(TypedDict, total=False):
+    dark_mode: bool
+
+
+class Configuration(ConfigDarkMode, TypedDict):
+    country: str
+    language: str
+    orientation: Literal["landscape", "portrait"]
+    keyboardHidden: bool
+    screenwidth: int
+    screenheight: int
+    fontscale: float
+    density: float
+    
 
 class Connection:
     """This represents a connection to the Termux:GUI plugin and contains all functions that don't act on any
@@ -64,12 +80,12 @@ class Connection:
             except timeout:
                 raise RuntimeError("Could not connect to Termux:GUI. Is the plugin installed?")
 
-    def events(self):
+    def events(self) -> Iterator[Event]:
         """Waits for events. Use this with "for in" to iterate over incoming events and block while waiting."""
         while True:
             yield Event(tgmsg.read_msg(self._event))
 
-    def checkevent(self):
+    def checkevent(self) -> Optional[Event]:
         """If there is at least one event to be read, returns it.
         If there is no event, returns None.
         You can use this to e.g. check for events between drawing a frame instead of
@@ -78,7 +94,7 @@ class Connection:
         if len(r) != 0:
             return Event(tgmsg.read_msg(self._event))
 
-    def toast(self, text, long=False):
+    def toast(self, text: str, long: bool = False):
         """Sends a Toast. Set long to True if you want to display the text for longer."""
         self.send_msg({"method": "toast", "params": {"text": text, "long": long}})
 
@@ -89,7 +105,8 @@ class Connection:
     def close(self):
         """Closes the connection.
 
-        The connection is automatically closed when the program exits, but it's good practice to close the connection yourself when you don't need it anymore or use a "with" statement."""
+        The connection is automatically closed when the program exits, but it's good practice to close the connection
+        yourself when you don't need it anymore or use a "with" statement."""
         self._main.close()
         self._event.close()
 
@@ -100,19 +117,19 @@ class Connection:
         self.close()
         return False
 
-    def send_msg(self, msg):
+    def send_msg(self, msg: Union[str, dict]):
         """Send a message to the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library."""
         if type(msg) is dict:
             msg = dumps(msg)
         tgmsg.send_msg(self._main, msg)
 
-    def read_msg(self):
+    def read_msg(self) -> Any:
         """Read a message from the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library."""
         return tgmsg.read_msg(self._main)
 
-    def send_read_msg(self, msg):
+    def send_read_msg(self, msg: Union[str, dict]):
         """Send a message to the main socket and read a message afterwards.
         You should only need to call this yourself if you want to use methods not yet implemented in the library."""
         self.send_msg(msg)
@@ -122,6 +139,11 @@ class Connection:
         """Turns the screen on."""
         self.send_msg({"method": "turnScreenOn", "params": {}})
 
-    def islocked(self):
+    def islocked(self) -> bool:
         """Returns whether the device is locked."""
         return self.send_read_msg({"method": "isLocked", "params": {}})
+
+    def getversion(self) -> bool:
+        """Returns the version code of the plugin app.
+        Can be used to disable features only present in a newer version or prompting the user to update."""
+        return self.send_read_msg({"method": "getVersion", "params": {}})

@@ -18,6 +18,13 @@ class Event:
     selected = "selected"  # used for RadioGroups
     itemselected = "itemselected"
     text = "text"
+    webviewnavigation = "webviewNavigation"
+    webviewhttperror = "webviewHTTPError"
+    webviewerror = "webviewError"
+    webviewdestroyed = "webviewDestroyed"
+    webviewprogress = "webviewProgress"
+    webviewconsolemessage = "webviewConsoleMessage"
+    remoteclick = "remoteclick"
 
     # activity events
     create = "create"
@@ -29,6 +36,7 @@ class Event:
     userleavehint = "UserLeaveHint"
     pipchanged = "pipchanged"
     config = "config"
+    back = "back"
 
     # general events
     screenon = "screen_on"
@@ -49,7 +57,7 @@ class Event:
     touch_cancel = "cancel"
     touch_move = "move"
 
-    def __init__(self, ev):
+    def __init__(self, ev: dict):
         self.type = ev["type"]
         self.value = {}
         try:

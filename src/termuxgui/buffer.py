@@ -1,5 +1,6 @@
 from mmap import mmap
 import os
+from typing import Literal
 
 import termuxgui.msg as msg
 
@@ -15,7 +16,7 @@ class Buffer:
 
     A RuntimeError is raised when a Buffer can't be created."""
 
-    def __init__(self, connection, w, h, format="ARGB888"):
+    def __init__(self, connection, w: int, h: int, format: Literal["ARGB888"] = "ARGB888"):
         self.c = connection
         self.c.send_msg({"method": "addBuffer", "params": {"w": w, "h": h, "format": format}})
         ret = msg.read_msg_fd(self.c._main)

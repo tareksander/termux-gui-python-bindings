@@ -1,9 +1,10 @@
 from json import loads
 import array
 import socket
+from typing import Any, Tuple, Optional
 
 
-def read_msg(s):
+def read_msg(s: socket.socket) -> Any:
     b = b''
     togo = 4
     while togo > 0:
@@ -19,18 +20,18 @@ def read_msg(s):
     return loads(b.decode("utf-8"))
 
 
-def send_msg(c, msg):
+def send_msg(c: socket.socket, msg: str):
     m = bytes(msg, "utf-8")
     c.sendall((len(m)).to_bytes(4, "big"))
     c.sendall(m)
 
 
-def send_read_msg(s, msg):
+def send_read_msg(s: socket.socket, msg: str) -> Any:
     send_msg(s, msg)
     return read_msg(s)
 
 
-def read_msg_fd(s):
+def read_msg_fd(s: socket.socket) -> Tuple[Any, Optional[int]]:
     b = b''
     togo = 4
     while togo > 0:
@@ -48,6 +49,6 @@ def read_msg_fd(s):
         b = b + read
         togo = togo - len(read)
     if len(fds) != 0:
-        return (loads(b.decode("utf-8")), fds[0])
+        return loads(b.decode("utf-8")), fds[0]
     else:
-        return (loads(b.decode("utf-8")),)
+        return loads(b.decode("utf-8")), None

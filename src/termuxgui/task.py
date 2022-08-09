@@ -1,7 +1,10 @@
+from termuxgui.connection import Connection
+
+
 class Task:
     """This represents an Android Task. It is automatically created with the Activity."""
 
-    def __init__(self, connection, tid):
+    def __init__(self, connection: Connection, tid: int):
         self.c = connection
         self.tid = tid
 

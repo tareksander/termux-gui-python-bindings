@@ -4,9 +4,10 @@ You don't need to include all the submodules, all needed classes are automatical
 importing the package. """
 
 __all__ = ['Activity', 'Buffer', 'Button', 'Checkbox', 'CompoundButton', 'Connection', 'EditText', 'Event',
-           'FrameLayout', 'HorizontalScrollView', 'ImageView', 'LinearLayout', 'NestedScrollView', 'ProgressBar',
-           'RadioButton', 'RadioGroup', 'RemoteViews', 'Space', 'Spinner', 'SwipeRefreshLayout', 'Switch', 'TabLayout',
-           'Task', 'TextView', 'ToggleButton', 'View', 'ViewGroup']
+           'FrameLayout', "GridLayout", 'HorizontalScrollView', 'ImageView', 'LinearLayout', 'NestedScrollView',
+           'Notification', 'ProgressBar', 'RadioButton', 'RadioGroup', 'RemoteViews', 'Space', 'Spinner',
+           'SwipeRefreshLayout', 'Switch', 'TabLayout', 'Task', 'TextView', 'ToggleButton', 'View', 'ViewGroup',
+           'WebView']
 
 from termuxgui.activity import Activity
 from termuxgui.buffer import Buffer
@@ -17,10 +18,12 @@ from termuxgui.connection import Connection
 from termuxgui.edittext import EditText
 from termuxgui.event import Event
 from termuxgui.framelayout import FrameLayout
+from termuxgui.gridlayout import GridLayout
 from termuxgui.horizontalscrollview import HorizontalScrollView
 from termuxgui.imageview import ImageView
 from termuxgui.linearlayout import LinearLayout
 from termuxgui.nestedscrollview import NestedScrollView
+from termuxgui.notification import Notification
 from termuxgui.progressbar import ProgressBar
 from termuxgui.radiobutton import RadioButton
 from termuxgui.radiogroup import RadioGroup
@@ -35,6 +38,5 @@ from termuxgui.textview import TextView
 from termuxgui.togglebutton import ToggleButton
 from termuxgui.view import View
 from termuxgui.viewgroup import ViewGroup
+from termuxgui.webview import WebView
 
-WRAP_CONTENT = "WRAP_CONTENT"
-MATCH_PARENT = "MATCH_PARENT"

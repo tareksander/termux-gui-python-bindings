@@ -5,7 +5,11 @@ import sys
 
 with tg.Connection() as c:
     a = tg.Activity(c)
-
+    
+    # Intercept the back button. Instead of finishing the Activity, it now sends an event instead
+    a.interceptbackbutton(True)
+    # Also possible: a = tg.Activity(c, intercept=True)
+    
     # Create a SwipeRefreshLayout as the root View
     ref = tg.SwipeRefreshLayout(a)
 
@@ -40,3 +44,6 @@ with tg.Connection() as c:
             tv1.settext("Refresh: " + str(refreshes))
             # Set that we are done with refreshing, so that the animation stops and the gesture can trigger again
             ref.setrefreshing(False)
+        # Back button presses generate an event now
+        if ev.type == tg.Event.back:
+            c.toast("User pressed the back button", True)
