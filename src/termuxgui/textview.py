@@ -34,3 +34,10 @@ class TextView(View):
     def sendtextevent(self, send: bool):
         """Sets whether ot not text events are send for this TextView."""
         self.a.c.send_msg({"method": "sendTextEvent", "params": {"aid": self.a.aid, "id": self.id, "send": send}})
+    
+    def setgravity(self, horizontal: Literal[0, 1, 2], vertical: Literal[0, 1, 2]):
+        """Sets the text gravity for this TextView.
+        The values are: 0: left/top, 1: center, 2: right/bottom.
+        Right and left are inverted for right-to-left layouts."""
+        self.a.c.send_msg({"method": "setGravity", "params": {"aid": self.a.aid, "id": self.id,
+                                                              "horizontal": horizontal, "vertical": vertical}})

@@ -34,6 +34,7 @@ with tg.Connection() as c:
     
     pagedpageview.setmargin(5, "left")
     pagedpageview.setmargin(5, "right")
+    pagedpageview.setgravity(1, 1)  # Center the text
     
     # make the NestedScrollView for the content
     pagedscrollview = tg.NestedScrollView(a, pagedlayout)
