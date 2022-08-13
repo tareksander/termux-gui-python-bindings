@@ -18,6 +18,9 @@ class Event:
     selected = "selected"  # used for RadioGroups
     itemselected = "itemselected"
     text = "text"
+    notification = "notification"
+    notificationdismissed = "notificationDismissed"
+    notificationaction = "notificationaction"
     webviewnavigation = "webviewNavigation"
     webviewhttperror = "webviewHTTPError"
     webviewerror = "webviewError"
