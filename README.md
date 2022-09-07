@@ -6,8 +6,11 @@ See [here](https://github.com/tareksander/termux-gui-python-bindings/blob/main/T
 There is also [documentation](https://tareksander.github.io/termux-gui-python-bindings/termuxgui/index.html) generated from the docstrings.   
 
 
-Installing and updating:  
-Download a wheel from the releases and then run `pip install wheel.whl` to install or update the library, or just use `pip install termuxgui` to install from pypi.
+### Installing and updating:  
+Just use `pip install termuxgui` to install from pypi.
 
 
+### License
 
+The license is the [Mozilla Public License 2.0](https://www.mozilla.org/en-US/MPL/2.0/).  
+TL;DR: You can use this library in your own projects, regardless of the license you choose for it. Modifications to this library have to be published under the MPL 2.0 (or a GNU license in some cases) though.
