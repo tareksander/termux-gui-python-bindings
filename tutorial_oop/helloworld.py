@@ -17,6 +17,7 @@ class HelloWorldLayout(tgo.LinearLayout):
         # Also new is the event system:
         # You can provide callables as on_* methods which will be called
         # if the corresponding Event is triggered on the View.
+        # The methods get the event and the View as parameters.
         b.on_click = lambda e, v: print(e.type, e.value, v.id)
         
 
