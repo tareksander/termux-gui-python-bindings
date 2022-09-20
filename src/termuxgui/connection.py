@@ -7,7 +7,7 @@ from struct import unpack
 from json import dumps
 from select import select
 from typing import TypedDict, Literal, Optional, Any, Union, Iterator
-from threading import Lock
+from threading import RLock
 
 from termuxgui.event import Event
 import termuxgui.msg as tgmsg
@@ -40,8 +40,8 @@ class Connection:
     def __init__(self):
         """When a connection can't be established, a RuntimeError is raised."""
         
-        self.__main_lock = Lock()
-        self.__event_lock = Lock()
+        self.__main_lock = RLock()
+        self.__event_lock = RLock()
         
         adrMain = ''.join(choice(ascii_letters + digits) for i in range(50))
         adrEvent = ''.join(choice(ascii_letters + digits) for i in range(50))
