@@ -15,5 +15,9 @@ class Spinner(View):
         View.__init__(self, activity, activity.c.send_read_msg({"method": "createSpinner", "params": args}))
 
     def setlist(self, list: List[str]):
-        """Sets the list of items displayed in the spinner."""
+        """Sets the list of items displayed in the Spinner."""
         self.a.c.send_msg({"method": "setList", "params": {"aid": self.a.aid, "id": self.id, "list": list}})
+
+    def selectitem(self, item: int):
+        """Sets the selected item of the Spinner."""
+        self.a.c.send_msg({"method": "selectItem", "params": {"aid": self.a.aid, "id": self.id, "item": item}})
