@@ -1,0 +1,1316 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>termuxgui package &#8212; termuxgui 0.1.5 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="termuxgui.oo package" href="termuxgui.oo.html" />
+    <link rel="prev" title="Welcome to termuxgui’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="termuxgui.oo.html" title="termuxgui.oo package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to termuxgui’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">termuxgui 0.1.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">termuxgui package</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="termuxgui-package">
+<h1>termuxgui package<a class="headerlink" href="#termuxgui-package" title="Permalink to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="termuxgui.oo.html">termuxgui.oo package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="termuxgui.oo.html#module-termuxgui.oo">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-termuxgui">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-termuxgui" title="Permalink to this heading">¶</a></h2>
+<p>This is a library for interacting with the Termux:GUI plugin from python.</p>
+<p>You don’t need to include all the submodules, all needed classes are automatically included in the package scope upon
+importing the package.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Activity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Activity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Connection" title="termuxgui.connection.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialog</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lockscreen</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">canceloutside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents an Android Activity.</p>
+<p>Use a.c to access the Connection object of an Activity and a.t to access the Task object.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.finish">
+<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finishes an Activity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.getconfiguration">
+<span class="sig-name descname"><span class="pre">getconfiguration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Configuration</span></span></span><a class="headerlink" href="#termuxgui.Activity.getconfiguration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the current configuration of this Activity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.hidesoftkeyboard">
+<span class="sig-name descname"><span class="pre">hidesoftkeyboard</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.hidesoftkeyboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hides the soft keyboard if this Activity has the soft keyboard focus.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.interceptbackbutton">
+<span class="sig-name descname"><span class="pre">interceptbackbutton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.interceptbackbutton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether to intercept a back button press and send an event instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.keepscreenon">
+<span class="sig-name descname"><span class="pre">keepscreenon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">on</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.keepscreenon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the Activity should keep the screen on while it is showing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.movetoback">
+<span class="sig-name descname"><span class="pre">movetoback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.movetoback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves this Activity’s Task to the recents screen and hides it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.requestunlock">
+<span class="sig-name descname"><span class="pre">requestunlock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.requestunlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Requests the lockscreen to unlock.
+If the lockscreen is just protected by a swipe, it is unlocked immediately.
+If a PIN, password or pattern has to be used, brings up the UI to let the user unlock the lockscreen.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.sendoverlayevents">
+<span class="sig-name descname"><span class="pre">sendoverlayevents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">send</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.sendoverlayevents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether or not you want to receive overlay events if the Activity is an overlay.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.setinputmode">
+<span class="sig-name descname"><span class="pre">setinputmode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'resize'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'pan'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.setinputmode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the input mode for an Activity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.setorientation">
+<span class="sig-name descname"><span class="pre">setorientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orientation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'behind'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'fullSensor'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'fullUser'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'landscape'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'locked'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'nosensor'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'portrait'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'reverseLandscape'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'reversePortrait'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sensorLandscape'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'sensorPortrait'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'user'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'userLandscape'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'userPortrait'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.setorientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the preferred orientation of the Activity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.setpipmode">
+<span class="sig-name descname"><span class="pre">setpipmode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.setpipmode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Goes into / out of picture-in-picture mode.</p>
+<p>When you exit pip, you Activity is put in the recent tasks list and not shown to the user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.setpipmodeauto">
+<span class="sig-name descname"><span class="pre">setpipmodeauto</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.setpipmodeauto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set whether the Activity should automatically enter picture-in-picture mode
+when the user leaves the Activity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.setpipparams">
+<span class="sig-name descname"><span class="pre">setpipparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">den</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.setpipparams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the PiP parameters for the Activity, currently only the aspect ration.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.setposition">
+<span class="sig-name descname"><span class="pre">setposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.setposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the screen position of the Activity if it is an overlay.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.settaskdescription">
+<span class="sig-name descname"><span class="pre">settaskdescription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.settaskdescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the Task icon. img has to be a PNG or JPEG image as a base64 encoded string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Activity.settheme">
+<span class="sig-name descname"><span class="pre">settheme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statusbarcolor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colorprimary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">windowbackground</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textcolor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coloraccent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Activity.settheme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the Theme for the Activity.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Buffer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'ARGB888'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ARGB888'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents a raw ARGB888 image buffer.</p>
+<p>This is only available on Android 8.1+.
+Buffers consume much memory, so be sure to close any Buffer you don’t need any more.
+Preferably use “with” to get the memory object of the buffer so it is automatically closed.
+The memory object is a shared memory object that can be used like a bytes object or a file object.
+You can also directly access the memory object as b.mem.</p>
+<p>A RuntimeError is raised when a Buffer can’t be created.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Buffer.blit">
+<span class="sig-name descname"><span class="pre">blit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Buffer.blit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blits the buffer to the underlying image in the plugin.
+To update ImageViews using this buffer, they have to be refreshed afterwards.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Buffer.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Buffer.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes this buffer, freeing the memory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Button">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allcaps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.TextView" title="termuxgui.textview.TextView"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextView</span></code></a></p>
+<p>This represents a Button.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Checkbox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Checkbox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Checkbox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.CompoundButton" title="termuxgui.compoundbutton.CompoundButton"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompoundButton</span></code></a></p>
+<p>This represents a CheckBox.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.CompoundButton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">CompoundButton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.CompoundButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.Button" title="termuxgui.button.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a></p>
+<p>This represents a CompoundButton.</p>
+<p>This class doesn’t correspond to a particular View, it is used to provide common methods for all CompoundButtons.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.CompoundButton.handleevent">
+<span class="sig-name descname"><span class="pre">handleevent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Event" title="termuxgui.event.Event"><span class="pre">Event</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.CompoundButton.handleevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this to let the CompoundButton track whether it is checked or not. Just pass every Event here.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.CompoundButton.setchecked">
+<span class="sig-name descname"><span class="pre">setchecked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checked</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.CompoundButton.setchecked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Explicitly set the checked status of this CompoundButton.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Connection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Connection</span></span><a class="headerlink" href="#termuxgui.Connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents a connection to the Termux:GUI plugin and contains all functions that don’t act on any
+particular View, Activity or Task.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.checkevent">
+<span class="sig-name descname"><span class="pre">checkevent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.Event" title="termuxgui.event.Event"><span class="pre">Event</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#termuxgui.Connection.checkevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>If there is at least one event to be read, returns it.
+If there is no event, returns None.
+You can use this to e.g. check for events between drawing a frame instead of
+having to use a separate thread and blocking it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Connection.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the connection.</p>
+<p>The connection is automatically closed when the program exits, but it’s good practice to close the connection
+yourself when you don’t need it anymore or use a “with” statement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.events">
+<span class="sig-name descname"><span class="pre">events</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.Event" title="termuxgui.event.Event"><span class="pre">Event</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#termuxgui.Connection.events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Waits for events. Use this with “for in” to iterate over incoming events and block while waiting.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.getversion">
+<span class="sig-name descname"><span class="pre">getversion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#termuxgui.Connection.getversion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the version code of the plugin app.
+Can be used to disable features only present in a newer version or prompting the user to update.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.islocked">
+<span class="sig-name descname"><span class="pre">islocked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#termuxgui.Connection.islocked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether the device is locked.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.read_msg">
+<span class="sig-name descname"><span class="pre">read_msg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#termuxgui.Connection.read_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a message from the main socket.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.send_msg">
+<span class="sig-name descname"><span class="pre">send_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Connection.send_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the main socket.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.send_read_msg">
+<span class="sig-name descname"><span class="pre">send_read_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Connection.send_read_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a message to the main socket and read a message afterwards.
+You should only need to call this yourself if you want to use methods not yet implemented in the library.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.toast">
+<span class="sig-name descname"><span class="pre">toast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">long</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Connection.toast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a Toast. Set long to True if you want to display the text for longer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.totermux">
+<span class="sig-name descname"><span class="pre">totermux</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Connection.totermux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns to the termux task. This is a shorthand for running “am start” to start the termux activity.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Connection.turnscreenon">
+<span class="sig-name descname"><span class="pre">turnscreenon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Connection.turnscreenon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns the screen on.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.EditText">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">EditText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singleline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blockinput</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inputtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'text'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'textMultiLine'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'phone'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'date'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'time'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'datetime'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'number'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'numberDecimal'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'numberPassword'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'numberSigned'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'numberDecimalSigned'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'textEmailAddress'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'textPassword'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'text'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.EditText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.TextView" title="termuxgui.textview.TextView"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextView</span></code></a></p>
+<p>This represents an EditText.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.EditText.showcursor">
+<span class="sig-name descname"><span class="pre">showcursor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.EditText.showcursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the cursor position should be shown.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Event">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ev</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents an Event in the GUI.</p>
+<p>The class variables are the available event types.</p>
+<p>Use ev.type == Event.eventtype to check for event types.</p>
+<p>ev.type contains the event type and ev.value is a dictionary containing the values of the event, if any.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.airplane">
+<span class="sig-name descname"><span class="pre">airplane</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'airplane'</span></em><a class="headerlink" href="#termuxgui.Event.airplane" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.back">
+<span class="sig-name descname"><span class="pre">back</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'back'</span></em><a class="headerlink" href="#termuxgui.Event.back" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.click">
+<span class="sig-name descname"><span class="pre">click</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'click'</span></em><a class="headerlink" href="#termuxgui.Event.click" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.config">
+<span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'config'</span></em><a class="headerlink" href="#termuxgui.Event.config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.create">
+<span class="sig-name descname"><span class="pre">create</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'create'</span></em><a class="headerlink" href="#termuxgui.Event.create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.destroy">
+<span class="sig-name descname"><span class="pre">destroy</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'destroy'</span></em><a class="headerlink" href="#termuxgui.Event.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.focusChange">
+<span class="sig-name descname"><span class="pre">focusChange</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'focusChange'</span></em><a class="headerlink" href="#termuxgui.Event.focusChange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.itemselected">
+<span class="sig-name descname"><span class="pre">itemselected</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'itemselected'</span></em><a class="headerlink" href="#termuxgui.Event.itemselected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.key">
+<span class="sig-name descname"><span class="pre">key</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'key'</span></em><a class="headerlink" href="#termuxgui.Event.key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.locale">
+<span class="sig-name descname"><span class="pre">locale</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'locale'</span></em><a class="headerlink" href="#termuxgui.Event.locale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.longClick">
+<span class="sig-name descname"><span class="pre">longClick</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'longClick'</span></em><a class="headerlink" href="#termuxgui.Event.longClick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.notification">
+<span class="sig-name descname"><span class="pre">notification</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'notification'</span></em><a class="headerlink" href="#termuxgui.Event.notification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.notificationDismissed">
+<span class="sig-name descname"><span class="pre">notificationDismissed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'notificationDismissed'</span></em><a class="headerlink" href="#termuxgui.Event.notificationDismissed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.notificationaction">
+<span class="sig-name descname"><span class="pre">notificationaction</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'notificationaction'</span></em><a class="headerlink" href="#termuxgui.Event.notificationaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.overlayScale">
+<span class="sig-name descname"><span class="pre">overlayScale</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'overlayScale'</span></em><a class="headerlink" href="#termuxgui.Event.overlayScale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.overlaytouch">
+<span class="sig-name descname"><span class="pre">overlaytouch</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'overlayTouch'</span></em><a class="headerlink" href="#termuxgui.Event.overlaytouch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.pause">
+<span class="sig-name descname"><span class="pre">pause</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pause'</span></em><a class="headerlink" href="#termuxgui.Event.pause" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.pipchanged">
+<span class="sig-name descname"><span class="pre">pipchanged</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pipchanged'</span></em><a class="headerlink" href="#termuxgui.Event.pipchanged" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'refresh'</span></em><a class="headerlink" href="#termuxgui.Event.refresh" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.remoteclick">
+<span class="sig-name descname"><span class="pre">remoteclick</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'remoteclick'</span></em><a class="headerlink" href="#termuxgui.Event.remoteclick" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.resume">
+<span class="sig-name descname"><span class="pre">resume</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'resume'</span></em><a class="headerlink" href="#termuxgui.Event.resume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.screen_off">
+<span class="sig-name descname"><span class="pre">screen_off</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'screen_off'</span></em><a class="headerlink" href="#termuxgui.Event.screen_off" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.screenon">
+<span class="sig-name descname"><span class="pre">screenon</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'screen_on'</span></em><a class="headerlink" href="#termuxgui.Event.screenon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.selected">
+<span class="sig-name descname"><span class="pre">selected</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'selected'</span></em><a class="headerlink" href="#termuxgui.Event.selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.start">
+<span class="sig-name descname"><span class="pre">start</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'start'</span></em><a class="headerlink" href="#termuxgui.Event.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'stop'</span></em><a class="headerlink" href="#termuxgui.Event.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.text">
+<span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'text'</span></em><a class="headerlink" href="#termuxgui.Event.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.timezone">
+<span class="sig-name descname"><span class="pre">timezone</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'timezone'</span></em><a class="headerlink" href="#termuxgui.Event.timezone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.touch">
+<span class="sig-name descname"><span class="pre">touch</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'touch'</span></em><a class="headerlink" href="#termuxgui.Event.touch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.touch_cancel">
+<span class="sig-name descname"><span class="pre">touch_cancel</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cancel'</span></em><a class="headerlink" href="#termuxgui.Event.touch_cancel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.touch_down">
+<span class="sig-name descname"><span class="pre">touch_down</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'down'</span></em><a class="headerlink" href="#termuxgui.Event.touch_down" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.touch_move">
+<span class="sig-name descname"><span class="pre">touch_move</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'move'</span></em><a class="headerlink" href="#termuxgui.Event.touch_move" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.touch_pointer_down">
+<span class="sig-name descname"><span class="pre">touch_pointer_down</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pointer_down'</span></em><a class="headerlink" href="#termuxgui.Event.touch_pointer_down" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.touch_pointer_up">
+<span class="sig-name descname"><span class="pre">touch_pointer_up</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pointer_up'</span></em><a class="headerlink" href="#termuxgui.Event.touch_pointer_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.touch_up">
+<span class="sig-name descname"><span class="pre">touch_up</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'up'</span></em><a class="headerlink" href="#termuxgui.Event.touch_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.userleavehint">
+<span class="sig-name descname"><span class="pre">userleavehint</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'UserLeaveHint'</span></em><a class="headerlink" href="#termuxgui.Event.userleavehint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.webviewConsoleMessage">
+<span class="sig-name descname"><span class="pre">webviewConsoleMessage</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webviewConsoleMessage'</span></em><a class="headerlink" href="#termuxgui.Event.webviewConsoleMessage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.webviewDestroyed">
+<span class="sig-name descname"><span class="pre">webviewDestroyed</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webviewDestroyed'</span></em><a class="headerlink" href="#termuxgui.Event.webviewDestroyed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.webviewError">
+<span class="sig-name descname"><span class="pre">webviewError</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webviewError'</span></em><a class="headerlink" href="#termuxgui.Event.webviewError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.webviewHTTPError">
+<span class="sig-name descname"><span class="pre">webviewHTTPError</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webviewHTTPError'</span></em><a class="headerlink" href="#termuxgui.Event.webviewHTTPError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.webviewNavigation">
+<span class="sig-name descname"><span class="pre">webviewNavigation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webviewNavigation'</span></em><a class="headerlink" href="#termuxgui.Event.webviewNavigation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.Event.webviewProgress">
+<span class="sig-name descname"><span class="pre">webviewProgress</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webviewProgress'</span></em><a class="headerlink" href="#termuxgui.Event.webviewProgress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.FrameLayout">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">FrameLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.FrameLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.ViewGroup" title="termuxgui.viewgroup.ViewGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">ViewGroup</span></code></a></p>
+<p>This represents a FrameLayout.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.GridLayout">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">GridLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.GridLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.ViewGroup" title="termuxgui.viewgroup.ViewGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">ViewGroup</span></code></a></p>
+<p>This represents a GridLayout.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.HorizontalScrollView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">HorizontalScrollView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillviewport</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nobar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.HorizontalScrollView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.FrameLayout" title="termuxgui.framelayout.FrameLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameLayout</span></code></a></p>
+<p>This represents a HorizontalScrollView.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.HorizontalScrollView.getscrollposition">
+<span class="sig-name descname"><span class="pre">getscrollposition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#termuxgui.HorizontalScrollView.getscrollposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the x and x scroll positions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.HorizontalScrollView.setscrollposition">
+<span class="sig-name descname"><span class="pre">setscrollposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.HorizontalScrollView.setscrollposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the x and x scroll positions. smooth specifies whether is’s a smooth scoll or not.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.ImageView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">ImageView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ImageView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<p>This represents an ImageView.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.ImageView.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ImageView.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redraws the ImageView. You have to use this after blitting the Buffer when using a buffer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.ImageView.setbuffer">
+<span class="sig-name descname"><span class="pre">setbuffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Buffer" title="termuxgui.buffer.Buffer"><span class="pre">Buffer</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ImageView.setbuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the ImageView use a shared buffer as the image source.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.ImageView.setimage">
+<span class="sig-name descname"><span class="pre">setimage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ImageView.setimage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the image of the ImageView.
+The image has to be a bytes object containing the image in png or jpeg format.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.LinearLayout">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">LinearLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.LinearLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.ViewGroup" title="termuxgui.viewgroup.ViewGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">ViewGroup</span></code></a></p>
+<p>This represents a LinearLayout.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.NestedScrollView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">NestedScrollView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fillviewport</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nobar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.NestedScrollView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.FrameLayout" title="termuxgui.framelayout.FrameLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameLayout</span></code></a></p>
+<p>This represents a NestedScrollView.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.NestedScrollView.getscrollposition">
+<span class="sig-name descname"><span class="pre">getscrollposition</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#termuxgui.NestedScrollView.getscrollposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the x and x scroll positions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.NestedScrollView.setscrollposition">
+<span class="sig-name descname"><span class="pre">setscrollposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.NestedScrollView.setscrollposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the x and x scroll positions. smooth specifies whether it’s a smooth scroll or not.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Notification">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Connection" title="termuxgui.connection.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">importance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents a notification.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancels the notification.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.createchannel">
+<span class="sig-name descname"><span class="pre">createchannel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.createchannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the notification channel for the notification. This is called automatically when you call notify.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.notify">
+<span class="sig-name descname"><span class="pre">notify</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.notify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates/updates the notification.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setactions">
+<span class="sig-name descname"><span class="pre">setactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the displayed actions for the notification.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setalertonce">
+<span class="sig-name descname"><span class="pre">setalertonce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alertonce</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setalertonce" title="Permalink to this definition">¶</a></dt>
+<dd><p>If you call notify more than once, whether to alert the user every time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setcontent">
+<span class="sig-name descname"><span class="pre">setcontent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setcontent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the content of the notification, removing any set custom layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setexpandedlayout">
+<span class="sig-name descname"><span class="pre">setexpandedlayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.RemoteViews" title="termuxgui.remoteviews.RemoteViews"><span class="pre">RemoteViews</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setexpandedlayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a custom expanded layout for the notification.
+Removes any title, content largetext or largeimage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.sethudlayout">
+<span class="sig-name descname"><span class="pre">sethudlayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.RemoteViews" title="termuxgui.remoteviews.RemoteViews"><span class="pre">RemoteViews</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.sethudlayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a custom hud layout for the notification.
+Removes any title, content largetext or largeimage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.seticon">
+<span class="sig-name descname"><span class="pre">seticon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.seticon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the icon of the notification.
+icon has to be a bytes object containing the icon in png or jpeg format.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setlargeimage">
+<span class="sig-name descname"><span class="pre">setlargeimage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setlargeimage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a large image for the notification, removing any set custom layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setlargeimageasthumbnail">
+<span class="sig-name descname"><span class="pre">setlargeimageasthumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asthumbnail</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setlargeimageasthumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether to show a large image as a thumbnail in the collapsed notification.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setlargetext">
+<span class="sig-name descname"><span class="pre">setlargetext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setlargetext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text after expanding the notification, removing any set custom layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setlayout">
+<span class="sig-name descname"><span class="pre">setlayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.RemoteViews" title="termuxgui.remoteviews.RemoteViews"><span class="pre">RemoteViews</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setlayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a custom layout for the notification.
+Removes any title, content largetext or largeimage.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setongoing">
+<span class="sig-name descname"><span class="pre">setongoing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ongoing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setongoing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ongoing notifications can’t be dismissed by the user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.setshowtimestamp">
+<span class="sig-name descname"><span class="pre">setshowtimestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.setshowtimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the timestamp is shown in the notification</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.settimestamp">
+<span class="sig-name descname"><span class="pre">settimestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.settimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the timestamp of the notification. The format is the unix time in milliseconds.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Notification.settitle">
+<span class="sig-name descname"><span class="pre">settitle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Notification.settitle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the title of the notification, removing any set custom layout.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.ProgressBar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">ProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<p>This represents a ProgressBar.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.ProgressBar.setprogress">
+<span class="sig-name descname"><span class="pre">setprogress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ProgressBar.setprogress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the progress of the ProgressBar. The progress has to be an integer from 0 to 100 (inclusive).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.RadioButton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">RadioButton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RadioButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.CompoundButton" title="termuxgui.compoundbutton.CompoundButton"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompoundButton</span></code></a></p>
+<p>This represents a RadioButton.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.RadioGroup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">RadioGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RadioGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.LinearLayout" title="termuxgui.linearlayout.LinearLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearLayout</span></code></a></p>
+<p>This represents a RadioGroup.</p>
+<p>Only one RadioButton inside a RadioGroup can be checked at once, and the RadioGroup emits events when the checked button has changed.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">RemoteViews</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Connection" title="termuxgui.connection.Connection"><span class="pre">Connection</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents a remote Layout. You can use remote Layouts for custom notifications or widgets.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.addButton">
+<span class="sig-name descname"><span class="pre">addButton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#termuxgui.RemoteViews.addButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Button in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.addFrameLayout">
+<span class="sig-name descname"><span class="pre">addFrameLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#termuxgui.RemoteViews.addFrameLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a FrameLayout in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.addImageView">
+<span class="sig-name descname"><span class="pre">addImageView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#termuxgui.RemoteViews.addImageView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an ImageView in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.addLinearLayout">
+<span class="sig-name descname"><span class="pre">addLinearLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#termuxgui.RemoteViews.addLinearLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a LinearLayout in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.addProgressBar">
+<span class="sig-name descname"><span class="pre">addProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#termuxgui.RemoteViews.addProgressBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a ProgressBar in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.addTextView">
+<span class="sig-name descname"><span class="pre">addTextView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#termuxgui.RemoteViews.addTextView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a TextView in this remote Layout and returns the id, or -1 if it could not be created.
+The id can be used in further methods to manipulate the View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes this remote Layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setBackgroundColor">
+<span class="sig-name descname"><span class="pre">setBackgroundColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setBackgroundColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the background color of a View in this remote Layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setImage">
+<span class="sig-name descname"><span class="pre">setImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the image of an ImageView in this remote Layout.
+The image has to be a bytes object containing the image in png or jpeg format,
+or a string containing the base64 encoded version of it.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setPadding">
+<span class="sig-name descname"><span class="pre">setPadding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setPadding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the padding of a View in this remote Layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setProgress">
+<span class="sig-name descname"><span class="pre">setProgress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setProgress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the progress and maximum value of a ProgressBar in this remote Layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setText">
+<span class="sig-name descname"><span class="pre">setText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text of a TextView in this remote Layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setTextColor">
+<span class="sig-name descname"><span class="pre">setTextColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setTextColor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text color of a TextView in this remote Layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setTextSize">
+<span class="sig-name descname"><span class="pre">setTextSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">px</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setTextSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text size of a TextView in this remote Layout.
+If px is true, the size will be in pixels. If not, it will be in dip.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.setVisibility">
+<span class="sig-name descname"><span class="pre">setVisibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.setVisibility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the visibility of a View in this remote Layout.</p>
+<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+Gone views do not take up layout space.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.RemoteViews.updateWidget">
+<span class="sig-name descname"><span class="pre">updateWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.RemoteViews.updateWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the content of the Widget with ID wid to this remote Layout.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Space">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<p>This represents a Space. You can use this to create empty space in your layout.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Spinner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Spinner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Spinner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<p>This represents a Spinner.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Spinner.setlist">
+<span class="sig-name descname"><span class="pre">setlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Spinner.setlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the list of items displayed in the spinner.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.SwipeRefreshLayout">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">SwipeRefreshLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.SwipeRefreshLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.ViewGroup" title="termuxgui.viewgroup.ViewGroup"><code class="xref py py-class docutils literal notranslate"><span class="pre">ViewGroup</span></code></a></p>
+<p>This represents a SwipeRefreshLayout.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.SwipeRefreshLayout.setrefreshing">
+<span class="sig-name descname"><span class="pre">setrefreshing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refreshing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.SwipeRefreshLayout.setrefreshing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the SwipeRefreshLayout displays the refresh animation.</p>
+<p>You have to call this with False when you refreshed the contents.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Switch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.CompoundButton" title="termuxgui.compoundbutton.CompoundButton"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompoundButton</span></code></a></p>
+<p>This represents a Switch.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.TabLayout">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">TabLayout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TabLayout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.HorizontalScrollView" title="termuxgui.horizontalscrollview.HorizontalScrollView"><code class="xref py py-class docutils literal notranslate"><span class="pre">HorizontalScrollView</span></code></a></p>
+<p>This represents a TabLayout.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TabLayout.selecttab">
+<span class="sig-name descname"><span class="pre">selecttab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TabLayout.selecttab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects a tab in the TabLayout. tab is the index of the tab to select, starting at 0.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TabLayout.setlist">
+<span class="sig-name descname"><span class="pre">setlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TabLayout.setlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the list tabs.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.Task">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">Task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Connection" title="termuxgui.connection.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents an Android Task. It is automatically created with the Activity.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Task.bringtofront">
+<span class="sig-name descname"><span class="pre">bringtofront</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Task.bringtofront" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bring this Task to the front and make it visible to the user.
+Might require “overlay over other apps” permission.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.Task.finish">
+<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.Task.finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finishes this Task.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.TextView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">TextView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selectabletext</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clickablelinks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TextView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<p>This represents a TextView.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TextView.gettext">
+<span class="sig-name descname"><span class="pre">gettext</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#termuxgui.TextView.gettext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the text of this TextView.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TextView.sendtextevent">
+<span class="sig-name descname"><span class="pre">sendtextevent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">send</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TextView.sendtextevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether ot not text events are send for this TextView.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TextView.setgravity">
+<span class="sig-name descname"><span class="pre">setgravity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">horizontal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TextView.setgravity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text gravity for this TextView.
+The values are: 0: left/top, 1: center, 2: right/bottom.
+Right and left are inverted for right-to-left layouts.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TextView.settext">
+<span class="sig-name descname"><span class="pre">settext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TextView.settext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text of this TextView.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TextView.settextcolor">
+<span class="sig-name descname"><span class="pre">settextcolor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TextView.settextcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text color of this TextView. The color format is the same as for Activity.settheme().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.TextView.settextsize">
+<span class="sig-name descname"><span class="pre">settextsize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.TextView.settextsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the text size for this TextView.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.ToggleButton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">ToggleButton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checked</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ToggleButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.CompoundButton" title="termuxgui.compoundbutton.CompoundButton"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompoundButton</span></code></a></p>
+<p>This represents a ToggleButton.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.View">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">View</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This represents a generic View.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.View.GONE">
+<span class="sig-name descname"><span class="pre">GONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#termuxgui.View.GONE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visibility constant for hidden views</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.View.HIDDEN">
+<span class="sig-name descname"><span class="pre">HIDDEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#termuxgui.View.HIDDEN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visibility constant for visible views</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.View.MATCH_PARENT">
+<span class="sig-name descname"><span class="pre">MATCH_PARENT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MATCH_PARENT'</span></em><a class="headerlink" href="#termuxgui.View.MATCH_PARENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.View.VISIBLE">
+<span class="sig-name descname"><span class="pre">VISIBLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#termuxgui.View.VISIBLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Special size constant to only take up the space needed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="termuxgui.View.WRAP_CONTENT">
+<span class="sig-name descname"><span class="pre">WRAP_CONTENT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'WRAP_CONTENT'</span></em><a class="headerlink" href="#termuxgui.View.WRAP_CONTENT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Special size constant to take up the space of the parent View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes this View from the layout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.focus">
+<span class="sig-name descname"><span class="pre">focus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forcesoft</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.focus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the Focus to this View and opens the soft keyboard if the View has keyboard input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.getdimensions">
+<span class="sig-name descname"><span class="pre">getdimensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#termuxgui.View.getdimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the width and height of a View in the layout as a list. The values are in pixels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.handleevent">
+<span class="sig-name descname"><span class="pre">handleevent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Event" title="termuxgui.event.Event"><span class="pre">Event</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.handleevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles an Event for this View. Subclasses can override this to provide event handling.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.sendclickevent">
+<span class="sig-name descname"><span class="pre">sendclickevent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">send</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.sendclickevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether ot not click events are sent for this View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.sendfocuschangeevent">
+<span class="sig-name descname"><span class="pre">sendfocuschangeevent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">send</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.sendfocuschangeevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether ot not focus change events are sent for this View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.sendlongclickevent">
+<span class="sig-name descname"><span class="pre">sendlongclickevent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">send</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.sendlongclickevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether ot not long click events are sent for this View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.sendtouchevent">
+<span class="sig-name descname"><span class="pre">sendtouchevent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">send</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.sendtouchevent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether ot not touch events are sent for this View.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setbackgroundcolor">
+<span class="sig-name descname"><span class="pre">setbackgroundcolor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setbackgroundcolor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the background color for this view.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setclickable">
+<span class="sig-name descname"><span class="pre">setclickable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clickable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setclickable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the View is clickable by the user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setdimensions">
+<span class="sig-name descname"><span class="pre">setdimensions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">px</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setdimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the dimensions of this view. width and height are the same as for setwidth and setheight.
+If px is true, the values are in pixels instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setgridlayoutparams">
+<span class="sig-name descname"><span class="pre">setgridlayoutparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colsize</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignmentrow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'top'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bottom'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'center'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'baseline'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'fill'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'center'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignmentcol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'top'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bottom'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'center'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'baseline'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'fill'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'center'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setgridlayoutparams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the GridLayout position for this View.
+The rows and columns start at 0.
+rowsize and colsize define how many row/column cells a View takes up.
+alignmentrow and alignmentcol specify how the View is positioned in its cells,</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setheight">
+<span class="sig-name descname"><span class="pre">setheight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">px</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setheight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the height of this View.
+Can be either an integer describing the value in dp, “MATCH_PARENT” or “WRAP_CONTENT”.
+If px is true, the values are in pixels instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setlinearlayoutparams">
+<span class="sig-name descname"><span class="pre">setlinearlayoutparams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setlinearlayoutparams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the LinearLayout weight and/or position for this view.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setmargin">
+<span class="sig-name descname"><span class="pre">setmargin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">margin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'top'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'bottom'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'left'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'right'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setmargin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the margins of this View for one or all directions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setvisibility">
+<span class="sig-name descname"><span class="pre">setvisibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setvisibility" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the visibility for this view.</p>
+<p>0 = gone, 1 = hidden, 2 = visible. While hidden, views are not visible but still take up space in the layout.
+Gone views do not take up layout space.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.View.setwidth">
+<span class="sig-name descname"><span class="pre">setwidth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">px</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.View.setwidth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the width of this View.
+Can be either an integer describing the value in dp, “MATCH_PARENT” or “WRAP_CONTENT”.
+If px is true, the values are in pixels instead.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.ViewGroup">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">ViewGroup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ViewGroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<p>This represents a generic ViewGroup.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.ViewGroup.clearchildren">
+<span class="sig-name descname"><span class="pre">clearchildren</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.ViewGroup.clearchildren" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes all child Views of this ViewGroup.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="termuxgui.WebView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">termuxgui.</span></span><span class="sig-name descname"><span class="pre">WebView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">activity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#termuxgui.Activity" title="termuxgui.activity.Activity"><span class="pre">Activity</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><span class="pre">View</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#termuxgui.View" title="termuxgui.view.View"><code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></a></p>
+<p>This represents a WebView.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.allowcontenturi">
+<span class="sig-name descname"><span class="pre">allowcontenturi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.allowcontenturi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether it is allowed to load content from a content:// URI.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.allowjavascript">
+<span class="sig-name descname"><span class="pre">allowjavascript</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.allowjavascript" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether Javascript execution is allowed in the WebView.
+If requesting to allow, the user is prompted and can deny the request.
+Blocks until the user responded.
+Returns wheter Javascript is enabled after the call.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.allownavigation">
+<span class="sig-name descname"><span class="pre">allownavigation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">allow</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.allownavigation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets whether the user and Javascript are allowed to navigate to different sites.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.evaluatejs">
+<span class="sig-name descname"><span class="pre">evaluatejs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.evaluatejs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs Javascript in the WebView, if Javascript is enabled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.goback">
+<span class="sig-name descname"><span class="pre">goback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.goback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Goes back in the history.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.goforward">
+<span class="sig-name descname"><span class="pre">goforward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.goforward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Goes forward in the history.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.loaduri">
+<span class="sig-name descname"><span class="pre">loaduri</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.loaduri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a URI.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="termuxgui.WebView.setdata">
+<span class="sig-name descname"><span class="pre">setdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#termuxgui.WebView.setdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the document data.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">termuxgui package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#module-termuxgui">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Welcome to termuxgui’s documentation!</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="termuxgui.oo.html"
+                          title="next chapter">termuxgui.oo package</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/termuxgui.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="termuxgui.oo.html" title="termuxgui.oo package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to termuxgui’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">termuxgui 0.1.5 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">termuxgui package</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Tarek Sander.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  </body>
+</html>
