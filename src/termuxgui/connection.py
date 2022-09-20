@@ -7,6 +7,7 @@ from struct import unpack
 from json import dumps
 from select import select
 from typing import TypedDict, Literal, Optional, Any, Union, Iterator
+from threading import Lock
 
 from termuxgui.event import Event
 import termuxgui.msg as tgmsg
@@ -38,6 +39,10 @@ class Connection:
 
     def __init__(self):
         """When a connection can't be established, a RuntimeError is raised."""
+        
+        self.__main_lock = Lock()
+        self.__event_lock = Lock()
+        
         adrMain = ''.join(choice(ascii_letters + digits) for i in range(50))
         adrEvent = ''.join(choice(ascii_letters + digits) for i in range(50))
         mainss = socket(AF_UNIX, SOCK_STREAM)
@@ -82,17 +87,19 @@ class Connection:
 
     def events(self) -> Iterator[Event]:
         """Waits for events. Use this with "for in" to iterate over incoming events and block while waiting."""
-        while True:
-            yield Event(tgmsg.read_msg(self._event))
+        with self.__event_lock:
+            while True:
+                yield Event(tgmsg.read_msg(self._event))
 
     def checkevent(self) -> Optional[Event]:
         """If there is at least one event to be read, returns it.
         If there is no event, returns None.
         You can use this to e.g. check for events between drawing a frame instead of
         having to use a separate thread and blocking it."""
-        r, _, _ = select([self._event], [], [], 0)
-        if len(r) != 0:
-            return Event(tgmsg.read_msg(self._event))
+        with self.__event_lock:
+            r, _, _ = select([self._event], [], [], 0)
+            if len(r) != 0:
+                return Event(tgmsg.read_msg(self._event))
 
     def toast(self, text: str, long: bool = False):
         """Sends a Toast. Set long to True if you want to display the text for longer."""
@@ -120,11 +127,12 @@ class Connection:
     def send_msg(self, msg: Union[str, dict]):
         """Send a message to the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library."""
-        if type(msg) is dict:
-            msg = dumps(msg)
-        tgmsg.send_msg(self._main, msg)
+        with self.__main_lock:
+            if type(msg) is dict:
+                msg = dumps(msg)
+            tgmsg.send_msg(self._main, msg)
 
-    def read_msg(self) -> Any:
+    def __read_msg(self) -> Any:
         """Read a message from the main socket.
         You should only need to call this yourself if you want to use methods not yet implemented in the library."""
         return tgmsg.read_msg(self._main)
@@ -132,8 +140,9 @@ class Connection:
     def send_read_msg(self, msg: Union[str, dict]):
         """Send a message to the main socket and read a message afterwards.
         You should only need to call this yourself if you want to use methods not yet implemented in the library."""
-        self.send_msg(msg)
-        return self.read_msg()
+        with self.__main_lock:
+            self.send_msg(msg)
+            return self.__read_msg()
 
     def turnscreenon(self):
         """Turns the screen on."""
