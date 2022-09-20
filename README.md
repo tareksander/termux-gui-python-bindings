@@ -1,9 +1,10 @@
 # Termux:GUI Python Bindings
 A Python library to interact with the Termux:GUI plugin.  
   
-See [here](https://github.com/tareksander/termux-gui-python-bindings/blob/main/TUTORIAL.md) for a tutorial.  
+See [here](https://github.com/tareksander/termux-gui-python-bindings/blob/main/TUTORIAL.md) for a tutorial
+and [here](https://github.com/tareksander/termux-gui-python-bindings/blob/main/TUTORIAL_OOP.md) for using the more object-oriented subpackage.  
   
-There is also [documentation](https://tareksander.github.io/termux-gui-python-bindings/termuxgui/index.html) generated from the docstrings.   
+There is also [documentation](https://tareksander.github.io/termux-gui-python-bindings/index.html) generated from the docstrings.   
 
 
 ### Installing and updating:  
