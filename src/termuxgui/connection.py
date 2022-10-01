@@ -1,3 +1,5 @@
+import os
+import sys
 from socket import socket, AF_UNIX, SOCK_STREAM, timeout, SOL_SOCKET, SO_PEERCRED
 from subprocess import run, DEVNULL
 from secrets import choice
@@ -15,6 +17,12 @@ import termuxgui.msg as tgmsg
 
 def _check_user(s):
     uid = unpack("III", s.getsockopt(SOL_SOCKET, SO_PEERCRED, 12))[1]
+    env_uid = os.getenv("TGUI_PY_UID")
+    if env_uid is not None:
+        if os.getenv("TGUI_PY_UID_NOWARN") is None:
+            print("WARNING: Socket UID to check taken from environment variable TGUI_PY_UID\n"
+                  "Set TGUI_PY_UID_NOWARN to suppress this message.", file=sys.stderr)
+        return uid == int(env_uid)
     return uid == getuid()
 
 
