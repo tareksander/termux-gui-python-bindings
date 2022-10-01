@@ -1,6 +1,6 @@
 import os
 import sys
-from socket import socket, AF_UNIX, SOCK_STREAM, timeout, SOL_SOCKET, SO_PEERCRED
+from socket import socket, AF_UNIX, SOCK_STREAM, timeout, SOL_SOCKET, SO_PEERCRED, SHUT_WR
 from subprocess import run, DEVNULL
 from secrets import choice
 from string import ascii_letters, digits
@@ -24,6 +24,25 @@ def _check_user(s):
                   "Set TGUI_PY_UID_NOWARN to suppress this message.", file=sys.stderr)
         return uid == int(env_uid)
     return uid == getuid()
+
+
+def _termux_am(main: str, event: str) -> bool:
+    am_socket_path = "/data/data/com.termux/files/apps/com.termux/termux-am/am.sock"
+    try:
+        if os.path.exists(am_socket_path):
+            ams = socket(AF_UNIX, SOCK_STREAM)
+            ams.connect(am_socket_path)
+            ams.sendall(bytes("broadcast -n com.termux.gui/.GUIReceiver --es mainSocket "
+                              + main + " --es eventSocket " + event, "ascii"))
+            ams.shutdown(SHUT_WR)
+            code = ams.recv(1)
+            while len(ams.recv(4096)) != 0:
+                pass
+            return code[0] == 0
+    except BaseException as e:
+        print(e, file=sys.stderr)
+        return False
+    return False
 
 
 class ConfigDarkMode(TypedDict, total=False):
@@ -62,8 +81,9 @@ class Connection:
             eventss.listen(1)
             mainss.settimeout(5)
             eventss.settimeout(5)
-            run(["am", "broadcast", "-n", "com.termux.gui/.GUIReceiver", "--es", "mainSocket", adrMain, "--es",
-                 "eventSocket", adrEvent], stdout=DEVNULL, stderr=DEVNULL)
+            if not _termux_am(adrMain, adrEvent):
+                run(["am", "broadcast", "-n", "com.termux.gui/.GUIReceiver", "--es", "mainSocket", adrMain, "--es",
+                     "eventSocket", adrEvent], stdout=DEVNULL, stderr=DEVNULL)
             try:
                 main = mainss.accept()[0]
                 try:
