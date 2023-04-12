@@ -106,6 +106,9 @@ class Activity:
     def interceptbackbutton(self, intercept: bool):
         """Sets whether to intercept a back button press and send an event instead."""
         self.c.send_msg({"method": "interceptBackButton", "params": {"aid": self.aid, "intercept": intercept}})
-    
-    
+
+    def setsecure(self, secure: bool):
+        """Sets the secure flag for the Activity, making screenshots impossible and showing a blank screen in the
+        task switcher."""
+        self.c.send_msg({"method": "setSecure", "params": {"aid": self.aid, "secure": secure}})
     
