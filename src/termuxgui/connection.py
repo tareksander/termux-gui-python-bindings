@@ -54,7 +54,7 @@ class Connection:
             eventss.listen(1)
             mainss.settimeout(5)
             eventss.settimeout(5)
-            run(["am", "broadcast", "-n", "com.termux.gui/.GUIReceiver", "--es", "mainSocket", adrMain, "--es",
+            run(["termux-am", "broadcast", "-n", "com.termux.gui/.GUIReceiver", "--es", "mainSocket", adrMain, "--es",
                  "eventSocket", adrEvent], stdout=DEVNULL, stderr=DEVNULL)
             try:
                 main = mainss.accept()[0]
@@ -83,7 +83,36 @@ class Connection:
                     main.close()
                     raise e
             except timeout:
-                raise RuntimeError("Could not connect to Termux:GUI. Is the plugin installed?")
+                run(["am", "broadcast", "-n", "com.termux.gui/.GUIReceiver", "--es", "mainSocket", adrMain, "--es",
+                     "eventSocket", adrEvent], stdout=DEVNULL, stderr=DEVNULL)
+                try:
+                    main = mainss.accept()[0]
+                    try:
+                        event = eventss.accept()[0]
+                        try:
+                            # check for the termux uid to see if it is really the plugin that has connected
+                            if not _check_user(main) or not _check_user(event):
+                                main.close()
+                                event.close()
+                                raise RuntimeError("Plugin doesn't have the same UID")
+                            main.sendall(b'\x01')
+                            ret = b''
+                            while len(ret) == 0:
+                                ret = ret + main.recv(1)
+                            if ret[0] != 0:
+                                main.close()
+                                event.close()
+                                raise RuntimeError("Invalid Protocol version response")
+                            self._main = main
+                            self._event = event
+                        except Exception as e:
+                            event.close()
+                            raise e
+                    except Exception as e:
+                        main.close()
+                        raise e
+                except timeout:
+                    raise RuntimeError("Could not connect to Termux:GUI. Is the plugin installed?")
 
     def events(self) -> Iterator[Event]:
         """Waits for events. Use this with "for in" to iterate over incoming events and block while waiting."""
