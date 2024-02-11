@@ -25,7 +25,7 @@ class Activity:
             params["overlay"] = overlay
         if lockscreen is not None:
             params["lockscreen"] = lockscreen
-        if tid is None:
+        if tid is None and overlay is None:
             self.aid, tid = self.c.send_read_msg({"method": "newActivity", "params": params})
         else:
             self.aid = self.c.send_read_msg({"method": "newActivity", "params": params})
