@@ -71,8 +71,9 @@ with tg.Connection() as c:
 
 Now let's modify the example a bit: add 
 ```python
-time.sleep(5)
-tv.settext(main, a, tv, "Goodbye world!")
+    tv.settext("Goodbye world!")
+
+    time.sleep(5)
 ```
 after `tv = tg.TextView(a, "Hello world!")`.
 Now it displays "Hello World!" for 5 seconds, "Goodbye world!" for 5 seconds and then exits.  
