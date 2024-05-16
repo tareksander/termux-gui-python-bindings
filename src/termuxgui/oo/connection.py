@@ -27,7 +27,7 @@ class Connection(tg.Connection):
     
     """Launches an Activity with the specified parameters."""
     def launch(self, activity: Type[Activity], t: Optional[tg.Task] = None, *args, **kwargs):
-        a = activity(self, t, *args, *kwargs)
+        a = activity(self, t, *args, **kwargs)
         self.__activities[a.aid] = a
     
     """Runs the event loop. Dispatches events to Activities and Views. Exits if there aren't any Activities anymore."""
